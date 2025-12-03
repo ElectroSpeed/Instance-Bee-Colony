@@ -22,17 +22,26 @@ public class EnvironmentManager : MonoBehaviour
 
     private void Update()
     {
+        UpdateTimer();
+
+        if (autoStabilize)
+        {
+            StabilizeEnvironment();
+        }   
+    }
+
+
+    private void UpdateTimer() 
+    {
         updateTimer += Time.deltaTime;
 
         if (updateTimer < updateInterval)
+        {
             return;
+        }
 
         updateTimer = 0f;
-
-        if (autoStabilize)
-            StabilizeEnvironment();
     }
-
     private void StabilizeEnvironment()
     {
         bool changed = false;
