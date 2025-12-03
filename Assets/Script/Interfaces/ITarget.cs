@@ -1,8 +1,6 @@
 using UnityEngine;
-
 public interface ITarget
 {
-    Transform GetTransform();
-    Vector3 GetPosition();
-    GameObject GetEntity();
+    Vector3 _position { get; }
+    bool _isValid();
 }
