@@ -5,9 +5,11 @@ public class EnvironmentManager : MonoBehaviour
 {
     [Range(0, 100)] public float _sunlight;
     [Range(0, 100)] public float _humidity;
+    [Range(-40, 40)] public float _temperature;
 
     public event Action<float> OnSunlightChanged;
     public event Action<float> OnHumidityChanged;
+    public event Action<float> OnTemperatureChanged;
 
     [Header("Stabilisation Settings")]
     [SerializeField] private float _stabilizeSpeed = 1f;
@@ -60,5 +62,12 @@ public class EnvironmentManager : MonoBehaviour
     {
         _humidity = Mathf.Clamp(value, 0f, 100f);
         OnHumidityChanged?.Invoke(_humidity);
+    }
+
+    public void SetTemperature(float value)
+    {
+        _temperature = Mathf.Clamp(value, -40f, 40f);
+        OnTemperatureChanged?.Invoke(_temperature);
+
     }
 }

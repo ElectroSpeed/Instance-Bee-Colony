@@ -57,9 +57,11 @@ public class Flower : MonoBehaviour
 
     private bool CanGrow()
     {
-        //return _environment._humidity >= _data._minHumidity && _environment._humidity <= _data._maxHumidity &&
-         //      _environment._sunlight >= _data._minSunlight && _environment._sunlight <= _data._maxSunlight;
-         return true;
+        return _environment._humidity >= _data._minHumidity && _environment._humidity <= _data._maxHumidity &&
+               _environment._sunlight >= _data._minSunlight && _environment._sunlight <= _data._maxSunlight &&
+               _environment._temperature >= _data._minTemperature && _environment._temperature <= _data._maxTemperature;
+
+
     }
 
     private void Grow()

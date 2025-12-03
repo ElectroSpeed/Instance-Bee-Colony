@@ -15,4 +15,6 @@ public class SO_FlowerData : ScriptableObject
     [Range(0, 100)] public float _maxHumidity;
     [Range(0, 100)] public float _minSunlight;
     [Range(0, 100)] public float _maxSunlight;
+    [Range(-40, 40)] public float _minTemperature;
+    [Range(-40, 40)] public float _maxTemperature;
 }
