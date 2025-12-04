@@ -171,11 +171,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - {fileID: 8187971557249102625, guid: ea168e8b0e71511498fb1d2597230dea, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1606851902297198055, guid: ea168e8b0e71511498fb1d2597230dea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1073601139}
   m_SourcePrefab: {fileID: 100100000, guid: ea168e8b0e71511498fb1d2597230dea, type: 3}
+--- !u!1 &1073601138 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1606851902297198055, guid: ea168e8b0e71511498fb1d2597230dea, type: 3}
+  m_PrefabInstance: {fileID: 1073601137}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1073601139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073601138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed1b656c2b0be0f41a4511a2751916ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnvironmentManager
+  Sunlight: 50
+  Humidity: 50
+  autoStabilize: 1
+  stabilizeSpeed: 1
+  updateInterval: 0.5
 --- !u!1 &1355206420
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,17 +4,16 @@ using UnityEngine;
 public class EnvironmentManager : MonoBehaviour
 {
     [Header("Environment Values")]
-    [Range(0, 100)] public float Sunlight = 50f;
-    [Range(0, 100)] public float Humidity = 50f;
+    [Range(0, 100)] public float _sunlight = 50f;
+    [Range(0, 100)] public float _humidity = 50f;
+    [Range(-10, 40)] public float _temperature = 20f;
 
     [Header("Stabilization Settings")]
-    [SerializeField] private bool autoStabilize = true;
-    [SerializeField] private float stabilizeSpeed = 1f;
-    [SerializeField] private float updateInterval = 0.5f;
+    [SerializeField] private bool _autoStabilize = true;
+    [SerializeField] private float _stabilizeSpeed = 1f;
+    [SerializeField] private float _updateInterval = 0.5f;
 
-    private float updateTimer;
-
-    // Events (create a new action when you have a new environment change, EX : you create a pollution variable for flower, you create a new action for this)
+    private float _updateTimer;
     public event Action<float> OnSunlightChanged;
     public event Action<float> OnHumidityChanged;
 
@@ -24,39 +23,39 @@ public class EnvironmentManager : MonoBehaviour
     {
         UpdateTimer();
 
-        if (autoStabilize)
+        if (_autoStabilize)
             StabilizeEnvironment();
     }
 
     private void UpdateTimer()
     {
-        updateTimer += Time.deltaTime;
+        _updateTimer += Time.deltaTime;
 
-        if (updateTimer < updateInterval)
+        if (_updateTimer < _updateInterval)
         {
             return;
         }
             
-        updateTimer = 0f;
+        _updateTimer = 0f;
     }
 
     private void StabilizeEnvironment()
     {
         bool changed = false;
 
-        float newSun = Mathf.MoveTowards(Sunlight, TargetValue, stabilizeSpeed);
-        if (newSun != Sunlight)
+        float newSun = Mathf.MoveTowards(_sunlight, TargetValue, _stabilizeSpeed);
+        if (newSun != _sunlight)
         {
-            Sunlight = newSun;
-            OnSunlightChanged?.Invoke(Sunlight);
+            _sunlight = newSun;
+            OnSunlightChanged?.Invoke(_sunlight);
             changed = true;
         }
 
-        float newHum = Mathf.MoveTowards(Humidity, TargetValue, stabilizeSpeed);
-        if (newHum != Humidity)
+        float newHum = Mathf.MoveTowards(_humidity, TargetValue, _stabilizeSpeed);
+        if (newHum != _humidity)
         {
-            Humidity = newHum;
-            OnHumidityChanged?.Invoke(Humidity);
+            _humidity = newHum;
+            OnHumidityChanged?.Invoke(_humidity);
             changed = true;
         }
 
@@ -68,23 +67,23 @@ public class EnvironmentManager : MonoBehaviour
 
     public void SetSunlight(float value)
     {
-        Sunlight = Mathf.Clamp(value, 0f, 100f);
-        OnSunlightChanged?.Invoke(Sunlight);
+        _sunlight = Mathf.Clamp(value, 0f, 100f);
+        OnSunlightChanged?.Invoke(_sunlight);
     }
 
     public void SetHumidity(float value)
     {
-        Humidity = Mathf.Clamp(value, 0f, 100f);
-        OnHumidityChanged?.Invoke(Humidity);
+        _humidity = Mathf.Clamp(value, 0f, 100f);
+        OnHumidityChanged?.Invoke(_humidity);
     }
 
     public void AddSunlight(float delta)
     {
-        SetSunlight(Sunlight + delta);
+        SetSunlight(_sunlight + delta);
     }
 
     public void AddHumidity(float delta)
     {
-        SetHumidity(Humidity + delta);
+        SetHumidity(_humidity + delta);
     }
 }
