@@ -60,8 +60,6 @@ public class Flower : MonoBehaviour
         return _environment._humidity >= _data._minHumidity && _environment._humidity <= _data._maxHumidity &&
                _environment._sunlight >= _data._minSunlight && _environment._sunlight <= _data._maxSunlight &&
                _environment._temperature >= _data._minTemperature && _environment._temperature <= _data._maxTemperature;
-
-
     }
 
     private void Grow()
@@ -79,6 +77,7 @@ public class Flower : MonoBehaviour
             _isGrowed = true;
             _canBePollinated = true;
             _hasPollen = true;
+            Debug.Log("Growed");
         }
     }
     

@@ -283,15 +283,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53fba08177530904e9355ae85626cb85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraMovement
-  moveSpeed: 20
-  borderThickness: 20
+  _moveSpeed: 0
   _playerCamera: {fileID: 1158957965}
   _pivotCamera: {fileID: 696087196}
-  tiltAngle: 45
   _zoomSpeed: 40
   _minZoom: -10
   _maxZoom: 50
-  _sensitivity: 0.1
+  _sensitivityRotation: 0
 --- !u!4 &696087196
 Transform:
   m_ObjectHideFlags: 0
