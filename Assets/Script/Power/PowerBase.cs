@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class PowerBase : MonoBehaviour, IPower
 {
-    [HideInInspector] public bool _usePower = false;
+    public bool _usePower = true;
 
     [SerializeField] protected SO_PowerData _data;
     protected float _lastActivationTime;

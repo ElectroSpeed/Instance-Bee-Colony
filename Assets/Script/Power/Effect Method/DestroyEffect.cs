@@ -6,16 +6,19 @@ public class DestroyEffect : SO_EffectBehaviour
 {
     public override void ApplyEffect(IEnumerable<ITarget> targets)
     {
+        Debug.Log("hh");
         if (targets == null)
             return;
 
         foreach (var target in targets)
         {
             if (target == null || !target._isValid())
+
                 continue;
 
             if (target is EntityTarget entityTarget)
             {
+                
                 GameObject entity = entityTarget._entity;
 
                 if (entity != null)
