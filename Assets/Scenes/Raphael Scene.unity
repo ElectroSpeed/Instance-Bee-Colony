@@ -345,7 +345,7 @@ MonoBehaviour:
   scale: 10
   persistance: 0.5
   lacunarity: 2
-  heightMultiplier: 30
+  heightMultiplier: 50
   heightCurve:
     serializedVersion: 2
     m_Curve:

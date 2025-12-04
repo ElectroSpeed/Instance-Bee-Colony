@@ -20,7 +20,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private float persistance;
     [SerializeField] private float lacunarity;
     
-    [Range(1,50)]
+    [Min(1)]
     [SerializeField] private float heightMultiplier=1;
 
     [SerializeField] private AnimationCurve heightCurve;
@@ -56,7 +56,7 @@ public class MapGenerator : MonoBehaviour
             {
                 heightMap[i, j] = heightCurve.Evaluate(heightMap[i, j]);
                 heatMap[i, j] = heatCurve.Evaluate(heatMap[i, j]);
-                cells[i * cells.Count + j].transform.position+=new Vector3(0, (heightMap[i,j]*heightMultiplier)/2, 0);
+                //cells[i * cells.Count + j].transform.position+=new Vector3(0, (heightMap[i,j]*heightMultiplier)/2, 0);
                 if (heightMap[i, j] < 0.0001f)
                 {
                     heightMap[i, j] = 0.001f;
