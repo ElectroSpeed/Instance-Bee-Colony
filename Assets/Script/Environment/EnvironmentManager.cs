@@ -6,7 +6,7 @@ public class EnvironmentManager : MonoBehaviour
     [Header("Environment Values")]
     [Range(0, 100)] public float _sunlight;
     [Range(0, 100)] public float _humidity;
-    [Range(-10, 40)] public float _temperature;
+    [Range(-40, 40)] public float _temperature;
 
     [Header("Stabilization Settings")]
     [SerializeField] private float _stabilizeSpeed;
@@ -15,6 +15,7 @@ public class EnvironmentManager : MonoBehaviour
     private float _updateTimer;
     public event Action<float> OnSunlightChanged;
     public event Action<float> OnHumidityChanged;
+    public event Action<float> OnTemperatureChanged;
 
     private void Update()
     {
@@ -44,6 +45,7 @@ public class EnvironmentManager : MonoBehaviour
 
         OnSunlightChanged?.Invoke(_sunlight);
         OnHumidityChanged?.Invoke(_humidity);
+        OnTemperatureChanged?.Invoke(_temperature);
     }
 
     public void SetSunlight(float value)
