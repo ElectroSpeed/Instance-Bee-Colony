@@ -5,32 +5,31 @@ using static UnityEngine.Rendering.DebugUI;
 public class CameraMovement : MonoBehaviour
 {
     [Header("Camera Movement")]
-    public float _moveSpeed = 20f;
+    public float _moveSpeed = 20f; // vitesse de déplacement de la caméra
     public float _borderThickness = 20f; // pixels du bord de l'écran
-    private Vector2 _moveInput;
+    private Vector2 _moveInput; // input de déplacement
     private Vector3 _targetPosition;
 
     [Header("Camera Information")]
-    [SerializeField] private Transform _playerCamera;
-    [SerializeField] private Transform _pivotCamera;
+    [SerializeField] private Transform _playerCamera; //la caméra elle-même
+    [SerializeField] private Transform _pivotCamera; //game object qui est parent de la caméra
 
     [Header("Camera Angle")]
-    public float tiltAngle = 45f;
+    public float tiltAngle = 45f; // angle de la caméra sur l'axe X
 
     [Header("Zoom Settings")]
     [SerializeField] private float _zoomSpeed;
     [SerializeField] private float _minZoom;
-    [SerializeField] private float _maxZoom;
+    [SerializeField] private float _maxZoom; 
     private float _currentZoom;
 
     [Header("Rotation Settings")]
-    [SerializeField] private float _sensitivity;
-    private float _rotationX;
-    private float _rotationY;
+    [SerializeField] private float _sensitivity; // sensibilité de la rotation de la caméra
+    private float _rotationX; // rotation autour de l'axe Y
+    private float _rotationY; // rotation autour de l'axe X
 
-    private Camera _cam;
-    private bool _isRightMouseHeld = false;
-    private bool _isLeftMouseHeld = false;
+    private Camera _cam; // référence à la caméra principale
+    private bool _isRightMouseHeld = false; // pour détecter si le clic droit est maintenu
 
     private void Start()
     {
@@ -41,10 +40,10 @@ public class CameraMovement : MonoBehaviour
         // Applique l'angle de la caméra
         transform.rotation = Quaternion.Euler(tiltAngle, 0, 0);
 
-        _currentZoom = Vector3.Distance(_playerCamera.position, _pivotCamera.position);
-        _targetPosition = _pivotCamera.position;
+        _currentZoom = Vector3.Distance(_playerCamera.position, _pivotCamera.position); // initialiser le zoom actuel
+        _targetPosition = _pivotCamera.position; // initialiser la position cible
 
-        Vector3 euler = _pivotCamera.localEulerAngles;
+        Vector3 euler = _pivotCamera.localEulerAngles; // obtenir les angles de rotation initiaux
         _rotationX = euler.y;
         _rotationY = euler.x;
     }
@@ -57,7 +56,7 @@ public class CameraMovement : MonoBehaviour
 
     #region Click Detection
 
-    public void OnRightClick(InputAction.CallbackContext context)
+    public void OnRightClick(InputAction.CallbackContext context) // détecte si le clic droit est maintenu
     {
         if (context.started)
             _isRightMouseHeld = true;
@@ -69,12 +68,12 @@ public class CameraMovement : MonoBehaviour
 
     #region Camera Movement
 
-    public void OnMove(InputAction.CallbackContext context)
+    public void OnMove(InputAction.CallbackContext context) // input de déplacement
     {
         _moveInput = context.ReadValue<Vector2>();
     }
 
-    public void BorderCameraMovement()
+    public void BorderCameraMovement() // déplacer la caméra lorsque la souris est proche des bords de l'écran
     {
         Vector3 direction = Vector3.zero;
 
@@ -107,7 +106,7 @@ public class CameraMovement : MonoBehaviour
     }
 
     // placer la fonction du déplacement en ZQSD ici 
-    private void InputCameraMovement()
+    private void InputCameraMovement() // déplacer la caméra avec les touches
     {
         if (_moveInput == Vector2.zero)
             return;
@@ -131,7 +130,7 @@ public class CameraMovement : MonoBehaviour
 
     #region Camera Zoom
 
-    public void OnZoom(InputAction.CallbackContext context)
+    public void OnZoom(InputAction.CallbackContext context) // input de zoom
     {
         if (context.started || context.performed)
         {
@@ -145,7 +144,7 @@ public class CameraMovement : MonoBehaviour
         }
     }
 
-    private void UpdateCameraPosition()
+    private void UpdateCameraPosition() // met à jour la position de la caméra en fonction du zoom actuel
     {   
         _playerCamera.localPosition = new Vector3(0, 0, -_currentZoom);
     }
@@ -154,7 +153,7 @@ public class CameraMovement : MonoBehaviour
 
     #region Camera Rotation
 
-    public void OnRotate(InputAction.CallbackContext context)
+    public void OnRotate(InputAction.CallbackContext context) // input de rotation
     {
         if (!_isRightMouseHeld) return;
 
