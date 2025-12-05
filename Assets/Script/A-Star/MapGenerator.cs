@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGenerator : MonoBehaviour
+public class MapGenerator1 : MonoBehaviour
 {
-    public static MapGenerator instance;
+    public static MapGenerator1 instance;
 
     [Header("Map settings")]
     [SerializeField] private GameObject testTile;
@@ -18,20 +18,18 @@ public class MapGenerator : MonoBehaviour
 
     [Header("Runtime")]
     public List<GameObject> tiles = new List<GameObject>();
-    public List<Vector2> tilePositions = new List<Vector2>();
-
     public Dictionary<Vector2Int, Cell> graph = new Dictionary<Vector2Int, Cell>();
 
 
-    private void Awake()
-    {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        instance = this;
-    }
+    // private void Awake()
+    // {
+    //     if (instance != null && instance != this)
+    //     {
+    //         Destroy(gameObject);
+    //         return;
+    //     }
+    //     instance = this;
+    // }
 
     private void Start()
     {
@@ -71,7 +69,6 @@ public class MapGenerator : MonoBehaviour
             if (t != null) Destroy(t);
 
         tiles.Clear();
-        tilePositions.Clear();
         graph.Clear();
 
         GameObject tile;
@@ -87,12 +84,11 @@ public class MapGenerator : MonoBehaviour
                 {
                     tile = Instantiate(testTile, pos, Quaternion.identity, transform);
                     tiles.Add(tile);
-                    tilePositions.Add(new Vector2(pos.x, pos.z));
+                    
                 }
                 else
                 {
                     tiles.Add(null);
-                    tilePositions.Add(new Vector2(-1, -1));
                 }
 
                 index++;
@@ -118,7 +114,7 @@ public class MapGenerator : MonoBehaviour
 
                     bool isWalkable = !obstacles.Contains(gridPos);
 
-                    graph[gridPos] = new Cell(x, y, isWalkable);
+  //                  graph[gridPos] = new Cell(x, y, isWalkable);
                 }
                 index++;
             }
@@ -150,9 +146,9 @@ public class MapGenerator : MonoBehaviour
         {
             Vector3 w = GridToWorld(kv.Key) + Vector3.up * 0.1f;
 
-            if (kv.Value.isWalkable)
+  //          if (kv.Value.isWalkable)
                 Gizmos.color = Color.green;
-            else
+ //           else
                 Gizmos.color = Color.blue;
 
             Gizmos.DrawSphere(w, 0.15f);

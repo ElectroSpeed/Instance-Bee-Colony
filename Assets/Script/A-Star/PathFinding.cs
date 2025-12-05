@@ -3,9 +3,16 @@ using UnityEngine;
 
 public class PathFinding
 {
+
+    public PathFinding(MapGenerator _mapGenerator)
+    {
+        mapGenerator=_mapGenerator;
+    }
+    
     private List<Cell> tempNeighbors = new List<Cell>();
     private List<Cell> usedCells = new List<Cell>();
     private List<Cell> path = new List<Cell>();
+    MapGenerator mapGenerator;
 
     private static readonly Vector2Int[] evenRow =
     {
@@ -31,7 +38,7 @@ public class PathFinding
         foreach (var d in dirs)
         {
             Vector2Int nPos = cell.position + d;
-            if (MapGenerator.instance.graph.TryGetValue(nPos, out Cell n) && n.isWalkable)
+            if (mapGenerator.graph.TryGetValue(nPos, out Cell n))
             {
                 tempNeighbors.Add(n);
             }
@@ -49,24 +56,19 @@ public class PathFinding
 
     public List<Cell> FindPath(Vector3 startWorld, Vector3 endWorld)
     {
-        if (MapGenerator.instance == null)
-        {
-            Debug.LogError("MapGenerator.instance is null");
-            return null;
-        }
 
-        Vector2Int startGrid = MapGenerator.instance.WorldToGrid(startWorld);
-        Vector2Int endGrid = MapGenerator.instance.WorldToGrid(endWorld);
+        Vector2Int startGrid = mapGenerator.WorldToGrid(startWorld);
+        Vector2Int endGrid = mapGenerator.WorldToGrid(endWorld);
 
         Debug.Log($"Start GRID: {startGrid} | End GRID: {endGrid}");
 
-        if (!MapGenerator.instance.graph.TryGetValue(startGrid, out Cell start))
+        if (!mapGenerator.graph.TryGetValue(startGrid, out Cell start))
         {
             Debug.LogError("START is outside grid: " + startGrid);
             return null;
         }
 
-        if (!MapGenerator.instance.graph.TryGetValue(endGrid, out Cell end))
+        if (!mapGenerator.graph.TryGetValue(endGrid, out Cell end))
         {
             Debug.LogError("END is outside grid: " + endGrid);
             return null;
@@ -108,7 +110,7 @@ public class PathFinding
                     neighbor.gCost = tentativeG;
                     neighbor.parent = current;
 
-                    int f = neighbor.gCost + Heuristic(neighbor, end);
+                    float f = (neighbor.gCost + Heuristic(neighbor, end))*neighbor.cellWeight;
 
                     if (!open.Contains(neighbor))
                         open.Enqueue(neighbor, f);

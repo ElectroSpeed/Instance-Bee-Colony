@@ -8,12 +8,14 @@ public class PathfindingTester : MonoBehaviour
     public Transform startPoint;
     public Transform endPoint;
 
+    [SerializeField] MapGenerator mapGenerator;
+    
     private PathFinding pathfinding;
     private List<Cell> path;
 
     private void Start()
     {
-        pathfinding = new PathFinding();
+        pathfinding = new PathFinding(mapGenerator);
         StartCoroutine(TestAfterDelay());
     }
 
@@ -31,21 +33,21 @@ public class PathfindingTester : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (path == null || MapGenerator.instance == null) return;
+        if (path == null || mapGenerator == null) return;
 
         Gizmos.color = Color.red;
 
         for (int i = 0; i < path.Count; i++)
         {
-            Vector3 worldPos = MapGenerator.instance.GridToWorld(path[i].position);
-            Gizmos.DrawSphere(worldPos + Vector3.up * 0.2f, 0.2f);
+            Vector3 worldPos = mapGenerator.GridToWorld(path[i].position);
+            Gizmos.DrawSphere(worldPos + Vector3.up * 5f, 0.2f);
 
             if (i < path.Count - 1)
             {
-                Vector3 nextWorldPos = MapGenerator.instance.GridToWorld(path[i + 1].position);
+                Vector3 nextWorldPos = mapGenerator.GridToWorld(path[i + 1].position);
                 Gizmos.DrawLine(
-                    worldPos + Vector3.up * 0.2f,
-                    nextWorldPos + Vector3.up * 0.2f
+                    worldPos + Vector3.up * 5f,
+                    nextWorldPos + Vector3.up * 5f
                 );
             }
         }
