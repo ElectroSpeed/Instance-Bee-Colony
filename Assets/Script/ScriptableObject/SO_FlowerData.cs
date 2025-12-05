@@ -4,6 +4,7 @@ using UnityEngine;
 public class SO_FlowerData : ScriptableObject
 {
     public string _flowerName;
+    public string _description;
     public AnimationCurve _growthCurve;
     public float _growthDuration;
     public float _lifeDuration;
