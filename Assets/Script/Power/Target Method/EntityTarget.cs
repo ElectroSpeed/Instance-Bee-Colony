@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EntityTarget : IEntityTarget
+public class EntityTarget : ITarget
 {
     public GameObject _entity { get; }
     public Transform _transform => _entity ? _entity.transform : null;
