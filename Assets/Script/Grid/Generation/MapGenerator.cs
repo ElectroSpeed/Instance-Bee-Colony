@@ -53,6 +53,7 @@ public class MapGenerator : MonoBehaviour
     [Tooltip("How much the heightmap (the elevation of the terrain) influence the heat map")]
     [SerializeField] private float elevationMultiplier = 1;
     
+    [Space(10)]
     [SerializeField] private GameObject cellPrefab;
     Dictionary<int, GameObject> cells = new Dictionary<int, GameObject>();
 
