@@ -14,19 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SO_FlowerData
   _flowerName: BlueFlowerData
   _description: Fleure bleu qui pousse dans les endroit froid et humide
+  _flowerPrefab: {fileID: 778431225565301238, guid: 66fa6b38f83425248b2e3530a7896f38, type: 3}
+  _lifeDuration: 50
+  _pollenAmount: 3
+  _growthDuration: 10
   _growthCurve:
     serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _growthDuration: 10
-  _lifeDuration: 50
-  _pollenAmount: 3
-  _flowerPrefab: {fileID: 778431225565301238, guid: 66fa6b38f83425248b2e3530a7896f38, type: 3}
   _minHumidity: 80
   _maxHumidity: 100
   _minSunlight: 50
   _maxSunlight: 100
-  _minTemperature: -30
+  _minTemperature: -10
   _maxTemperature: 10

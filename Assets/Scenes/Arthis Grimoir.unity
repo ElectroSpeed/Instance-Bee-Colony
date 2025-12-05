@@ -280,7 +280,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 218143128}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -402,10 +402,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 601916d56fd864d46ace28346b8ba941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GrimoirScript
-  flowerDatas:
-  - {fileID: 11400000, guid: e80d08ce4a83af649b8e588705a46439, type: 2}
-  - {fileID: 11400000, guid: 8727043d63855ee40861e10cff5f9204, type: 2}
-  - {fileID: 11400000, guid: 00706294703fba34592fc49beb89f9ab, type: 2}
   GrimoirSlotPrefab: {fileID: 2974581897866248230, guid: 69a4a62ab73961d47a82721c0dc3f085, type: 3}
   GrimoirContent: {fileID: 727814413}
   FlowerImage: {fileID: -699957876, guid: 42114d1ec9c863f428899c566886cf98, type: 3}
@@ -508,7 +504,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -343.13013}
+  m_AnchoredPosition: {x: 0, y: -600}
   m_SizeDelta: {x: 1500, y: 1766.2603}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1623961896

@@ -3,7 +3,14 @@ using UnityEngine;
 public class GrimoirScript : MonoBehaviour
 {
     //tableaux de fleurs
-    [SerializeField] private SO_FlowerData[] flowerDatas;
+    private SO_FlowerData[] flowerDatas;
+
+    void Awake()
+    {
+        flowerDatas = Resources.LoadAll<SO_FlowerData>("Flowers");
+    }
+
+
     [SerializeField] private GameObject GrimoirSlotPrefab;
     [SerializeField] private GameObject GrimoirContent;
 
@@ -35,13 +42,13 @@ public class GrimoirScript : MonoBehaviour
             slot.SunlightIcon.sprite = SunlightImage;
 
             // Textes
-            slot.Description.text = flowerData._description;
-            slot.Name.text = flowerData._flowerName;
+            slot.Description.text = flowerData.Description;
+            slot.Name.text = flowerData.FlowerName;
 
             // Conditions
-            slot.HumidityText.text = flowerData._minHumidity + "% / " + flowerData._maxHumidity + "%";
-            slot.SunlightText.text = flowerData._minSunlight + "% / " + flowerData._maxSunlight + "%";
-            slot.TemperatureText.text = flowerData._minTemperature + "°C / " + flowerData._maxTemperature + "°C";
+            slot.HumidityText.text = flowerData.MinHumidity + "% / " + flowerData.MaxHumidity + "%";
+            slot.SunlightText.text = flowerData.MinSunlight + "% / " + flowerData.MaxSunlight + "%";
+            slot.TemperatureText.text = flowerData.MinTemperature + "°C / " + flowerData.MaxTemperature + "°C";
         }
     }
 }
