@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 83755687}
   - component: {fileID: 83755686}
   - component: {fileID: 83755685}
+  - component: {fileID: 83755688}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -211,6 +212,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &83755688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83755684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1 &128113827
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,7 +266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 128113828}
   - component: {fileID: 128113830}
-  - component: {fileID: 128113829}
+  - component: {fileID: 128113831}
   m_Layer: 5
   m_Name: MusicSlider
   m_TagString: Untagged
@@ -251,19 +296,6 @@ RectTransform:
   m_AnchoredPosition: {x: -2, y: 46}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &128113829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 128113827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b96a69d2f4ae4384ba7db453820ea53f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioSlider
-  sliderType: 1
 --- !u!114 &128113830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,19 +346,22 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 128113829}
-        m_TargetAssemblyTypeName: AudioSlider, Assembly-CSharp
-        m_MethodName: UpdateSlider
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &128113831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128113827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b3620c8a7745464a96d9ba99561a7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioSliderBinder
+  _audioEventChannel: {fileID: 11400000, guid: d0411eeef1527294c83cde740c12a60c, type: 2}
+  _channelType: 1
+  _slider: {fileID: 128113830}
 --- !u!1 &214408252
 GameObject:
   m_ObjectHideFlags: 0
@@ -1212,7 +1247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1375652873}
   - component: {fileID: 1375652875}
-  - component: {fileID: 1375652874}
+  - component: {fileID: 1375652876}
   m_Layer: 5
   m_Name: MasterSlider
   m_TagString: Untagged
@@ -1242,19 +1277,6 @@ RectTransform:
   m_AnchoredPosition: {x: -1, y: 89}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1375652874
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1375652872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b96a69d2f4ae4384ba7db453820ea53f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioSlider
-  sliderType: 0
 --- !u!114 &1375652875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1305,19 +1327,22 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1375652874}
-        m_TargetAssemblyTypeName: AudioSlider, Assembly-CSharp
-        m_MethodName: UpdateSlider
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &1375652876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375652872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b3620c8a7745464a96d9ba99561a7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioSliderBinder
+  _audioEventChannel: {fileID: 11400000, guid: d0411eeef1527294c83cde740c12a60c, type: 2}
+  _channelType: 0
+  _slider: {fileID: 1375652875}
 --- !u!1 &1444459429
 GameObject:
   m_ObjectHideFlags: 0
@@ -1618,7 +1643,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1892473207}
   - component: {fileID: 1892473209}
-  - component: {fileID: 1892473208}
+  - component: {fileID: 1892473210}
   m_Layer: 5
   m_Name: SFXSlider
   m_TagString: Untagged
@@ -1648,19 +1673,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1892473208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1892473206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b96a69d2f4ae4384ba7db453820ea53f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioSlider
-  sliderType: 2
 --- !u!114 &1892473209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1711,19 +1723,22 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1892473208}
-        m_TargetAssemblyTypeName: AudioSlider, Assembly-CSharp
-        m_MethodName: UpdateSlider
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &1892473210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892473206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b3620c8a7745464a96d9ba99561a7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioSliderBinder
+  _audioEventChannel: {fileID: 11400000, guid: d0411eeef1527294c83cde740c12a60c, type: 2}
+  _channelType: 2
+  _slider: {fileID: 1892473209}
 --- !u!1001 &1892538041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1732,17 +1747,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1001821445700857310, guid: 963c414038d4d1c4884b72c0e9364725, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 2127064223325720072, guid: 5eb8e10a84038bd498237707783a15cf, type: 2}
+    - target: {fileID: 1896915896230231108, guid: 963c414038d4d1c4884b72c0e9364725, type: 3}
+      propertyPath: mixer
+      value: 
+      objectReference: {fileID: 24100000, guid: 5eb8e10a84038bd498237707783a15cf, type: 2}
+    - target: {fileID: 1896915896230231108, guid: 963c414038d4d1c4884b72c0e9364725, type: 3}
+      propertyPath: channel
+      value: 
+      objectReference: {fileID: 11400000, guid: d0411eeef1527294c83cde740c12a60c, type: 2}
+    - target: {fileID: 1896915896230231108, guid: 963c414038d4d1c4884b72c0e9364725, type: 3}
+      propertyPath: _audioMixer
+      value: 
+      objectReference: {fileID: 24100000, guid: 5eb8e10a84038bd498237707783a15cf, type: 2}
+    - target: {fileID: 1896915896230231108, guid: 963c414038d4d1c4884b72c0e9364725, type: 3}
+      propertyPath: _audioEventChannel
+      value: 
+      objectReference: {fileID: 11400000, guid: d0411eeef1527294c83cde740c12a60c, type: 2}
+    - target: {fileID: 3446103964640964116, guid: 963c414038d4d1c4884b72c0e9364725, type: 3}
+      propertyPath: _soundLibrary
+      value: 
+      objectReference: {fileID: 11400000, guid: 84d85cc83cc702d429bef1084e0de8e7, type: 2}
     - target: {fileID: 5145095911863182166, guid: 963c414038d4d1c4884b72c0e9364725, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.80513
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5145095911863182166, guid: 963c414038d4d1c4884b72c0e9364725, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 41.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5145095911863182166, guid: 963c414038d4d1c4884b72c0e9364725, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -33.81583
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5145095911863182166, guid: 963c414038d4d1c4884b72c0e9364725, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1776,6 +1815,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 9047461820896829189, guid: 963c414038d4d1c4884b72c0e9364725, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -7462863343732204413, guid: 5eb8e10a84038bd498237707783a15cf, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

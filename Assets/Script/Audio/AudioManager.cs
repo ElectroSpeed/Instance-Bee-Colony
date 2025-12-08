@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
@@ -7,8 +6,7 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private AudioSource _musicSource;
     [SerializeField] private AudioSource _sfxSource;
-    [SerializeField] private AudioMixer _mixer;
-    [SerializeField] private SoundLibrary _library;
+    [SerializeField] private SoundLibrary _soundLibrary;
 
     private void Awake()
     {
@@ -22,6 +20,7 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     private void Start()
     {
         PlayMusic(SoundType.Child);
@@ -29,26 +28,30 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic(SoundType type)
     {
-        var sound = _library.GetSound(type, true);
+        var sound = _soundLibrary.GetSound(type, true);
         if (sound == null) return;
+
+        if (_musicSource.clip == sound._clip) return;
+
         _musicSource.clip = sound._clip;
         _musicSource.loop = sound._loop;
         _musicSource.Play();
-    }
-
-    public void PlaySFX(SoundType type)
-    {
-        var sound = _library.GetSound(type, false);
-        if (sound == null) return;
-        _sfxSource.PlayOneShot(sound._clip);
     }
 
     public void StopMusic()
     {
         _musicSource.Stop();
     }
-    
-    public void StopSFX()
+
+    public void PlaySFX(SoundType type)
+    {
+        var sound = _soundLibrary.GetSound(type, false);
+        if (sound == null) return;
+
+        _sfxSource.PlayOneShot(sound._clip);
+    }
+
+    public void StopAllSFX()
     {
         _sfxSource.Stop();
     }
