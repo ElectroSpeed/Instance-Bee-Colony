@@ -293,7 +293,7 @@ MonoBehaviour:
   scale: 10
   persistance: 0.5
   lacunarity: 2
-  heightMultiplier: 50
+  heightMultiplier: 10
   heightCurve:
     serializedVersion: 2
     m_Curve:
@@ -328,7 +328,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   heatOctaves: 2
-  heatScale: 20
+  heatScale: 25
   heatPersistance: 0.2
   heatLacunarity: 1
   heatCurve:
@@ -336,32 +336,41 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      value: 1
+      inSlope: -0.5333333
+      outSlope: -0.5333333
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.75
+      value: 0.6
+      inSlope: -1
+      outSlope: -1
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      value: 0
+      inSlope: -2.4
+      outSlope: -2.4
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   impactedByElevation: 1
-  elevationMultiplier: 1
+  elevationMultiplier: 1.5
   obstacleRate: 0.2
-  generateRandomObstacles: 1
+  generateRandomObstacles: 0
   obstacles: []
   holes: 
-  pathMultiplier: 3
+  pathMultiplier: 1
   cellPrefab: {fileID: 6951201226651083657, guid: 586db401534cc6344b72441c4bcc00c1, type: 3}
 --- !u!4 &656575866
 Transform:

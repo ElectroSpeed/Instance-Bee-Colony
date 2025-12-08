@@ -115,14 +115,15 @@ public class MapGenerator : MonoBehaviour
                     //the child(0) is the hexagon mesh
                     //TODO : Change Cell prefab with the definitive mesh
                     cells[i * width + j].transform.GetChild(0).localScale = new Vector3(
-                        transform.GetChild(0).localScale.x, transform.GetChild(0).localScale.y,
+                        1, 1,
                         heightMap[i, j] * heightMultiplier);
                     
                     //TODO : Create an overlay instead of changing directly the mesh color
                     cells[i * width + j].transform.GetChild(0).GetComponent<MeshRenderer>().material.color =
                         new Color(heatMap[i, j], 1 - heatMap[i, j], 1 - heatMap[i, j]);
                     
-                    //cells[i * width + j].transform.position+=new Vector3(0, (heightMap[i,j]*heightMultiplier)/2, 0);
+                    cells[i * width + j].transform.position+=new Vector3(0, (heightMap[i,j]*heightMultiplier)/2, 0);
+                    
                 }
             }
         }
@@ -139,13 +140,23 @@ public class MapGenerator : MonoBehaviour
             
             for (int x = 0; x < height; x++)
             {
-                Vector3 pos = new Vector3((y % 2 * .5f * 2) + x * 2, 
-                    0, 
-                    y * 2);
+                Vector3 pos = Vector3.zero;
+                if (y % 2 == 0)
+                {
+                    pos.x =x*1.73f;
+                    pos.z = y * 1.5f ;
+                }
+                else
+                {
+                    pos.x =(x*1.73f)-.865f;
+                    pos.z = y * 1.5f;
+                }
+                
+                
                 if (!holes.Contains(index))
                 {
                     
-                    cells.Add(Instantiate(cellPrefab,pos,Quaternion.Euler(0,0,0),gameObject.transform));
+                    cells.Add(Instantiate(cellPrefab,pos,Quaternion.Euler(0,90,0),gameObject.transform));
                 }
                 else
                 {
