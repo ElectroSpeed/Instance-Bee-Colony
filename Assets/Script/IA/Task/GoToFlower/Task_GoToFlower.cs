@@ -35,7 +35,7 @@ public class Task_GoToFlower : AgentTaskBase
             _speed * Time.deltaTime
         );
 
-        if (Vector3.Distance(_agentTransform.position, targetPos) < 0.5f)
+        if (Vector3.Distance(_agentTransform.position, targetPos) == 0f)
         {
             _isFinished = true;
 
@@ -46,7 +46,24 @@ public class Task_GoToFlower : AgentTaskBase
 
     public override float GetUtility()
     {
-        return _bb.GetValue("TargetFlower") != null ? 10f : 0f;
+        Flower flower = (Flower)_bb.GetValue("TargetFlower");
+        if (flower == null) return 0f;
+
+        Hunger h = GetHunger();
+        Tiredness t = GetTiredness();
+
+        float cond_HasFlower = 1f;
+        float cond_NotHungry = Normalize(h._currentHungerValue, h._minHungerValue, h._maxHungerValue);
+        float cond_NotTired = Normalize(t._currentTirednessValue, t._minTirednessValue, t._maxTirednessValue);
+
+        float cond_InventoryEmpty = ((int)_bb.GetValue("CollectedPollen") == 0) ? 1f : 0f;
+
+        Transform agent = (Transform)_bb.GetValue("AgentTransform");
+        float dist = Vector3.Distance(agent.position, flower.transform.position);
+
+        float cond_NotCloseYet = dist > 0.5f ? 1f : 0f;
+        Debug.Log("GoToFlower Utility: " + Combine(cond_HasFlower, cond_NotHungry, cond_NotTired, cond_InventoryEmpty, cond_NotCloseYet));
+        return Combine(cond_HasFlower, cond_NotHungry, cond_NotTired, cond_InventoryEmpty, cond_NotCloseYet);
     }
 
     public override int GetTaskPriority() => 1;

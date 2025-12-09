@@ -15,7 +15,7 @@ public struct Hunger
     public float _maxHungerValue;
     public float _currentHungerValue;
 
-    public Hunger(float maxHunger, float minHunger, float currentHunger = 0f)
+    public Hunger(float maxHunger, float minHunger, float currentHunger = 100f)
     {
         _maxHungerValue = maxHunger;
         _minHungerValue = minHunger;
@@ -30,7 +30,7 @@ public struct Tiredness
     public float _maxTirednessValue;
     public float _currentTirednessValue;
 
-    public Tiredness(float minTiredness, float maxTiredness, float currentTiredness = 0f)
+    public Tiredness(float minTiredness, float maxTiredness, float currentTiredness = 100f)
     {
         _minTirednessValue = minTiredness;
         _maxTirednessValue = maxTiredness;
@@ -44,8 +44,10 @@ public class AgentStatData : ScriptableObject
     [Header("Hunger Stats")]
     public float _minHungerValue;
     public float _maxHungerValue;
+    public float _currentHungerValue;
 
     [Header("Tiredness Stats")]
     public float _minTirednessValue;
     public float _maxTirednessValue;
+    public float _currentTirednessValue;
 }

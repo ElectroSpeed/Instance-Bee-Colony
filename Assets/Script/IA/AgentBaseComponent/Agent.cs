@@ -17,7 +17,21 @@ public class Agent : MonoBehaviour
     {
         _bb = new Blackboard();
         _bb.AddValue("AgentTransform", this.transform);
+
+        _bb.AddValue("Hunger", new Hunger(
+            _statsData._minHungerValue,
+            _statsData._maxHungerValue,
+            _statsData._currentHungerValue
+        ));
+
+        _bb.AddValue("Tiredness", new Tiredness(
+            _statsData._minTirednessValue,
+            _statsData._maxTirednessValue,
+            _statsData._currentTirednessValue
+        ));
+
         _bb.AddValue("TargetFlower", null);
+        _bb.AddValue("CollectedPollen", 0);
         CreateAgentTasks();
     }
 

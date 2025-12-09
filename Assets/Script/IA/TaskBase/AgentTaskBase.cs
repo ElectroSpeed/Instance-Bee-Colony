@@ -69,5 +69,31 @@ public abstract class AgentTaskBase
     /// </summary>
     public abstract bool IsTaskFinished();
 
+    /// <summary>
+    /// Multiplies multiple condition weights (each 0–1)
+    /// </summary>
+    protected float Combine(params float[] values)
+    {
+        float result = 1f;
+        foreach (float v in values)
+            result *= v;
+        return result;
+    }
+
+    protected float Normalize(float current, float min, float max)
+    {
+        return Mathf.Clamp01(1f - ((current - min) / (max - min)));
+    }
+
+    protected Hunger GetHunger()
+    {
+        return (Hunger)_bb.GetValue("Hunger");
+    }
+
+    protected Tiredness GetTiredness()
+    {
+        return (Tiredness)_bb.GetValue("Tiredness");
+    }
+
     #endregion
 }
