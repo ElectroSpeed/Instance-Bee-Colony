@@ -11,6 +11,7 @@ public class EnvironmentManager : MonoBehaviour
     [Header("Stabilization Settings")]
     [SerializeField] private float _stabilizeSpeed;
     [SerializeField] private float _updateInterval;
+    private bool isPowerActive = false;
 
     private float _updateTimer;
     public event Action<float> OnSunlightChanged;
@@ -18,7 +19,12 @@ public class EnvironmentManager : MonoBehaviour
 
     private void Update()
     {
-        UpdateTimer();
+        if (!isPowerActive) UpdateTimer();
+    }
+
+    public void SetPowerActive(bool isActive)
+    {
+        isPowerActive = isActive;
     }
 
     private void UpdateTimer()
