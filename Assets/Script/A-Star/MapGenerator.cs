@@ -1,156 +1,116 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGenerator1 : MonoBehaviour
+public class MapGenerator : MonoBehaviour
 {
-    public static MapGenerator1 instance;
+    public static MapGenerator instance;
 
     [Header("Map settings")]
-    [SerializeField] private GameObject testTile;
-    [SerializeField] public int length = 10;
-    [SerializeField] public int width = 10;
-    [SerializeField] private List<int> holes = new List<int>();
+    [SerializeField] private Cell _tilePrefab;
+    [SerializeField] private int _gridLength = 10;
+    [SerializeField] private int _gridWidth = 10;
+    
+    public Dictionary<Vector2Int, Cell> _graph = new Dictionary<Vector2Int, Cell>();
+    
+    public Vector3 _cellSizes = Vector3.zero;
 
-    [Header("Obstacles settings")]
-    [Range(0f, 1f)] public float obstacleRate = 0.2f;
-    public bool generateRandomObstacles = true;
-    public List<Vector2Int> obstacles = new List<Vector2Int>();
-
-    [Header("Runtime")]
-    public List<GameObject> tiles = new List<GameObject>();
-    public Dictionary<Vector2Int, Cell> graph = new Dictionary<Vector2Int, Cell>();
-
-
-    // private void Awake()
-    // {
-    //     if (instance != null && instance != this)
-    //     {
-    //         Destroy(gameObject);
-    //         return;
-    //     }
-    //     instance = this;
-    // }
+    private void Awake()
+    {
+        if (_tilePrefab == null)
+        {
+            return;
+        }
+        
+        Cell temp = Instantiate(_tilePrefab, Vector3.zero, _tilePrefab.transform.rotation, transform);
+        
+        Renderer rend = temp.GetComponentInChildren<Renderer>();
+        if (rend == null)
+        {
+            Debug.LogError("MapGenerator: Aucun Renderer trouvé sur le prefab de tuile.");
+            Destroy(temp.gameObject);
+            return;
+        }
+        
+        Vector3 worldSize = rend.bounds.size;
+        
+        _cellSizes = worldSize;
+        
+        Destroy(temp.gameObject);
+    }
 
     private void Start()
     {
-        if (generateRandomObstacles)
-            GenerateRandomObstacles();
-
         GenerateMap();
     }
 
-    void GenerateRandomObstacles()
-    {
-        obstacles.Clear();
-
-        for (int y = 0; y < width; y++)
-        {
-            for (int x = 0; x < length; x++)
-            {
-                int index = y * length + x;
-
-                if (holes.Contains(index))
-                    continue;
-
-                if (Random.value < obstacleRate)
-                {
-                    obstacles.Add(new Vector2Int(x, y));
-                }
-            }
-        }
-
-        Debug.Log("Obstacles generated : " + obstacles.Count);
-    }
-
-
     public void GenerateMap()
     {
-        foreach (var t in tiles)
-            if (t != null) Destroy(t);
+        foreach (var cell in _graph.Values)
+            if (cell != null) Destroy(cell.gameObject);
 
-        tiles.Clear();
-        graph.Clear();
+        _graph.Clear();
+        
+        float cellWidth = _cellSizes.x;
+        float cellDepth = _cellSizes.z;
+        
+        // For hex flat-top, vertical overlap ~ 25% => vertical step = depth * 0.75
+        float xStep = cellWidth;
+        float yStep = cellDepth * 0.75f;
 
-        GameObject tile;
-        int index = 0;
-
-        for (int y = 0; y < width; y++)
+        for (int y = 0; y < _gridWidth; y++)
         {
-            for (int x = 0; x < length; x++)
+            for (int x = 0; x < _gridLength; x++)
             {
-                Vector3 pos = new Vector3((y % 2 == 1 ? 1f : 0f) + x * 2f, 0f, y * 2f);
+                float offset = (y % 2 == 1) ? cellWidth / 2f : 0f;
 
-                if (!holes.Contains(index))
-                {
-                    tile = Instantiate(testTile, pos, Quaternion.identity, transform);
-                    tiles.Add(tile);
-                    
-                }
-                else
-                {
-                    tiles.Add(null);
-                }
-
-                index++;
-            }
-        }
-
-        BuildGraph();
-    }
-
-
-    void BuildGraph()
-    {
-        graph.Clear();
-        int index = 0;
-
-        for (int y = 0; y < width; y++)
-        {
-            for (int x = 0; x < length; x++)
-            {
-                if (!holes.Contains(index))
-                {
-                    Vector2Int gridPos = new Vector2Int(x, y);
-
-                    bool isWalkable = !obstacles.Contains(gridPos);
-
-  //                  graph[gridPos] = new Cell(x, y, isWalkable);
-                }
-                index++;
+                Vector3 pos = new Vector3(
+                    x * xStep + offset,
+                    0f,
+                    y * yStep
+                );
+                
+                Cell tile = Instantiate(_tilePrefab, pos, _tilePrefab.transform.rotation, transform);
+                _graph.Add(new Vector2Int(x, y), tile);
             }
         }
     }
-
 
     public Vector2Int WorldToGrid(Vector3 world)
     {
-        int gy = Mathf.FloorToInt(world.z / 2f + 0.5f);
-        float offset = (gy % 2 == 1) ? 1f : 0f;
-        int gx = Mathf.FloorToInt((world.x - offset) / 2f + 0.5f);
+        float cellWidth = _cellSizes.x;
+        float cellDepth = _cellSizes.z;
+        float yStep = cellDepth * 0.75f;
+        
+        int gy = Mathf.RoundToInt(world.z / yStep);
+
+        float offset = (gy % 2 == 1) ? cellWidth / 2f : 0f;
+        int gx = Mathf.RoundToInt((world.x - offset) / cellWidth);
 
         return new Vector2Int(gx, gy);
     }
 
     public Vector3 GridToWorld(Vector2Int grid)
     {
-        float offset = (grid.y % 2 == 1) ? 1f : 0f;
-        return new Vector3(grid.x * 2f + offset, 0f, grid.y * 2f);
-    }
+        float cellWidth = _cellSizes.x;
+        float cellDepth = _cellSizes.z;
+        float offset = (grid.y % 2 == 1) ? cellWidth / 2f : 0f;
 
+        return new Vector3(
+            grid.x * cellWidth + offset,
+            0f,
+            grid.y * cellDepth * 0.75f
+        );
+    }
 
     private void OnDrawGizmosSelected()
     {
-        if (graph == null) return;
+        if (_graph == null) return;
 
-        foreach (var kv in graph)
+        foreach (var kv in _graph)
         {
-            Vector3 w = GridToWorld(kv.Key) + Vector3.up * 0.1f;
-
-  //          if (kv.Value.isWalkable)
-                Gizmos.color = Color.green;
- //           else
-                Gizmos.color = Color.blue;
-
+            Vector3 w = GridToWorld(kv.Key) + Vector3.up * 1f;
+            
+            Gizmos.color = Color.green;
             Gizmos.DrawSphere(w, 0.15f);
         }
     }
