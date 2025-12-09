@@ -62,7 +62,7 @@ public class Task_GoToFlower : AgentTaskBase
         float dist = Vector3.Distance(agent.position, flower.transform.position);
 
         float cond_NotCloseYet = dist > 0.5f ? 1f : 0f;
-        Debug.Log("GoToFlower Utility: " + Combine(cond_HasFlower, cond_NotHungry, cond_NotTired, cond_InventoryEmpty, cond_NotCloseYet));
+
         return Combine(cond_HasFlower, cond_NotHungry, cond_NotTired, cond_InventoryEmpty, cond_NotCloseYet);
     }
 

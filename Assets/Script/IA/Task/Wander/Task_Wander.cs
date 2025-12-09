@@ -92,8 +92,9 @@ public class Task_Wander : AgentTaskBase
         float cond_NotHungry = Normalize(h._currentHungerValue, h._minHungerValue, h._maxHungerValue);
         float cond_NotTired = Normalize(t._currentTirednessValue, t._minTirednessValue, t._maxTirednessValue);
 
-        return Combine(cond_NoFlower, cond_NotHungry, cond_NotTired);
+        Debug.Log(Combine(cond_NoFlower, cond_NotHungry, cond_NotTired));
 
+        return Combine(cond_NoFlower, cond_NotHungry, cond_NotTired);
     }
 
     public override int GetTaskPriority()
