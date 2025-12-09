@@ -11,7 +11,7 @@ public class EnvironmentManager : MonoBehaviour
     [Header("Stabilization Settings")]
     [SerializeField] private float _stabilizeSpeed;
     [SerializeField] private float _updateInterval;
-    private bool isPowerActive = false;
+    public bool isPowerActive = false;
 
     private float _updateTimer;
     public event Action<float> OnSunlightChanged;
@@ -62,5 +62,12 @@ public class EnvironmentManager : MonoBehaviour
     {
         _humidity = Mathf.Clamp(value, 0f, 100f);
         OnHumidityChanged?.Invoke(_humidity);
+    }
+
+    public void GetEnvironmentValues(out float sunlight, out float humidity, out float temperature)
+    {
+        sunlight = _sunlight;
+        humidity = _humidity;
+        temperature = _temperature;
     }
 }
