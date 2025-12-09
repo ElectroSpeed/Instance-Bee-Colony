@@ -7,7 +7,7 @@ public class Agent : MonoBehaviour
     [Header("Agent need Parameters")]
     [SerializeField] private AgentStatData _statsData;
     [SerializeField] private List<TaskDataBase> _tasksData;
-
+    [SerializeField] private Beehive hive;  
 
     private List<AgentTaskBase> _agentsTask = new(); 
     private AgentTaskBase _currentTask;
@@ -32,6 +32,7 @@ public class Agent : MonoBehaviour
 
         _bb.AddValue("TargetFlower", null);
         _bb.AddValue("CollectedPollen", 0);
+        _bb.AddValue("Hive", hive);
         CreateAgentTasks();
     }
 

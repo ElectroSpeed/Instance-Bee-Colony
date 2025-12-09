@@ -76,8 +76,8 @@ public abstract class AgentTaskBase
     {
         float result = 1f;
         foreach (float v in values)
-            result *= v;
-        return result;
+            result += v;
+        return result != 0 ? result / values.Length : 0;
     }
 
     protected float Normalize(float current, float min, float max)

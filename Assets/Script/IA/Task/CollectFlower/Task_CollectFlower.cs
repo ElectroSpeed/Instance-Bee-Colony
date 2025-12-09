@@ -32,6 +32,7 @@ public class Task_CollectFlower : AgentTaskBase
 
     public override void OnUpdate()
     {
+
     }
 
     public override void OnFinish() { }

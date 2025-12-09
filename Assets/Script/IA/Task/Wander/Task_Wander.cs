@@ -84,8 +84,11 @@ public class Task_Wander : AgentTaskBase
     public override float GetUtility()
     {
         bool hasFlower = _bb.GetValue("TargetFlower") != null;
-        
+        int collectedPollen = (int)_bb.GetValue("CollectedPollen");
+
         float cond_NoFlower = hasFlower ? 0f : 1f;
+        float cond_NoPollen = collectedPollen > 0 ? 0f : 1f;
+
         Hunger h = GetHunger();
         Tiredness t = GetTiredness();
 
@@ -94,7 +97,7 @@ public class Task_Wander : AgentTaskBase
 
         Debug.Log(Combine(cond_NoFlower, cond_NotHungry, cond_NotTired));
 
-        return Combine(cond_NoFlower, cond_NotHungry, cond_NotTired);
+        return Combine(cond_NoPollen, cond_NoFlower, cond_NotHungry, cond_NotTired);
     }
 
     public override int GetTaskPriority()

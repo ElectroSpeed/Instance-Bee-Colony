@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = ("GodGameSO/Agent/TaskData"))]
+[CreateAssetMenu(menuName = ("GodGameSO/Agent/TaskData/Wander"))]
 public class TaskData_Wander : TaskDataBase<Task_Wander>
 {
     public float _radius;

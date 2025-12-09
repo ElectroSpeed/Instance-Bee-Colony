@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = ("GodGameSO/Agent/TaskData"))]
+[CreateAssetMenu(menuName = ("GodGameSO/Agent/TaskData/GoToFlower"))]
 public class TaskData_GoToFlower : TaskDataBase<Task_GoToFlower>
 {
     public float _speed;
