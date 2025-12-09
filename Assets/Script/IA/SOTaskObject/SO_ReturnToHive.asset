@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f9fa9d5f9d123a438c4d648dfe85478, type: 3}
   m_Name: SO_ReturnToHive
   m_EditorClassIdentifier: Assembly-CSharp::TaskData_ReturnToHive
-  _taskName: 
-  _beehive: {fileID: 0}
+  _taskName: ReturnToHive
   _speed: 4

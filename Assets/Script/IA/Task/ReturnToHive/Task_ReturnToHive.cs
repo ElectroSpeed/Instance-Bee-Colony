@@ -6,6 +6,10 @@ public class Task_ReturnToHive : AgentTaskBase
     private bool _isFinished = false;
     private float _speed;
 
+    private float _waitDuration = 1.5f;
+    private float _timer = 0f;
+    private bool _arrived = false;
+
     public Task_ReturnToHive(string name, Blackboard bb, float speed)
         : base(name, bb)
     {
@@ -23,6 +27,7 @@ public class Task_ReturnToHive : AgentTaskBase
         }
 
         _isFinished = false;
+        _timer = 0f;
     }
 
     public override void OnUpdate()
@@ -36,23 +41,30 @@ public class Task_ReturnToHive : AgentTaskBase
 
         Vector3 target = hive.transform.position;
 
-        _agentTransform.position = Vector3.MoveTowards(
-            _agentTransform.position,
-            target,
-            _speed * Time.deltaTime
-        );
-
-        if (Vector3.Distance(_agentTransform.position, target) < 0.5f)
+        if (!_arrived)
         {
-            int pollen = (int)_bb.GetValue("CollectedPollen");
+            _agentTransform.position = Vector3.MoveTowards(_agentTransform.position, target, _speed * Time.deltaTime);
 
-            if (pollen > 0)
+            if (Vector3.Distance(_agentTransform.position, target) < 0.5f)
             {
-                hive.AddPollen(pollen);
-                _bb.ModifyValue("CollectedPollen", 0);
+                _arrived = true;
+                _timer = 0f;
             }
+        }
+        else
+        {
+            _timer += Time.deltaTime;
 
-            _isFinished = true;
+            if (_timer >= _waitDuration)
+            {
+                int pollen = (int)_bb.GetValue("CollectedPollen");
+                if (pollen > 0)
+                {
+                    hive.AddPollen(pollen);
+                    _bb.ModifyValue("CollectedPollen", 0);
+                }
+                _isFinished = true;
+            }
         }
     }
 

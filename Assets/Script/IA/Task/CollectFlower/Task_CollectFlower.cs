@@ -5,6 +5,8 @@ public class Task_CollectFlower : AgentTaskBase
     private Flower _flower;
     private bool _isFinished = false;
     private int _pollenCollected = 0;
+    private float _collectDuration = 2f;
+    private float _timer = 0f; 
 
     public Task_CollectFlower(string taskName, Blackboard bb, int pollenCollected): base(taskName, bb)
     {
@@ -14,25 +16,26 @@ public class Task_CollectFlower : AgentTaskBase
     public override void OnStart()
     {
         _flower = (Flower)_bb.GetValue("TargetFlower");
+        _timer = 0f;
 
         if (_flower == null)
         {
             _isFinished = true;
             return;
         }
-
-        _pollenCollected = _flower.GetPollen();
-
-        _bb.ModifyValue("CollectedPollen", _pollenCollected);
-
-        _bb.ModifyValue("TargetFlower", null);
-
-        _isFinished = true;
     }
 
     public override void OnUpdate()
     {
+        _timer += Time.deltaTime;
 
+        if (_timer >= _collectDuration)
+        {
+            _pollenCollected = _flower.GetPollen();
+            _bb.ModifyValue("CollectedPollen", _pollenCollected);
+            _bb.ModifyValue("TargetFlower", null);
+            _isFinished = true;
+        }
     }
 
     public override void OnFinish() { }
