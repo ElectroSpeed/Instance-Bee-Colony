@@ -5,7 +5,7 @@ public class Agent : MonoBehaviour
 {
 
     [Header("Agent need Parameters")]
-    [SerializeField] private AgentStatData _statsData;
+    [SerializeField] private AgentStatsData _statsData;
     [SerializeField] private List<TaskDataBase> _tasksData;
     [SerializeField] private Beehive hive;  
 

@@ -425,7 +425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aad2b9f36640984f858ed288cebd580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Agent
-  _statsData: {fileID: 11400000, guid: 59a2b30a2e7baef4a9a5018b60dbbc3b, type: 2}
+  _statsData: {fileID: 11400000, guid: 5ac36d2e55b6e52438c8fe3d42df0ce4, type: 2}
   _tasksData:
   - {fileID: 11400000, guid: 532040ef44cfeb74a9a3833dc9b70b86, type: 2}
   - {fileID: 11400000, guid: 1974c740498e8ec4e9d7928fc591cc0b, type: 2}

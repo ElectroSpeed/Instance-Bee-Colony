@@ -1,24 +1,16 @@
 using UnityEngine;
 
 [System.Serializable]
-public class AgentBase
-{
-    public Hunger _hunger;
-    public Tiredness _tiredness; 
-
-}
-
-[System.Serializable]
 public struct Hunger
 {
     public float _minHungerValue;
     public float _maxHungerValue;
     public float _currentHungerValue;
 
-    public Hunger(float maxHunger, float minHunger, float currentHunger = 100f)
+    public Hunger(float minHunger, float maxHunger, float currentHunger = 100f)
     {
-        _maxHungerValue = maxHunger;
         _minHungerValue = minHunger;
+        _maxHungerValue = maxHunger;
         _currentHungerValue = currentHunger;
     }
 }
@@ -38,16 +30,9 @@ public struct Tiredness
     }
 }
 
-[CreateAssetMenu(menuName = "GodGameSO/AgentIA/StatBase", order = 1)]
-public class AgentStatData : ScriptableObject
+[System.Serializable]
+public class AgentBase
 {
-    [Header("Hunger Stats")]
-    public float _minHungerValue;
-    public float _maxHungerValue;
-    public float _currentHungerValue;
-
-    [Header("Tiredness Stats")]
-    public float _minTirednessValue;
-    public float _maxTirednessValue;
-    public float _currentTirednessValue;
+    public Hunger _hunger;
+    public Tiredness _tiredness;
 }
