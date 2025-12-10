@@ -626,7 +626,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1295301211270048140, guid: 77dd172286c2a7e41b094deb0229b87c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.79
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1295301211270048140, guid: 77dd172286c2a7e41b094deb0229b87c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -668,6 +668,10 @@ PrefabInstance:
       propertyPath: hive
       value: 
       objectReference: {fileID: 583258848}
+    - target: {fileID: 5949307829999877993, guid: 77dd172286c2a7e41b094deb0229b87c, type: 3}
+      propertyPath: _statsData
+      value: 
+      objectReference: {fileID: 11400000, guid: d3e152e4f7049a34ea960f22dfae9194, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
