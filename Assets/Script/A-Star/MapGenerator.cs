@@ -3,57 +3,82 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-    public static MapGenerator instance;
+    public static MapGenerator Instance;
 
     [Header("Map settings")]
     [SerializeField] private Cell _tilePrefab;
     [SerializeField] private int _gridLength = 10;
     [SerializeField] private int _gridWidth = 10;
-    
+
+    [Header("Perlin Noise Settings")]
+    public int _seed = 12345;
+    public float _scale = 20f;
+    public int _octaves = 4;
+    [Range(0f, 1f)] public float _persistance = 0.5f;
+    public float _lacunarity = 2f;
+    public Vector2 _noiseOffset = Vector2.zero;
+    public Noise.NormalizeMode _normalizeMode = Noise.NormalizeMode.Local;
+
+    [Header("Terrain settings")]
+    public float _heightMultiplier = 3f;
+    public Gradient _colorGradient;
+
     public Dictionary<Vector2Int, Cell> _graph = new Dictionary<Vector2Int, Cell>();
-    
     public Vector3 _cellSizes = Vector3.zero;
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         if (_tilePrefab == null)
         {
             return;
         }
-        
-        Cell temp = Instantiate(_tilePrefab, Vector3.zero, _tilePrefab.transform.rotation, transform);
-        
-        Renderer rend = temp.GetComponentInChildren<Renderer>();
-        if (rend == null)
+
+        Cell _sizeTestCell = Instantiate(_tilePrefab, Vector3.zero, _tilePrefab.transform.rotation, transform);
+
+        Renderer _sizeTestCellRenderer = _sizeTestCell.GetComponentInChildren<Renderer>();
+        if (_sizeTestCellRenderer == null)
         {
             Debug.LogError("MapGenerator: Aucun Renderer trouvé sur le prefab de tuile.");
-            Destroy(temp.gameObject);
+            Destroy(_sizeTestCell.gameObject);
             return;
         }
-        
-        Vector3 worldSize = rend.bounds.size;
-        
+
+        Vector3 worldSize = _sizeTestCellRenderer.bounds.size;
         _cellSizes = worldSize;
-        
-        Destroy(temp.gameObject);
+
+        Destroy(_sizeTestCell.gameObject);
     }
+
 
     private void Start()
     {
         GenerateMap();
     }
 
-    public void GenerateMap()
+    private void ClearOlderGraph()
     {
         foreach (var cell in _graph.Values)
             if (cell != null) Destroy(cell.gameObject);
 
         _graph.Clear();
-        
+    }
+    
+    public void GenerateMap()
+    {
+        ClearOlderGraph();
+
+        float[,] noiseMap = Noise.GenerateNoiseMap(_gridLength, _gridWidth, _seed, _scale, _octaves, _persistance, _lacunarity, _noiseOffset, _normalizeMode);
+
         float cellWidth = _cellSizes.x;
         float cellDepth = _cellSizes.z;
-        
-        // For hex flat-top, vertical overlap ~ 25% => vertical step = depth * 0.75
+
         float xStep = cellWidth;
         float yStep = cellDepth * 0.75f;
 
@@ -63,14 +88,48 @@ public class MapGenerator : MonoBehaviour
             {
                 float offset = (y % 2 == 1) ? cellWidth / 2f : 0f;
 
-                Vector3 pos = new Vector3(
-                    x * xStep + offset,
-                    0f,
-                    y * yStep
-                );
+                Vector3 pos = new Vector3(x * xStep + offset, 0f, y * yStep);
+
+                Cell mapCell = Instantiate(_tilePrefab, pos, _tilePrefab.transform.rotation, transform);
                 
-                Cell tile = Instantiate(_tilePrefab, pos, _tilePrefab.transform.rotation, transform);
-                _graph.Add(new Vector2Int(x, y), tile);
+                mapCell._position = new Vector2Int(x, y);
+
+                float noiseValue = noiseMap[x, y];
+
+                Transform mapCellMesh = mapCell.transform.GetChild(0).GetChild(0);
+
+                if (mapCellMesh != null)
+                {
+                    float height = Mathf.Max(0.1f, noiseValue * _heightMultiplier);
+                    mapCell._height = height;
+
+                    Vector3 meshScale = mapCellMesh.localScale;
+
+                    meshScale.z = height / 2f;
+                    mapCellMesh.localScale = meshScale;
+
+                    Vector3 meshPosition = mapCellMesh.localPosition;
+                    meshPosition.y = height / 4f;
+                    mapCellMesh.localPosition = meshPosition;
+
+                    Transform mapCellPathPoint = mapCell.transform.GetChild(1);
+
+                    if (mapCellPathPoint != null)
+                    {
+                        Vector3 mapCellPathPointPosition = mapCellPathPoint.localPosition;
+                        float mapCellPathPointPositionY = meshPosition.y + (height / 2f);
+                        mapCellPathPointPosition.y = mapCellPathPointPositionY + 1f;
+                        mapCellPathPoint.localPosition = mapCellPathPointPosition;
+                    }
+                }
+
+                Renderer mapCellRenderer = mapCell.GetComponentInChildren<Renderer>();
+                if (mapCellRenderer != null)
+                {
+                    mapCellRenderer.material.color = _colorGradient.Evaluate(noiseValue);
+                }
+
+                _graph.Add(new Vector2Int(x, y), mapCell);
             }
         }
     }
@@ -80,7 +139,7 @@ public class MapGenerator : MonoBehaviour
         float cellWidth = _cellSizes.x;
         float cellDepth = _cellSizes.z;
         float yStep = cellDepth * 0.75f;
-        
+
         int gy = Mathf.RoundToInt(world.z / yStep);
 
         float offset = (gy % 2 == 1) ? cellWidth / 2f : 0f;
@@ -106,12 +165,24 @@ public class MapGenerator : MonoBehaviour
     {
         if (_graph == null) return;
 
+        Gizmos.color = Color.greenYellow;
+    
         foreach (var kv in _graph)
         {
-            Vector3 w = GridToWorld(kv.Key) + Vector3.up * 1f;
+            Cell cell = kv.Value;
+            if (cell == null) continue;
             
-            Gizmos.color = Color.green;
-            Gizmos.DrawSphere(w, 0.15f);
+            Transform pathPoint = null;
+            if (cell.transform.childCount > 1)
+                pathPoint = cell.transform.GetChild(1);
+
+            if (pathPoint != null)
+            {
+                Vector3 worldPos = pathPoint.position;
+
+                Gizmos.DrawSphere(worldPos, 0.15f);
+            }
         }
     }
+
 }
