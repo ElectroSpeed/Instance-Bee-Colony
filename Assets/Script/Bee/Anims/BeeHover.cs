@@ -40,8 +40,8 @@ public class BeeHover : MonoBehaviour
             ,0);
         
         _groundCheckCollider.GetComponent<CapsuleCollider>().height = groundCheckColliderPos.y+1;
-        _groundCheckCollider.onTriggerEnterFunction+= x => { _groundCheck = true; };
-        _groundCheckCollider.onTriggerExitFunction+= x => { _groundCheck = false; };
+        _groundCheckCollider._onTriggerEnterFunction+= x => { _groundCheck = true; };
+        _groundCheckCollider._onTriggerExitFunction+= x => { _groundCheck = false; };
     }
 
     private void Update()
@@ -56,7 +56,6 @@ public class BeeHover : MonoBehaviour
         _meshGameobject.transform.localPosition = _basePos+_sinPos;
         //targetPos = transform.parent.position;
         
-
         if (_lastState)
         {
             transform.parent.position += Vector3.up * (_climbingSpeed * Time.deltaTime);
