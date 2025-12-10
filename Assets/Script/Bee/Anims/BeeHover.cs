@@ -3,45 +3,45 @@ using UnityEngine;
 
 public class BeeHover : MonoBehaviour
 {
-    [SerializeField] private GameObject meshGameobject;
-    [SerializeField] private ColliderDetector groundCheckCollider;
-    [SerializeField] bool groundCheck;
+    [SerializeField] private GameObject _meshGameobject;
+    [SerializeField] private ColliderDetector _groundCheckCollider;
+    [SerializeField] bool _groundCheck;
     
-    [SerializeField] float fallingSpeed = 1;
-    [SerializeField] float climbingSpeed=1;
+    [SerializeField] float _fallingSpeed = 1;
+    [SerializeField] float _climbingSpeed=1;
     
-    [SerializeField] float animSpeedX=1;
-    [SerializeField] float sinAmplifierX = 1;
+    [SerializeField] float _animSpeedX=1;
+    [SerializeField] float _sinAmplifierX = 1;
     
-    [SerializeField] float animSpeedY=1;
-    [SerializeField] float sinAmplifierY = 1; 
+    [SerializeField] float _animSpeedY=1;
+    [SerializeField] float _sinAmplifierY = 1; 
     
     
-    [SerializeField] float animSpeedZ=1;
-    [SerializeField] float sinAmplifierZ = 1;
+    [SerializeField] float _animSpeedZ=1;
+    [SerializeField] float _sinAmplifierZ = 1;
 
     //Debug
     [SerializeField] private float b = 1;
 
-    private bool climbing = false;
-    private bool lastState=false;
-    private float lastPos = 0;
-    private float dist = 2;
+    private bool _climbing = false;
+    private bool _lastState=false;
+    private float _lastPos = 0;
+    private float _dist = 2;
     
-    private Vector3 sinPos= Vector3.zero;
-    private Vector3 basePos;
+    private Vector3 _sinPos= Vector3.zero;
+    private Vector3 _basePos;
 
     private void Start()
     {
-        basePos = transform.localPosition;
-        Vector3 groundCheckColliderPos=new Vector3(1f, sinAmplifierY, 1f);
+        _basePos = transform.localPosition;
+        Vector3 groundCheckColliderPos=new Vector3(1f, _sinAmplifierY, 1f);
         groundCheckColliderPos+=new Vector3(0,
             GetComponent<BoxCollider>().size.y*2+Mathf.Abs(GetComponent<BoxCollider>().center.y)
             ,0);
         
-        groundCheckCollider.GetComponent<CapsuleCollider>().height = groundCheckColliderPos.y+1;
-        groundCheckCollider.onTriggerEnterFunction+= x => { groundCheck = true; };
-        groundCheckCollider.onTriggerExitFunction+= x => { groundCheck = false; };
+        _groundCheckCollider.GetComponent<CapsuleCollider>().height = groundCheckColliderPos.y+1;
+        _groundCheckCollider.onTriggerEnterFunction+= x => { _groundCheck = true; };
+        _groundCheckCollider.onTriggerExitFunction+= x => { _groundCheck = false; };
     }
 
     private void Update()
@@ -49,47 +49,47 @@ public class BeeHover : MonoBehaviour
         //Debug
         transform.parent.position += Vector3.back * (Time.deltaTime * b);
         
-        sinPos.x = Mathf.Sin(Time.time*animSpeedX)*sinAmplifierX;
-        sinPos.y= Mathf.Sin(Time.time*animSpeedY)*sinAmplifierY;
-        sinPos.z= Mathf.Sin(Time.time*animSpeedZ)*sinAmplifierZ;
+        _sinPos.x = Mathf.Sin(Time.time*_animSpeedX)*_sinAmplifierX;
+        _sinPos.y= Mathf.Sin(Time.time*_animSpeedY)*_sinAmplifierY;
+        _sinPos.z= Mathf.Sin(Time.time*_animSpeedZ)*_sinAmplifierZ;
         
-        meshGameobject.transform.localPosition = basePos+sinPos;
+        _meshGameobject.transform.localPosition = _basePos+_sinPos;
         //targetPos = transform.parent.position;
         
 
-        if (lastState)
+        if (_lastState)
         {
-            transform.parent.position += Vector3.up * (climbingSpeed * Time.deltaTime);
-            if (transform.parent.position.y >= lastPos)
+            transform.parent.position += Vector3.up * (_climbingSpeed * Time.deltaTime);
+            if (transform.parent.position.y >= _lastPos)
             {
-                lastState = false;
+                _lastState = false;
             }
         }
         else
         {
-            if (climbing)
+            if (_climbing)
             {
-                transform.parent.position += Vector3.up * (climbingSpeed * Time.deltaTime);
+                transform.parent.position += Vector3.up * (_climbingSpeed * Time.deltaTime);
             }
-            else if (!groundCheck)
+            else if (!_groundCheck)
             {
-                transform.parent.position -= Vector3.up * (fallingSpeed * Time.deltaTime);
+                transform.parent.position -= Vector3.up * (_fallingSpeed * Time.deltaTime);
             }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        climbing = true;
-        lastState = climbing;
+        _climbing = true;
+        _lastState = _climbing;
         
     }
 
     private void OnTriggerExit(Collider other)
     {
-        climbing = false;
-        lastState = true;
-        lastPos = transform.parent.position.y+dist;
+        _climbing = false;
+        _lastState = true;
+        _lastPos = transform.parent.position.y+_dist;
 
     }
     
