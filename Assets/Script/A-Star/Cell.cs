@@ -1,25 +1,25 @@
 using UnityEngine;
 
-public class Cell
+public class Cell : MonoBehaviour
 {
-    public GameObject cellRender;
-    public Vector2Int position;
-    public int gCost = int.MaxValue;
-    public float cellWeight;
-    public Cell parent;
-    public bool inClosedSet;
-    
+    public Vector2Int _position;
+    public float _height;
 
-    public Cell(int x, int y, float weight)
-    {
-        position = new Vector2Int(x, y);
-        cellWeight = weight;
-    }
+    [HideInInspector] public Transform _pathPoint;
+    public int _gCost = int.MaxValue;
+    public Cell _parent;
+    public bool inClosedSet = false;
 
     public void Reset()
     {
-        gCost = int.MaxValue;
-        parent = null;
+        _gCost = int.MaxValue;
+        _parent = null;
         inClosedSet = false;
+    }
+
+    private void Awake()
+    {
+        if (transform.childCount > 1)
+            _pathPoint = transform.GetChild(1);
     }
 }

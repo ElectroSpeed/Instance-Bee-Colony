@@ -1,157 +1,188 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGenerator1 : MonoBehaviour
+public class MapGenerator : MonoBehaviour
 {
-    public static MapGenerator1 instance;
+    public static MapGenerator Instance;
 
     [Header("Map settings")]
-    [SerializeField] private GameObject testTile;
-    [SerializeField] public int length = 10;
-    [SerializeField] public int width = 10;
-    [SerializeField] private List<int> holes = new List<int>();
+    [SerializeField] private Cell _tilePrefab;
+    [SerializeField] private int _gridLength = 10;
+    [SerializeField] private int _gridWidth = 10;
 
-    [Header("Obstacles settings")]
-    [Range(0f, 1f)] public float obstacleRate = 0.2f;
-    public bool generateRandomObstacles = true;
-    public List<Vector2Int> obstacles = new List<Vector2Int>();
+    [Header("Perlin Noise Settings")]
+    public int _seed = 12345;
+    public float _scale = 20f;
+    public int _octaves = 4;
+    [Range(0f, 1f)] public float _persistance = 0.5f;
+    public float _lacunarity = 2f;
+    public Vector2 _noiseOffset = Vector2.zero;
+    public Noise.NormalizeMode _normalizeMode = Noise.NormalizeMode.Local;
 
-    [Header("Runtime")]
-    public List<GameObject> tiles = new List<GameObject>();
-    public Dictionary<Vector2Int, Cell> graph = new Dictionary<Vector2Int, Cell>();
+    [Header("Terrain settings")]
+    public float _heightMultiplier = 3f;
+    public Gradient _colorGradient;
 
+    public Dictionary<Vector2Int, Cell> _graph = new Dictionary<Vector2Int, Cell>();
+    public Vector3 _cellSizes = Vector3.zero;
 
-    // private void Awake()
-    // {
-    //     if (instance != null && instance != this)
-    //     {
-    //         Destroy(gameObject);
-    //         return;
-    //     }
-    //     instance = this;
-    // }
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
+        if (_tilePrefab == null)
+        {
+            return;
+        }
+
+        Cell _sizeTestCell = Instantiate(_tilePrefab, Vector3.zero, _tilePrefab.transform.rotation, transform);
+
+        Renderer _sizeTestCellRenderer = _sizeTestCell.GetComponentInChildren<Renderer>();
+        if (_sizeTestCellRenderer == null)
+        {
+            Debug.LogError("MapGenerator: Aucun Renderer trouvé sur le prefab de tuile.");
+            Destroy(_sizeTestCell.gameObject);
+            return;
+        }
+
+        Vector3 worldSize = _sizeTestCellRenderer.bounds.size;
+        _cellSizes = worldSize;
+
+        Destroy(_sizeTestCell.gameObject);
+    }
+
 
     private void Start()
     {
-        if (generateRandomObstacles)
-            GenerateRandomObstacles();
-
         GenerateMap();
     }
 
-    void GenerateRandomObstacles()
+    private void ClearOlderGraph()
     {
-        obstacles.Clear();
+        foreach (var cell in _graph.Values)
+            if (cell != null) Destroy(cell.gameObject);
 
-        for (int y = 0; y < width; y++)
-        {
-            for (int x = 0; x < length; x++)
-            {
-                int index = y * length + x;
-
-                if (holes.Contains(index))
-                    continue;
-
-                if (Random.value < obstacleRate)
-                {
-                    obstacles.Add(new Vector2Int(x, y));
-                }
-            }
-        }
-
-        Debug.Log("Obstacles generated : " + obstacles.Count);
+        _graph.Clear();
     }
-
-
+    
     public void GenerateMap()
     {
-        foreach (var t in tiles)
-            if (t != null) Destroy(t);
+        ClearOlderGraph();
 
-        tiles.Clear();
-        graph.Clear();
+        float[,] noiseMap = Noise.GenerateNoiseMap(_gridLength, _gridWidth, _seed, _scale, _octaves, _persistance, _lacunarity, _noiseOffset, _normalizeMode);
 
-        GameObject tile;
-        int index = 0;
+        float cellWidth = _cellSizes.x;
+        float cellDepth = _cellSizes.z;
 
-        for (int y = 0; y < width; y++)
+        float xStep = cellWidth;
+        float yStep = cellDepth * 0.75f;
+
+        for (int y = 0; y < _gridWidth; y++)
         {
-            for (int x = 0; x < length; x++)
+            for (int x = 0; x < _gridLength; x++)
             {
-                Vector3 pos = new Vector3((y % 2 == 1 ? 1f : 0f) + x * 2f, 0f, y * 2f);
+                float offset = (y % 2 == 1) ? cellWidth / 2f : 0f;
 
-                if (!holes.Contains(index))
+                Vector3 pos = new Vector3(x * xStep + offset, 0f, y * yStep);
+
+                Cell mapCell = Instantiate(_tilePrefab, pos, _tilePrefab.transform.rotation, transform);
+                
+                mapCell._position = new Vector2Int(x, y);
+
+                float noiseValue = noiseMap[x, y];
+
+                Transform mapCellMesh = mapCell.transform.GetChild(0).GetChild(0);
+
+                if (mapCellMesh != null)
                 {
-                    tile = Instantiate(testTile, pos, Quaternion.identity, transform);
-                    tiles.Add(tile);
-                    
-                }
-                else
-                {
-                    tiles.Add(null);
+                    float height = Mathf.Max(0.1f, noiseValue * _heightMultiplier);
+                    mapCell._height = height;
+
+                    Vector3 meshScale = mapCellMesh.localScale;
+
+                    meshScale.z = height / 2f;
+                    mapCellMesh.localScale = meshScale;
+
+                    Vector3 meshPosition = mapCellMesh.localPosition;
+                    meshPosition.y = height / 4f;
+                    mapCellMesh.localPosition = meshPosition;
+
+                    Transform mapCellPathPoint = mapCell.transform.GetChild(1);
+
+                    if (mapCellPathPoint != null)
+                    {
+                        Vector3 mapCellPathPointPosition = mapCellPathPoint.localPosition;
+                        float mapCellPathPointPositionY = meshPosition.y + (height / 2f);
+                        mapCellPathPointPosition.y = mapCellPathPointPositionY + 1f;
+                        mapCellPathPoint.localPosition = mapCellPathPointPosition;
+                    }
                 }
 
-                index++;
+                Renderer mapCellRenderer = mapCell.GetComponentInChildren<Renderer>();
+                if (mapCellRenderer != null)
+                {
+                    mapCellRenderer.material.color = _colorGradient.Evaluate(noiseValue);
+                }
+
+                _graph.Add(new Vector2Int(x, y), mapCell);
             }
         }
-
-        BuildGraph();
     }
-
-
-    void BuildGraph()
-    {
-        graph.Clear();
-        int index = 0;
-
-        for (int y = 0; y < width; y++)
-        {
-            for (int x = 0; x < length; x++)
-            {
-                if (!holes.Contains(index))
-                {
-                    Vector2Int gridPos = new Vector2Int(x, y);
-
-                    bool isWalkable = !obstacles.Contains(gridPos);
-
-  //                  graph[gridPos] = new Cell(x, y, isWalkable);
-                }
-                index++;
-            }
-        }
-    }
-
 
     public Vector2Int WorldToGrid(Vector3 world)
     {
-        int gy = Mathf.FloorToInt(world.z / 2f + 0.5f);
-        float offset = (gy % 2 == 1) ? 1f : 0f;
-        int gx = Mathf.FloorToInt((world.x - offset) / 2f + 0.5f);
+        float cellWidth = _cellSizes.x;
+        float cellDepth = _cellSizes.z;
+        float yStep = cellDepth * 0.75f;
+
+        int gy = Mathf.RoundToInt(world.z / yStep);
+
+        float offset = (gy % 2 == 1) ? cellWidth / 2f : 0f;
+        int gx = Mathf.RoundToInt((world.x - offset) / cellWidth);
 
         return new Vector2Int(gx, gy);
     }
 
     public Vector3 GridToWorld(Vector2Int grid)
     {
-        float offset = (grid.y % 2 == 1) ? 1f : 0f;
-        return new Vector3(grid.x * 2f + offset, 0f, grid.y * 2f);
-    }
+        float cellWidth = _cellSizes.x;
+        float cellDepth = _cellSizes.z;
+        float offset = (grid.y % 2 == 1) ? cellWidth / 2f : 0f;
 
+        return new Vector3(
+            grid.x * cellWidth + offset,
+            0f,
+            grid.y * cellDepth * 0.75f
+        );
+    }
 
     private void OnDrawGizmosSelected()
     {
-        if (graph == null) return;
+        if (_graph == null) return;
 
-        foreach (var kv in graph)
+        Gizmos.color = Color.greenYellow;
+    
+        foreach (var kv in _graph)
         {
-            Vector3 w = GridToWorld(kv.Key) + Vector3.up * 0.1f;
+            Cell cell = kv.Value;
+            if (cell == null) continue;
+            
+            Transform pathPoint = null;
+            if (cell.transform.childCount > 1)
+                pathPoint = cell.transform.GetChild(1);
 
-  //          if (kv.Value.isWalkable)
-                Gizmos.color = Color.green;
- //           else
-                Gizmos.color = Color.blue;
+            if (pathPoint != null)
+            {
+                Vector3 worldPos = pathPoint.position;
 
-            Gizmos.DrawSphere(w, 0.15f);
+                Gizmos.DrawSphere(worldPos, 0.15f);
+            }
         }
     }
+
 }

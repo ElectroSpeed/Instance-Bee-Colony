@@ -3,25 +3,18 @@ using UnityEngine;
 
 public class PathFinding
 {
+    private List<Cell> _cellNeighbors = new List<Cell>();
+    private List<Cell> _usedCells = new List<Cell>();
+    private List<Cell> _path = new List<Cell>();
 
-    public PathFinding(MapGenerator _mapGenerator)
-    {
-        mapGenerator=_mapGenerator;
-    }
-    
-    private List<Cell> tempNeighbors = new List<Cell>();
-    private List<Cell> usedCells = new List<Cell>();
-    private List<Cell> path = new List<Cell>();
-    MapGenerator mapGenerator;
-
-    private static readonly Vector2Int[] evenRow =
+    private static readonly Vector2Int[] _evenRow =
     {
         new Vector2Int(-1, 0), new Vector2Int(1, 0),
         new Vector2Int(0, -1), new Vector2Int(0, 1),
         new Vector2Int(-1, -1), new Vector2Int(-1, 1),
     };
 
-    private static readonly Vector2Int[] oddRow =
+    private static readonly Vector2Int[] _oddRow =
     {
         new Vector2Int(-1, 0), new Vector2Int(1, 0),
         new Vector2Int(0, -1), new Vector2Int(0, 1),
@@ -30,97 +23,101 @@ public class PathFinding
 
     private List<Cell> GetNeighbors(Cell cell)
     {
-        tempNeighbors.Clear();
+        _cellNeighbors.Clear();
 
-        bool isEven = (cell.position.y % 2) == 0;
-        Vector2Int[] dirs = isEven ? evenRow : oddRow;
+        bool isEven = (cell._position.y % 2) == 0;
+        Vector2Int[] dirs = isEven ? _evenRow : _oddRow;
 
         foreach (var d in dirs)
         {
-            Vector2Int nPos = cell.position + d;
-            if (mapGenerator.graph.TryGetValue(nPos, out Cell n))
+            Vector2Int nPos = cell._position + d;
+            if (MapGenerator.Instance._graph.TryGetValue(nPos, out Cell neighbor))
             {
-                tempNeighbors.Add(n);
+                _cellNeighbors.Add(neighbor);
             }
         }
 
-        return tempNeighbors;
+        return _cellNeighbors;
     }
 
     private int Heuristic(Cell a, Cell b)
     {
-        int dx = Mathf.Abs(a.position.x - b.position.x);
-        int dy = Mathf.Abs(a.position.y - b.position.y);
-        return Mathf.Max(dx, dy);
+        int dx = Mathf.Abs(a._position.x - b._position.x);
+        int dy = Mathf.Abs(a._position.y - b._position.y);
+        return dx + dy - Mathf.Min(dx, dy);
     }
 
     public List<Cell> FindPath(Vector3 startWorld, Vector3 endWorld)
     {
-
-        Vector2Int startGrid = mapGenerator.WorldToGrid(startWorld);
-        Vector2Int endGrid = mapGenerator.WorldToGrid(endWorld);
-
-        Debug.Log($"Start GRID: {startGrid} | End GRID: {endGrid}");
-
-        if (!mapGenerator.graph.TryGetValue(startGrid, out Cell start))
+        if (MapGenerator.Instance == null)
         {
-            Debug.LogError("START is outside grid: " + startGrid);
+            Debug.LogError("MapGenerator.instance is null");
             return null;
         }
 
-        if (!mapGenerator.graph.TryGetValue(endGrid, out Cell end))
+        Vector2Int startGrid = MapGenerator.Instance.WorldToGrid(startWorld);
+        Vector2Int endGrid = MapGenerator.Instance.WorldToGrid(endWorld);
+
+        if (!MapGenerator.Instance._graph.TryGetValue(startGrid, out Cell start))
         {
-            Debug.LogError("END is outside grid: " + endGrid);
+            Debug.LogError($"Start position {startGrid} is outside of map.");
+            return null;
+        }
+
+        if (!MapGenerator.Instance._graph.TryGetValue(endGrid, out Cell end))
+        {
+            Debug.LogError($"End position {endGrid} is outside of map.");
             return null;
         }
 
         ResetUsedCells();
-        path.Clear();
+        _path.Clear();
 
-        PriorityQueue<Cell> open = new PriorityQueue<Cell>();
+        PriorityQueue<Cell> openSet = new PriorityQueue<Cell>();
 
-        start.gCost = 0;
-        start.parent = null;
+        start._gCost = 0;
+        start._parent = null;
 
-        open.Enqueue(start, Heuristic(start, end));
+        openSet.Enqueue(start, Heuristic(start, end));
         AddToUsed(start);
 
-        while (open.Count > 0)
+        while (openSet.Count > 0)
         {
-            Cell current = open.Dequeue();
+            Cell current = openSet.Dequeue();
 
             if (current == end)
             {
-                path = BuildPath(end);
-                Debug.Log("PATH FOUND: " + path.Count);
+                _path = BuildPath(end);
                 ResetUsedCells();
-                return path;
+                return _path;
             }
 
             current.inClosedSet = true;
-
+            
             foreach (Cell neighbor in GetNeighbors(current))
             {
                 if (neighbor.inClosedSet) continue;
 
-                int tentativeG = current.gCost + 1;
+                float heightDiff = Mathf.Max(0, neighbor._height - current._height);
+                int heightCost = Mathf.RoundToInt(heightDiff * 10);
+                int pathCost = current._gCost + 1 + heightCost;
 
-                if (tentativeG < neighbor.gCost)
+                if (pathCost < neighbor._gCost)
                 {
-                    neighbor.gCost = tentativeG;
-                    neighbor.parent = current;
+                    neighbor._gCost = pathCost;
+                    neighbor._parent = current;
 
-                    float f = (neighbor.gCost + Heuristic(neighbor, end))*neighbor.cellWeight;
+                    int f = neighbor._gCost + Heuristic(neighbor, end);
 
-                    if (!open.Contains(neighbor))
-                        open.Enqueue(neighbor, f);
+                    if (!openSet.Contains(neighbor))
+                        openSet.Enqueue(neighbor, f);
 
                     AddToUsed(neighbor);
                 }
             }
         }
 
-        Debug.LogWarning("NO PATH FOUND");
+        Debug.LogWarning("No path found.");
         ResetUsedCells();
         return null;
     }
@@ -128,12 +125,12 @@ public class PathFinding
     private List<Cell> BuildPath(Cell end)
     {
         List<Cell> result = new List<Cell>();
-        Cell c = end;
+        Cell current = end;
 
-        while (c != null)
+        while (current != null)
         {
-            result.Add(c);
-            c = c.parent;
+            result.Add(current);
+            current = current._parent;
         }
 
         result.Reverse();
@@ -142,15 +139,34 @@ public class PathFinding
 
     private void AddToUsed(Cell c)
     {
-        if (!usedCells.Contains(c))
-            usedCells.Add(c);
+        if (!_usedCells.Contains(c))
+            _usedCells.Add(c);
     }
 
     private void ResetUsedCells()
     {
-        foreach (Cell c in usedCells)
+        foreach (Cell c in _usedCells)
             c.Reset();
 
-        usedCells.Clear();
+        _usedCells.Clear();
+    }
+    
+    public List<Vector3> FindPathPositions(Vector3 startWorld, Vector3 endWorld)
+    {
+        List<Cell> cellPath = FindPath(startWorld, endWorld);
+        if (cellPath == null)
+            return null;
+
+        List<Vector3> positions = new List<Vector3>();
+
+        foreach (Cell c in cellPath)
+        {
+            if (c._pathPoint != null)
+                positions.Add(c._pathPoint.position);
+            else
+                positions.Add(MapGenerator.Instance.GridToWorld(c._position));
+        }
+
+        return positions;
     }
 }
