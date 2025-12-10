@@ -93,7 +93,7 @@ public class PathFinding
             }
 
             current.inClosedSet = true;
-            
+
             foreach (Cell neighbor in GetNeighbors(current))
             {
                 if (neighbor.inClosedSet) continue;
@@ -150,15 +150,14 @@ public class PathFinding
 
         _usedCells.Clear();
     }
-    
+
     public List<Vector3> FindPathPositions(Vector3 startWorld, Vector3 endWorld)
     {
+        int smoothResolution = 50;
         List<Cell> cellPath = FindPath(startWorld, endWorld);
-        if (cellPath == null)
-            return null;
+        if (cellPath == null) return null;
 
         List<Vector3> positions = new List<Vector3>();
-
         foreach (Cell c in cellPath)
         {
             if (c._pathPoint != null)
@@ -166,7 +165,65 @@ public class PathFinding
             else
                 positions.Add(MapGenerator.Instance.GridToWorld(c._position));
         }
+        
+        if (positions.Count > 1)
+        {
+            positions = BSplineSmooth(positions, smoothResolution);
+        }
 
         return positions;
     }
+
+    #region B-Spline
+    private List<Vector3> BSplineSmooth(List<Vector3> points, int resolution)
+    {
+        if (points.Count < 2) return points;
+
+        List<Vector3> smoothPoints = new List<Vector3>();
+        smoothPoints.Add(points[0]);
+        smoothPoints.Add(points[0]);
+        smoothPoints.AddRange(points);
+        smoothPoints.Add(points[points.Count - 1]);
+        smoothPoints.Add(points[points.Count - 1]);
+
+        return BSplineRaw(smoothPoints, resolution);
+    }
+
+    private List<Vector3> BSplineRaw(List<Vector3> controlPoints, int resolution)
+    {
+        List<Vector3> smoothedPoints = new List<Vector3>();
+        
+        for (int segmentIndex = 0; segmentIndex < controlPoints.Count - 3; segmentIndex++)
+        {
+            for (int stepIndex = 0; stepIndex <= resolution; stepIndex++)
+            {
+                float normalizedTime = stepIndex / (float)resolution;
+
+                Vector3 pointOnSpline = EvaluateCubicBSpline(normalizedTime,
+                    controlPoints[segmentIndex], 
+                    controlPoints[segmentIndex + 1], 
+                    controlPoints[segmentIndex + 2], 
+                    controlPoints[segmentIndex + 3]
+                );
+                
+                smoothedPoints.Add(pointOnSpline);
+            }
+        }
+
+        return smoothedPoints;
+    }
+
+    private Vector3 EvaluateCubicBSpline(float normalizedTime, Vector3 previousPoint, Vector3 startPoint, Vector3 endPoint, Vector3 nextPoint)
+    {
+        float normalizedTimeSquared = normalizedTime * normalizedTime;
+        float normalizedTimeCubed   = normalizedTimeSquared * normalizedTime;
+
+        float weightPrevious = (-normalizedTimeCubed + 3f * normalizedTimeSquared - 3f * normalizedTime + 1f) / 6f;
+        float weightStart = (3f * normalizedTimeCubed - 6f * normalizedTimeSquared + 4f) / 6f;
+        float weightEnd = (-3f * normalizedTimeCubed + 3f * normalizedTimeSquared + 3f * normalizedTime + 1f) / 6f;
+        float weightNext = normalizedTimeCubed / 6f;
+
+        return weightPrevious * previousPoint + weightStart * startPoint + weightEnd * endPoint + weightNext * nextPoint;
+    }
+    #endregion
 }
