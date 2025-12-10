@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2092921140646256793
+--- !u!1 &3454634031155035739
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6687273254954967233}
-  - component: {fileID: 8944366342980376121}
-  - component: {fileID: 399771841927145351}
-  - component: {fileID: 4589665302233018967}
+  - component: {fileID: 1295301211270048140}
+  - component: {fileID: 1958096699237654986}
+  - component: {fileID: 1073768779816992093}
+  - component: {fileID: 6683974813168854862}
+  - component: {fileID: 5949307829999877993}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: babeille
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6687273254954967233
+--- !u!4 &1295301211270048140
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2092921140646256793}
+  m_GameObject: {fileID: 3454634031155035739}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -9.64837, y: 0.79, z: 18.98}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4872160978271933130}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8944366342980376121
+--- !u!33 &1958096699237654986
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2092921140646256793}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &399771841927145351
+  m_GameObject: {fileID: 3454634031155035739}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1073768779816992093
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2092921140646256793}
+  m_GameObject: {fileID: 3454634031155035739}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -90,13 +91,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &4589665302233018967
-CapsuleCollider:
+--- !u!65 &6683974813168854862
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2092921140646256793}
+  m_GameObject: {fileID: 3454634031155035739}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -108,57 +109,25 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &2102113273400245465
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4872160978271933130}
-  - component: {fileID: 8222636965491283759}
-  m_Layer: 0
-  m_Name: Beehive
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4872160978271933130
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2102113273400245465}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.37, y: 0, z: 4.66}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6687273254954967233}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8222636965491283759
+--- !u!114 &5949307829999877993
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2102113273400245465}
+  m_GameObject: {fileID: 3454634031155035739}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 716168ef13e095e4b936559a107c21e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 1aad2b9f36640984f858ed288cebd580, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Beehive
-  _pollenStock: 0
-  _honeyStock: 0
-  _pollenToHoneyRate: 5
-  _honeyToWaxRate: 5
+  m_EditorClassIdentifier: Assembly-CSharp::Agent
+  _statsData: {fileID: 11400000, guid: 59a2b30a2e7baef4a9a5018b60dbbc3b, type: 2}
+  _tasksData:
+  - {fileID: 11400000, guid: 532040ef44cfeb74a9a3833dc9b70b86, type: 2}
+  - {fileID: 11400000, guid: 1974c740498e8ec4e9d7928fc591cc0b, type: 2}
+  - {fileID: 11400000, guid: a4380fbbc036b5f49b9a8dbf7dd05bc1, type: 2}
+  - {fileID: 11400000, guid: 11dea03f3aaec5241810240059392c51, type: 2}
+  hive: {fileID: 0}

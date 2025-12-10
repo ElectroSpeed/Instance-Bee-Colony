@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d432732c08fd4af48952e4b433368840, type: 3}
   m_Name: SO_CollectPollen
   m_EditorClassIdentifier: Assembly-CSharp::TaskData_CollectFlower
-  _taskName: 
+  _taskName: CollectFlower
   _pollentCollected: 0
