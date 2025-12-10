@@ -1,38 +1,56 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Task_Wander : AgentTaskBase
 {
-    [Header ("Move Randomly")]
     private float _radius;
     private Vector3 _targetPosition;
     private bool _isFinished = false;
     private Transform _agentTransform;
 
-    [Header ("Scanner Flower")]
     private float _scanCooldown;
     private float _scanTimer;
     private float _flowerDetectionRadius;
+    private PathFinding _pathFinder = new PathFinding();
+    private List<Vector3> _currentPath;
+    private int _pathIndex = 0;
+    private float _moveSpeed = 2f;
 
-
-    public Task_Wander(string taskName, Blackboard bb, float radius, float scanCooldown, float scanTimer, float flowerDetectionRadius) : base(taskName, bb)
+    public Task_Wander(string taskName, Blackboard bb, float radius, float scanCooldown, float scanTimer, float flowerDetectionRadius)
+        : base(taskName, bb)
     {
         _radius = radius;
         _scanCooldown = scanCooldown;
         _scanTimer = scanTimer;
         _flowerDetectionRadius = flowerDetectionRadius;
+
         _agentTransform = (Transform)bb.GetValue("AgentTransform");
     }
 
     public override void OnStart()
     {
-        Vector2 randomCircle = Random.insideUnitCircle * _radius;
-        _targetPosition = _agentTransform.position + new Vector3(randomCircle.x, 0, randomCircle.y);
         _isFinished = false;
+
+        Vector2 rnd = Random.insideUnitCircle * _radius;
+        Vector3 rawTarget = _agentTransform.position + new Vector3(rnd.x, 0, rnd.y);
+
+        Vector2Int targetCell = MapGenerator.Instance.WorldToGrid(rawTarget);
+        _targetPosition = MapGenerator.Instance.GridToWorld(targetCell);
+
+        _currentPath = _pathFinder.FindPathPositions(_agentTransform.position, _targetPosition);
+        _pathIndex = 0;
+
+        if (_currentPath == null || _currentPath.Count == 0)
+        {
+            _isFinished = true;
+            OnFinish();
+        }
     }
 
     public override void OnUpdate()
     {
-        MoveRandomly();
+        FollowPath();
+
         _scanTimer += Time.deltaTime;
         if (_scanTimer >= _scanCooldown)
         {
@@ -41,16 +59,32 @@ public class Task_Wander : AgentTaskBase
         }
     }
 
-    public void MoveRandomly()
+    private void FollowPath()
     {
-        float speed = 2f;
-        _agentTransform.position = Vector3.MoveTowards(_agentTransform.position, _targetPosition, speed * Time.deltaTime);
-
-        if (Vector3.Distance(_agentTransform.position, _targetPosition) < 0.1f)
-        {
-            _isFinished = true;
-            OnFinish();
+        if (_isFinished || _currentPath == null || _pathIndex >= _currentPath.Count)
             return;
+
+        Vector3 target = _currentPath[_pathIndex];
+
+        _agentTransform.position = Vector3.MoveTowards(
+            _agentTransform.position,
+            target,
+            _moveSpeed * Time.deltaTime
+        );
+
+        Vector3 direction = (target - _agentTransform.position);
+        if (direction.sqrMagnitude > 0.01f)
+            _agentTransform.forward = direction.normalized;
+
+        if (Vector3.Distance(_agentTransform.position, target) < 0.1f)
+        {
+            _pathIndex++;
+
+            if (_pathIndex >= _currentPath.Count)
+            {
+                _isFinished = true;
+                OnFinish();
+            }
         }
     }
 
@@ -60,8 +94,7 @@ public class Task_Wander : AgentTaskBase
 
         foreach (var hit in hits)
         {
-            Flower flower = hit.GetComponent<Flower>();
-
+            Flower flower = hit.GetComponentInParent<Flower>(); // à changer quand le système de spawn des fleurs sera en place
             if (flower != null && flower.ContainsPollen())
             {
                 _bb.ModifyValue("TargetFlower", flower);
@@ -73,7 +106,7 @@ public class Task_Wander : AgentTaskBase
     public override void OnFinish()
     {
         if (_isFinished)
-        { 
+        {
             _isFinished = false;
             OnStart();
         }
@@ -95,18 +128,10 @@ public class Task_Wander : AgentTaskBase
         float cond_NotHungry = Normalize(h._currentHungerValue, h._minHungerValue, h._maxHungerValue);
         float cond_NotTired = Normalize(t._currentTirednessValue, t._minTirednessValue, t._maxTirednessValue);
 
-        Debug.Log(Combine(cond_NoFlower, cond_NotHungry, cond_NotTired));
-
         return Combine(cond_NoPollen, cond_NoFlower, cond_NotHungry, cond_NotTired);
     }
 
-    public override int GetTaskPriority()
-    {
-        return 0;
-    }
+    public override int GetTaskPriority() => 0;
 
-    public override bool IsTaskFinished()
-    {
-        return _isFinished;
-    }
+    public override bool IsTaskFinished() => _isFinished;
 }

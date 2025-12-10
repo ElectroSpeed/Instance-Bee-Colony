@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Task_ReturnToHive : AgentTaskBase
 {
@@ -10,17 +11,21 @@ public class Task_ReturnToHive : AgentTaskBase
     private float _timer = 0f;
     private bool _arrived = false;
 
+    private PathFinding _pathFinder = new PathFinding();
+    private List<Vector3> _currentPath;
+    private int _pathIndex = 0;
+
     public Task_ReturnToHive(string name, Blackboard bb, float speed)
         : base(name, bb)
     {
         _speed = speed;
+        _agentTransform = (Transform)bb.GetValue("AgentTransform");
     }
 
     public override void OnStart()
     {
-        _agentTransform = (Transform)_bb.GetValue("AgentTransform");
-
-        if (_bb.GetValue("Hive") == null)
+        Beehive hive = (Beehive)_bb.GetValue("Hive");
+        if (hive == null)
         {
             _isFinished = true;
             return;
@@ -28,6 +33,15 @@ public class Task_ReturnToHive : AgentTaskBase
 
         _isFinished = false;
         _timer = 0f;
+        _arrived = false;
+
+        _currentPath = _pathFinder.FindPathPositions(_agentTransform.position, hive.transform.position);
+        _pathIndex = 0;
+
+        if (_currentPath == null || _currentPath.Count == 0)
+        {
+            _isFinished = true;
+        }
     }
 
     public override void OnUpdate()
@@ -39,17 +53,9 @@ public class Task_ReturnToHive : AgentTaskBase
             return;
         }
 
-        Vector3 target = hive.transform.position;
-
         if (!_arrived)
         {
-            _agentTransform.position = Vector3.MoveTowards(_agentTransform.position, target, _speed * Time.deltaTime);
-
-            if (Vector3.Distance(_agentTransform.position, target) < 0.5f)
-            {
-                _arrived = true;
-                _timer = 0f;
-            }
+            FollowPath();
         }
         else
         {
@@ -64,6 +70,33 @@ public class Task_ReturnToHive : AgentTaskBase
                     _bb.ModifyValue("CollectedPollen", 0);
                 }
                 _isFinished = true;
+            }
+        }
+    }
+
+    private void FollowPath()
+    {
+        if (_currentPath == null || _pathIndex >= _currentPath.Count)
+        {
+            _arrived = true;
+            _timer = 0f;
+            return;
+        }
+
+        Vector3 target = _currentPath[_pathIndex];
+        _agentTransform.position = Vector3.MoveTowards(_agentTransform.position, target, _speed * Time.deltaTime);
+
+        Vector3 dir = (target - _agentTransform.position);
+        if (dir.sqrMagnitude > 0.01f)
+            _agentTransform.forward = dir.normalized;
+
+        if (Vector3.Distance(_agentTransform.position, target) < 0.1f)
+        {
+            _pathIndex++;
+            if (_pathIndex >= _currentPath.Count)
+            {
+                _arrived = true;
+                _timer = 0f;
             }
         }
     }
