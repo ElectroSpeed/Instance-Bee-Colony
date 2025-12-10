@@ -66,7 +66,7 @@ public class PathFinding
 
         if (!MapGenerator.Instance._graph.TryGetValue(endGrid, out Cell end))
         {
-            Debug.LogError($"End position {endGrid} is outside of map.");
+            Debug.LogWarning($"End position {endGrid} is outside of map.");
             return null;
         }
 
