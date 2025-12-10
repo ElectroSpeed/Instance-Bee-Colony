@@ -218,6 +218,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd2aabdaaae381c4c970436c6287d8f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathFindingTester
+  _startTransform: {fileID: 0}
+  _endTransform: {fileID: 0}
 --- !u!1 &283678236
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,7 +685,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2787905506375669025, guid: ea168e8b0e71511498fb1d2597230dea, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 80.12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2787905506375669025, guid: ea168e8b0e71511498fb1d2597230dea, type: 3}
       propertyPath: m_LocalPosition.y
@@ -691,7 +693,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2787905506375669025, guid: ea168e8b0e71511498fb1d2597230dea, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 69.92
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2787905506375669025, guid: ea168e8b0e71511498fb1d2597230dea, type: 3}
       propertyPath: m_LocalRotation.w
