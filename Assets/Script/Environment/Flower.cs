@@ -77,7 +77,6 @@ public class Flower : MonoBehaviour
             _isGrowed = true;
             _canBePollinated = true;
             _hasPollen = true;
-            Debug.Log("Growed");
         }
     }
     

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Book : MonoBehaviour
@@ -9,7 +10,13 @@ public class Book : MonoBehaviour
     [SerializeField] private GameObject pageBook;
     [SerializeField] private GameObject BookCover;
 
-    int index;
+    [Header("Ressources Loader")]
+    [SerializeField] private Sprite FlowerImage;
+    [SerializeField] private Sprite TemperatureImage;
+    [SerializeField] private Sprite HumidityImage;
+    [SerializeField] private Sprite SunlightImage;
+
+    int index = -1;
 
 
     bool isTurning = false;
@@ -32,9 +39,24 @@ public class Book : MonoBehaviour
                 return;
 
             }
+            // Images
+            slot.Image.sprite = FlowerImage;
+            slot.TemperatureIcon.sprite = TemperatureImage;
+            slot.HumidityIcon.sprite = HumidityImage;
+            slot.SunlightIcon.sprite = SunlightImage;
+
+            // Textes
+            slot.Description.text = flower.Description;
             slot.Name.text = flower.FlowerName;
+
+            // Conditions
+            slot.HumidityText.text = flower.MinHumidity + "% / " + flower.MaxHumidity + "%";
+            slot.SunlightText.text = flower.MinSunlight + "% / " + flower.MaxSunlight + "%";
+            slot.TemperatureText.text = flower.MinTemperature + "°C / " + flower.MaxTemperature + "°C";
+            slotGO.transform.SetAsFirstSibling();
+
         }
-        index = -1;
+
         if (pages.Count == 0)
         {
             foreach (Transform t in transform)
@@ -43,11 +65,14 @@ public class Book : MonoBehaviour
     }
     public void RotateForward()
     {
+        Debug.Log(index + "/" + pages.Count);
         if (isTurning) return;
         if (index + 1 >= pages.Count) return;
 
+
         index++;
         StartTurn(pages[index], 180f, false);
+
     }
 
      public void RotateBack()
@@ -76,7 +101,6 @@ public class Book : MonoBehaviour
 
      private void Update()
     {
-        Debug.Log(index);
         if (!isTurning) return;
 
         animT += Time.deltaTime * pageSpeed;

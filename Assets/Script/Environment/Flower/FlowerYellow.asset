@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FlowerYellow
   m_EditorClassIdentifier: Assembly-CSharp::SO_FlowerData
   _flowerName: FleurJaune
-  _description: on s en fout
+  _description: sxcftvygbuhinj
   _flowerPrefab: {fileID: 778431225565301238, guid: 66fa6b38f83425248b2e3530a7896f38, type: 3}
   _lifeDuration: 60
   _pollenAmount: 2
@@ -24,9 +24,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _minHumidity: 16.8
-  _maxHumidity: 41.8
-  _minSunlight: 14.7
-  _maxSunlight: 53.1
-  _minTemperature: 14.9
-  _maxTemperature: 3.4
+  _minHumidity: 68.9
+  _maxHumidity: 26.2
+  _minSunlight: 70.1
+  _maxSunlight: 26.2
+  _minTemperature: 28.4
+  _maxTemperature: 23.5
