@@ -11,12 +11,20 @@ public class Task_Wander : AgentTaskBase
     private float _scanCooldown;
     private float _scanTimer;
     private float _flowerDetectionRadius;
+
     private PathFinding _pathFinder = new PathFinding();
     private List<Vector3> _currentPath;
     private int _pathIndex = 0;
     private float _moveSpeed = 2f;
 
-    public Task_Wander(string taskName, Blackboard bb, float radius, float scanCooldown, float scanTimer, float flowerDetectionRadius)
+    public Task_Wander(
+        string taskName,
+        Blackboard bb,
+        float radius,
+        float scanCooldown,
+        float scanTimer,
+        float flowerDetectionRadius
+    )
         : base(taskName, bb)
     {
         _radius = radius;
@@ -31,8 +39,7 @@ public class Task_Wander : AgentTaskBase
     {
         _isFinished = false;
 
-        Vector2 rnd = Random.insideUnitCircle * _radius;
-        Vector3 rawTarget = _agentTransform.position + new Vector3(rnd.x, 0, rnd.y);
+        Vector3 rawTarget = GetValidWanderTarget();
 
         Vector2Int targetCell = MapGenerator.Instance.WorldToGrid(rawTarget);
         _targetPosition = MapGenerator.Instance.GridToWorld(targetCell);
@@ -47,6 +54,29 @@ public class Task_Wander : AgentTaskBase
         }
     }
 
+
+    private Vector3 GetValidWanderTarget() // function to get a random point inside the hive's exploration area
+    {
+        Vector3 candidate;
+        int safety = 0;
+
+        do
+        {
+            Vector2 rnd = Random.insideUnitCircle * _radius;
+            candidate = _agentTransform.position + new Vector3(rnd.x, 0, rnd.y);
+
+            safety++;
+            if (safety > 20)
+            {
+                return _agentTransform.position;
+            }
+
+        } 
+        while (!IsInsideHiveZone(candidate));
+
+        return candidate;
+    }
+
     public override void OnUpdate()
     {
         FollowPath();
@@ -59,7 +89,7 @@ public class Task_Wander : AgentTaskBase
         }
     }
 
-    private void FollowPath()
+    private void FollowPath() // simple path following logic
     {
         if (_isFinished || _currentPath == null || _pathIndex >= _currentPath.Count)
             return;
@@ -88,15 +118,18 @@ public class Task_Wander : AgentTaskBase
         }
     }
 
-    public void ScanForFlowers()
+    public void ScanForFlowers() // scan for flowers within detection radius
     {
         Collider[] hits = Physics.OverlapSphere(_agentTransform.position, _flowerDetectionRadius);
 
         foreach (var hit in hits)
         {
-            Flower flower = hit.GetComponentInParent<Flower>(); // à changer quand le système de spawn des fleurs sera en place
+            Flower flower = hit.GetComponentInParent<Flower>();
             if (flower != null && flower.ContainsPollen())
             {
+                if (!IsInsideHiveZone(flower.transform.position))
+                    continue;
+
                 _bb.ModifyValue("TargetFlower", flower);
                 return;
             }

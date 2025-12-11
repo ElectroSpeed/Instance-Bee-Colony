@@ -11,7 +11,10 @@ public class Beehive : MonoBehaviour {
     [Header("Production Rates")]
     [SerializeField] private int _pollenToHoneyRate = 5;
     [SerializeField] private int _honeyToWaxRate = 5;
-    
+
+    [Header("Exploration Area")]
+    public float explorationRadius = 25f;
+
     private WaxManager _waxManager;
     
     public event Action<int> OnPollenChanged;

@@ -95,5 +95,13 @@ public abstract class AgentTaskBase
         return (Tiredness)_bb.GetValue("Tiredness");
     }
 
+
+    protected bool IsInsideHiveZone(Vector3 position)
+    {
+        Beehive hive = (Beehive)_bb.GetValue("Hive");
+        if (hive == null) return true;
+
+        return Vector3.Distance(hive.transform.position, position) <= hive.explorationRadius;
+    }
     #endregion
 }
