@@ -118,7 +118,7 @@ public class MapGenerator : MonoBehaviour
                     {
                         Vector3 mapCellPathPointPosition = mapCellPathPoint.localPosition;
                         float mapCellPathPointPositionY = meshPosition.y + (height / 2f);
-                        mapCellPathPointPosition.y = mapCellPathPointPositionY + 1f;
+                        mapCellPathPointPosition.y = mapCellPathPointPositionY + mapCell._pathPointHeight;
                         mapCellPathPoint.localPosition = mapCellPathPointPosition;
                     }
                 }

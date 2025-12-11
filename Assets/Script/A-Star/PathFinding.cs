@@ -92,11 +92,11 @@ public class PathFinding
                 return _path;
             }
 
-            current.inClosedSet = true;
+            current._inClosedSet = true;
 
             foreach (Cell neighbor in GetNeighbors(current))
             {
-                if (neighbor.inClosedSet) continue;
+                if (neighbor._inClosedSet) continue;
 
                 float heightDiff = Mathf.Max(0, neighbor._height - current._height);
                 int heightCost = Mathf.RoundToInt(heightDiff * 10);

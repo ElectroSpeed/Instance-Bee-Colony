@@ -7,16 +7,16 @@ public class SO_EntityTargeting : SO_TargetingBehaviour
 {
     [SerializeField] private LayerMask _entityMask;
     
-    private Camera _cam;
+    private Camera _camera;
 
     private void Awake()
     {
-        _cam =  Camera.main;
+        _camera =  Camera.main;
     }
 
     public override IEnumerable<ITarget> GetTargets(Vector3 origin)
     {
-        Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, _entityMask))
         {

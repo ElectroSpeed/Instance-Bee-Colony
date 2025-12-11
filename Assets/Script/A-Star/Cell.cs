@@ -4,17 +4,18 @@ public class Cell : MonoBehaviour
 {
     public Vector2Int _position;
     public float _height;
+    public float _pathPointHeight;
 
     [HideInInspector] public Transform _pathPoint;
-    public int _gCost = int.MaxValue;
-    public Cell _parent;
-    public bool inClosedSet = false;
+    [HideInInspector] public int _gCost = int.MaxValue;
+    [HideInInspector] public Cell _parent;
+    [HideInInspector] public bool _inClosedSet = false;
 
     public void Reset()
     {
         _gCost = int.MaxValue;
         _parent = null;
-        inClosedSet = false;
+        _inClosedSet = false;
     }
 
     private void Awake()
