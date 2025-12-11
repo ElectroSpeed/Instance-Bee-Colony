@@ -9,22 +9,24 @@ public class EnvironmentManager : MonoBehaviour
     [Range(-10, 40)] public float _temperature;
 
     [Header("Stabilization Settings")]
-    [SerializeField] private float _stabilizeSpeed;
-    [SerializeField] private float _updateInterval;
-    public bool isPowerActive = false;
+    [SerializeField] private float _stabilizeSpeed = 5f;
+    [SerializeField] private float _updateInterval = 0.5f;
+    [HideInInspector] public bool _isPowerActive = false;
 
     private float _updateTimer;
+
     public event Action<float> OnSunlightChanged;
     public event Action<float> OnHumidityChanged;
 
     private void Update()
     {
-        if (!isPowerActive) UpdateTimer();
+        if (!_isPowerActive)
+            UpdateTimer();
     }
 
     public void SetPowerActive(bool isActive)
     {
-        isPowerActive = isActive;
+        _isPowerActive = isActive;
     }
 
     private void UpdateTimer()
@@ -32,22 +34,19 @@ public class EnvironmentManager : MonoBehaviour
         _updateTimer += Time.deltaTime;
 
         if (_updateTimer < _updateInterval)
-        {
             return;
-        }
-            
+
         _updateTimer = 0f;
-        
         StabilizeEnvironment();
     }
 
     private void StabilizeEnvironment()
     {
         float target = 50f;
-
+        
         _sunlight = Mathf.MoveTowards(_sunlight, target, _stabilizeSpeed);
         _humidity = Mathf.MoveTowards(_humidity, target, _stabilizeSpeed);
-
+        
         OnSunlightChanged?.Invoke(_sunlight);
         OnHumidityChanged?.Invoke(_humidity);
     }
