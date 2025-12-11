@@ -57,8 +57,8 @@ public class Task_CollectFlower : AgentTaskBase
         Hunger h = GetHunger();
         Tiredness t = GetTiredness();
 
-        float cond_NotHungry = Normalize(h._currentHungerValue, h._minHungerValue, h._maxHungerValue);
-        float cond_NotTired = Normalize(t._currentTirednessValue, t._minTirednessValue, t._maxTirednessValue);
+        float cond_NotHungry = Normalize(h.Current, h._minHungerValue, h._maxHungerValue);
+        float cond_NotTired = Normalize(t.Current, t._minTirednessValue, t._maxTirednessValue);
 
         return Combine(cond_CloseEnough, cond_FlowerHasPollen, cond_InventoryEmpty, cond_NotHungry, cond_NotTired);
 

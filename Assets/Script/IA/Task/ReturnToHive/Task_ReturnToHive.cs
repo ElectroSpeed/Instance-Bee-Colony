@@ -117,8 +117,8 @@ public class Task_ReturnToHive : AgentTaskBase
         Tiredness t = GetTiredness();
 
         float cond_HasPollen = 1f;
-        float cond_NotHungry = Normalize(h._currentHungerValue, h._minHungerValue, h._maxHungerValue);
-        float cond_NotTired = Normalize(t._currentTirednessValue, t._minTirednessValue, t._maxTirednessValue);
+        float cond_NotHungry = Normalize(h.Current, h._minHungerValue, h._maxHungerValue);
+        float cond_NotTired = Normalize(t.Current, t._minTirednessValue, t._maxTirednessValue);
 
         return Combine(cond_HasPollen, cond_NotHungry, cond_NotTired);
     }

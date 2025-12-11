@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AgentStatsData
   _minHungerValue: 0
   _maxHungerValue: 100
-  _currentHungerValue: 50
+  _currentHungerValue: 75
   _minTirednessValue: 0
   _maxTirednessValue: 100
   _currentTirednessValue: 50
