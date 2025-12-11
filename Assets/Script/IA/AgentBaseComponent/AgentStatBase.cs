@@ -1,13 +1,24 @@
 using UnityEngine;
 
 [System.Serializable]
-public struct Hunger
+public class Hunger
 {
     public float _minHungerValue;
     public float _maxHungerValue;
-    public float _currentHungerValue;
+    private float _currentHungerValue;
+    public event System.Action<float> OnValueChanged;
 
-    public Hunger(float minHunger, float maxHunger, float currentHunger = 100f)
+    public float Current
+    {
+        get => _currentHungerValue;
+        set
+        {
+            _currentHungerValue = Mathf.Clamp(value, _minHungerValue, _maxHungerValue);
+            OnValueChanged?.Invoke(_currentHungerValue);
+        }
+    }
+
+    public Hunger(float minHunger, float maxHunger, float currentHunger = 50f)
     {
         _minHungerValue = minHunger;
         _maxHungerValue = maxHunger;
@@ -16,21 +27,32 @@ public struct Hunger
 }
 
 [System.Serializable]
-public struct Tiredness
-{
-    public float _minTirednessValue;
-    public float _maxTirednessValue;
-    public float _currentTirednessValue;
-
-    public Tiredness(float minTiredness, float maxTiredness, float currentTiredness = 100f)
+    public class Tiredness
     {
-        _minTirednessValue = minTiredness;
-        _maxTirednessValue = maxTiredness;
-        _currentTirednessValue = currentTiredness;
-    }
-}
+        public float _minTirednessValue;
+        public float _maxTirednessValue;
+        private float _currentTirednessValue;
+        public event System.Action<float> OnValueChanged;
 
-[System.Serializable]
+    public float Current
+        {
+            get => _currentTirednessValue;
+            set
+            {
+                _currentTirednessValue = Mathf.Clamp(value, _minTirednessValue, _maxTirednessValue);
+                OnValueChanged?.Invoke(_currentTirednessValue);
+            }
+        }
+
+        public Tiredness(float minTiredness, float maxTiredness, float currentTiredness = 50f)
+        {
+            _minTirednessValue = minTiredness;
+            _maxTirednessValue = maxTiredness;
+            _currentTirednessValue = currentTiredness;
+        }
+    }
+
+    [System.Serializable]
 public class AgentBase
 {
     public Hunger _hunger;

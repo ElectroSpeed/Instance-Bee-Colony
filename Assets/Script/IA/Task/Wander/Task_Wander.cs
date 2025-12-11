@@ -17,15 +17,7 @@ public class Task_Wander : AgentTaskBase
     private int _pathIndex = 0;
     private float _moveSpeed = 2f;
 
-    public Task_Wander(
-        string taskName,
-        Blackboard bb,
-        float radius,
-        float scanCooldown,
-        float scanTimer,
-        float flowerDetectionRadius
-    )
-        : base(taskName, bb)
+    public Task_Wander( string taskName, Blackboard bb, float radius, float scanCooldown, float scanTimer, float flowerDetectionRadius): base(taskName, bb)
     {
         _radius = radius;
         _scanCooldown = scanCooldown;
@@ -158,8 +150,8 @@ public class Task_Wander : AgentTaskBase
         Hunger h = GetHunger();
         Tiredness t = GetTiredness();
 
-        float cond_NotHungry = Normalize(h._currentHungerValue, h._minHungerValue, h._maxHungerValue);
-        float cond_NotTired = Normalize(t._currentTirednessValue, t._minTirednessValue, t._maxTirednessValue);
+        float cond_NotHungry = Normalize(h.Current, h._minHungerValue, h._maxHungerValue);
+        float cond_NotTired = Normalize(t.Current, t._minTirednessValue, t._maxTirednessValue);
 
         return Combine(cond_NoPollen, cond_NoFlower, cond_NotHungry, cond_NotTired);
     }

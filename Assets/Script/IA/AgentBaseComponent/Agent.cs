@@ -7,11 +7,19 @@ public class Agent : MonoBehaviour
     [Header("Agent need Parameters")]
     [SerializeField] private AgentStatsData _statsData;
     [SerializeField] private List<TaskDataBase> _tasksData;
-    [SerializeField] private Beehive hive;  
+    [SerializeField] private Beehive hive;
+
+    [Header("Decay Parameters")]
+    [SerializeField] private float hungerDecayAmount = 5f;
+    [SerializeField] private float tirednessDecayAmount = 5f;
+
+    private float statTimer = 0f;
+    private float statInterval = 5f;
+
 
     private List<AgentTaskBase> _agentsTask = new(); 
     private AgentTaskBase _currentTask;
-    private Blackboard _bb; 
+    public Blackboard _bb; 
 
     void Start()
     {
@@ -36,6 +44,8 @@ public class Agent : MonoBehaviour
         CreateAgentTasks();
     }
 
+    public Blackboard GetBlackboard() => _bb;
+
     public void CreateAgentTasks()
     {
         foreach (var taskData in _tasksData)
@@ -48,6 +58,23 @@ public class Agent : MonoBehaviour
     void Update()
     {
         print(_currentTask);
+
+        statTimer += Time.deltaTime;
+        if (statTimer >= statInterval)
+        {
+            statTimer = 0f;
+
+            Hunger h = (Hunger)_bb.GetValue("Hunger");
+            Tiredness t = (Tiredness)_bb.GetValue("Tiredness");
+            Debug.Log($"Before Decay - Hunger: {h.Current}, Tiredness: {t.Current}");
+
+            h.Current += hungerDecayAmount;
+            t.Current += tirednessDecayAmount;
+
+            _bb.ModifyValue("Hunger", h);
+            _bb.ModifyValue("Tiredness", t);
+        }
+
 
         AgentTaskBase bestTask = GetBestTask();
 
@@ -68,6 +95,10 @@ public class Agent : MonoBehaviour
     {
         AgentTaskBase bestTask = null;
         float highestPriority = float.NegativeInfinity;
+
+        bool force = (bool)(_bb.GetValue("ForceRecalculate") ?? false);
+        if (force)
+            _bb.ModifyValue("ForceRecalculate", false);
 
         foreach (AgentTaskBase task in _agentsTask)
         {

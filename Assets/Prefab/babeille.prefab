@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.64837, y: 0.79, z: 18.98}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -124,10 +124,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aad2b9f36640984f858ed288cebd580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Agent
-  _statsData: {fileID: 11400000, guid: 59a2b30a2e7baef4a9a5018b60dbbc3b, type: 2}
+  _statsData: {fileID: 11400000, guid: d3e152e4f7049a34ea960f22dfae9194, type: 2}
   _tasksData:
   - {fileID: 11400000, guid: 532040ef44cfeb74a9a3833dc9b70b86, type: 2}
   - {fileID: 11400000, guid: 1974c740498e8ec4e9d7928fc591cc0b, type: 2}
   - {fileID: 11400000, guid: a4380fbbc036b5f49b9a8dbf7dd05bc1, type: 2}
   - {fileID: 11400000, guid: 11dea03f3aaec5241810240059392c51, type: 2}
+  - {fileID: 11400000, guid: 529f3204eedc8c445a35b2841da47be3, type: 2}
   hive: {fileID: 0}
+  hungerDecayAmount: 1
+  tirednessDecayAmount: 0.5
