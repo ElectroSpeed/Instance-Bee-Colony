@@ -67,17 +67,13 @@ public class Flower : MonoBehaviour
         _isGrowing = true;
         _timer += Time.deltaTime;
         float flowerProgress = Mathf.Clamp01(_timer / _data._growthDuration);
-        _growthProgress = _data._growthCurve.Evaluate(flowerProgress);
-
-        if (_model != null)
-            _model.localScale = Vector3.one * _growthProgress;
+        
 
         if (_growthProgress >= 1)
         {
             _isGrowed = true;
             _canBePollinated = true;
             _hasPollen = true;
-            Debug.Log("Growed");
         }
     }
     

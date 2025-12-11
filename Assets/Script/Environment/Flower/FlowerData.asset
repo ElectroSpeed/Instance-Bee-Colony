@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9759cbccae0e8c478cac5c449443b54, type: 3}
-  m_Name: FloweData
+  m_Name: FlowerData
   m_EditorClassIdentifier: Assembly-CSharp::SO_FlowerData
-  _flowerName: Flower
+  _flowerName: Daisy Flower
   _growthCurve:
     serializedVersion: 2
     m_Curve:
@@ -40,10 +40,10 @@ MonoBehaviour:
   _growthDuration: 10
   _lifeDuration: 50
   _pollenAmount: 3
-  _flowerPrefab: {fileID: 778431225565301238, guid: 66fa6b38f83425248b2e3530a7896f38, type: 3}
-  _minHumidity: 50
+  _flowerPrefab: {fileID: 919132149155446097, guid: 17b2c918b1494034983a3146b14861b3, type: 3}
+  _minHumidity: 0
   _maxHumidity: 100
-  _minSunlight: 50
+  _minSunlight: 0
   _maxSunlight: 100
-  _minTemperature: 10
-  _maxTemperature: 30
+  _minTemperature: -40
+  _maxTemperature: 40
