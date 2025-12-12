@@ -1,5 +1,11 @@
 public enum SoundType
         {
             None,
-            Child
+            Child,
+    AmbianceMainGame,
+    Ideemenu,
+    Click,
+    FleurPlantation,
+    Remoove,
+    SFXabeille
         }

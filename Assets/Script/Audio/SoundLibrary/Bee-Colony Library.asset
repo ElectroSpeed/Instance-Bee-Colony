@@ -16,4 +16,22 @@ MonoBehaviour:
   - _name: Child
     _clip: {fileID: 8300000, guid: 2b45b07f9de77454f8b500e7f3466abb, type: 3}
     _loop: 1
-  _sfxSounds: []
+  - _name: Ambiance Main Game
+    _clip: {fileID: 8300000, guid: d43ead7c3cd6ac24a900c214ea5dce1d, type: 3}
+    _loop: 1
+  - _name: Idee menu
+    _clip: {fileID: 8300000, guid: 1f01842cf2cee964896a076e434855cb, type: 3}
+    _loop: 1
+  _sfxSounds:
+  - _name: Click
+    _clip: {fileID: 8300000, guid: 68e0eda015580894395edcac5acd9f40, type: 3}
+    _loop: 0
+  - _name: Fleur Plantation
+    _clip: {fileID: 8300000, guid: 0165403038d689b43914a8ea82419bbb, type: 3}
+    _loop: 0
+  - _name: Remoove
+    _clip: {fileID: 8300000, guid: c587a63aded1b2749b2a4abe649fdda1, type: 3}
+    _loop: 0
+  - _name: SFX abeille
+    _clip: {fileID: 8300000, guid: 0d0a163f41af2fa4db50c2048ddc365e, type: 3}
+    _loop: 0
