@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GodGameSO/Agent/TaskData/Rest")]
+[CreateAssetMenu(menuName = "GodGameSO/Agent/TaskData/Bee/Rest")]
 public class TaskData_Rest : TaskDataBase<Task_Rest>
 {
     public float _restDuration;
