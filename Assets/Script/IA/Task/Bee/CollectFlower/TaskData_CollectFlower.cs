@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = ("GodGameSO/Agent/TaskData/CollectFlower"))]
+[CreateAssetMenu(menuName = ("GodGameSO/Agent/TaskData/Bee/CollectFlower"))]
 public class TaskData_CollectFlower : TaskDataBase<Task_CollectFlower>
 {
     public int _pollentCollected;
