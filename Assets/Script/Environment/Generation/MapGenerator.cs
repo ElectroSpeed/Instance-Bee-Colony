@@ -137,15 +137,13 @@ public class MapGenerator : MonoBehaviour
                         mapCellPathPoint.localPosition = mapCellPathPointPosition;
                     }
                     Mesh obstacleMesh = _obstacles[Random.Range(0, _obstacles.Count)];
-                    Bounds meshBounds = obstacleMesh.bounds;
-                    Vector3 minBounds = meshBounds.min;
-                    float minBoundsSizeY = minBounds.y;
+                    float meshBounds = obstacleMesh.bounds.size.y;
 
                     Vector3 obstaclesPos = mapCell._pathPoint.position;
                     
                     obstaclesPos.y -= mapCell._pathPointHeight;
                     
-                    if (_environmentObstaclesGenerator.GenerateEnvironment(obstaclesPos, _obstacleChance, minBoundsSizeY,
+                    if (_environmentObstaclesGenerator.GenerateEnvironment(obstaclesPos, _obstacleChance, meshBounds,
                             out Vector3 obstaclePos))
                     {
                         GameObject newObstacle=Instantiate(_environmentObstaclePrefab, obstaclePos, Quaternion.identity);
@@ -153,6 +151,7 @@ public class MapGenerator : MonoBehaviour
                         mapCell._isWalkable = false;
                     }
                 }
+                
                 
                 Renderer mapCellRenderer = mapCell.GetComponentInChildren<Renderer>();
                 if (mapCellRenderer != null)
