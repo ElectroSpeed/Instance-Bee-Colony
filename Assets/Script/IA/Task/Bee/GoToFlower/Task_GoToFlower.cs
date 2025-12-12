@@ -94,8 +94,8 @@ public class Task_GoToFlower : AgentTaskBase
         Tiredness t = GetTiredness();
 
         float cond_HasFlower = 1f;
-        float cond_NotHungry = Normalize(h._currentHungerValue, h._minHungerValue, h._maxHungerValue);
-        float cond_NotTired = Normalize(t._currentTirednessValue, t._minTirednessValue, t._maxTirednessValue);
+        float cond_NotHungry = Normalize(h.Current, h._minHungerValue, h._maxHungerValue);
+        float cond_NotTired = Normalize(t.Current, t._minTirednessValue, t._maxTirednessValue);
 
         float cond_InventoryEmpty = ((int)_bb.GetValue("CollectedPollen") == 0) ? 1f : 0f;
 
