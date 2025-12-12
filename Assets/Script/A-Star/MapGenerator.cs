@@ -19,7 +19,8 @@ public class MapGenerator : MonoBehaviour
     public Vector2 _noiseOffset = Vector2.zero;
     public Noise.NormalizeMode _normalizeMode = Noise.NormalizeMode.Local;
 
-    [Header("Terrain settings")]
+    [Header("Terrain settings")] 
+    public AnimationCurve _mapCurve;
     public float _heightMultiplier = 3f;
     public Gradient _colorGradient;
 
@@ -75,7 +76,7 @@ public class MapGenerator : MonoBehaviour
         ClearOlderGraph();
 
         float[,] noiseMap = Noise.GenerateNoiseMap(_gridLength, _gridWidth, _seed, _scale, _octaves, _persistance, _lacunarity, _noiseOffset, _normalizeMode);
-
+        
         float cellWidth = _cellSizes.x;
         float cellDepth = _cellSizes.z;
 
@@ -94,7 +95,9 @@ public class MapGenerator : MonoBehaviour
                 
                 mapCell._position = new Vector2Int(x, y);
 
+                noiseMap[x,y]= _mapCurve.Evaluate(noiseMap[x,y]);
                 float noiseValue = noiseMap[x, y];
+                //float noiseValue = _mapCurve.Evaluate(noiseMap[x,y]);
 
                 Transform mapCellMesh = mapCell.transform.GetChild(0).GetChild(0);
 
@@ -117,7 +120,7 @@ public class MapGenerator : MonoBehaviour
                     if (mapCellPathPoint != null)
                     {
                         Vector3 mapCellPathPointPosition = mapCellPathPoint.localPosition;
-                        float mapCellPathPointPositionY = meshPosition.y + (height / 2f);
+                        float mapCellPathPointPositionY = meshPosition.y + (height / 4f);
                         mapCellPathPointPosition.y = mapCellPathPointPositionY + mapCell._pathPointHeight;
                         mapCellPathPoint.localPosition = mapCellPathPointPosition;
                     }
