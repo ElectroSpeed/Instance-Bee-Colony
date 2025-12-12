@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Cell
   _position: {x: 0, y: 0}
   _height: 0
-  _pathPointHeigth: 1
+  _pathPointHeight: 2
   _pathPoint: {fileID: 0}
   _gCost: 2147483647
   _parent: {fileID: 0}
