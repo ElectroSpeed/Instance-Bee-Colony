@@ -26,6 +26,14 @@ public class MapGenerator : MonoBehaviour
 
     public Dictionary<Vector2Int, Cell> _graph = new Dictionary<Vector2Int, Cell>();
     public Vector3 _cellSizes = Vector3.zero;
+    
+    [SerializeField] private List<Mesh> _obstacles;
+    
+    [Range(0,100)]
+    [SerializeField] private float _obstacleChance;
+    [SerializeField] GameObject _environmentObstaclePrefab;
+    
+    EnvironmentObstaclesGenerator _environmentObstaclesGenerator;
 
     private void Awake()
     {
@@ -42,7 +50,6 @@ public class MapGenerator : MonoBehaviour
         }
 
         Cell _sizeTestCell = Instantiate(_tilePrefab, Vector3.zero, _tilePrefab.transform.rotation, transform);
-
         Renderer _sizeTestCellRenderer = _sizeTestCell.GetComponentInChildren<Renderer>();
         if (_sizeTestCellRenderer == null)
         {
@@ -60,6 +67,7 @@ public class MapGenerator : MonoBehaviour
 
     private void Start()
     {
+        _environmentObstaclesGenerator = GetComponent<EnvironmentObstaclesGenerator>();
         GenerateMap();
     }
 
@@ -100,7 +108,7 @@ public class MapGenerator : MonoBehaviour
                 //float noiseValue = _mapCurve.Evaluate(noiseMap[x,y]);
 
                 Transform mapCellMesh = mapCell.transform.GetChild(0).GetChild(0);
-
+                
                 if (mapCellMesh != null)
                 {
                     float height = Mathf.Max(0.1f, noiseValue * _heightMultiplier);
@@ -115,8 +123,12 @@ public class MapGenerator : MonoBehaviour
                     meshPosition.y = height / 4f;
                     mapCellMesh.localPosition = meshPosition;
 
+                    
+                    
+                    
+                    
                     Transform mapCellPathPoint = mapCell.transform.GetChild(1);
-
+                    
                     if (mapCellPathPoint != null)
                     {
                         Vector3 mapCellPathPointPosition = mapCellPathPoint.localPosition;
@@ -124,11 +136,27 @@ public class MapGenerator : MonoBehaviour
                         mapCellPathPointPosition.y = mapCellPathPointPositionY + mapCell._pathPointHeight;
                         mapCellPathPoint.localPosition = mapCellPathPointPosition;
                     }
-                }
+                    Mesh obstacleMesh = _obstacles[Random.Range(0, _obstacles.Count)];
+                    float meshBounds = obstacleMesh.bounds.size.y;
 
+                    Vector3 obstaclesPos = mapCell._pathPoint.position;
+                    
+                    obstaclesPos.y -= mapCell._pathPointHeight;
+                    
+                    if (_environmentObstaclesGenerator.GenerateEnvironment(obstaclesPos, _obstacleChance, meshBounds,
+                            out Vector3 obstaclePos))
+                    {
+                        GameObject newObstacle=Instantiate(_environmentObstaclePrefab, obstaclePos, Quaternion.identity);
+                        newObstacle.GetComponentInChildren<MeshFilter>().mesh = obstacleMesh;
+                        mapCell._isWalkable = false;
+                    }
+                }
+                
+                
                 Renderer mapCellRenderer = mapCell.GetComponentInChildren<Renderer>();
                 if (mapCellRenderer != null)
                 {
+                    
                     mapCellRenderer.material.color = _colorGradient.Evaluate(noiseValue);
                 }
 
