@@ -5,6 +5,7 @@ public class Cell : MonoBehaviour
     public Vector2Int _position;
     public float _height;
     public float _pathPointHeight;
+    public bool _isWalkable=true;
 
     [HideInInspector] public Transform _pathPoint;
     [HideInInspector] public int _gCost = int.MaxValue;
