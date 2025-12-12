@@ -137,13 +137,13 @@ public class MapGenerator : MonoBehaviour
                         mapCellPathPoint.localPosition = mapCellPathPointPosition;
                     }
                     Mesh obstacleMesh = _obstacles[Random.Range(0, _obstacles.Count)];
-                    float a = obstacleMesh.bounds.size.y;
+                    float meshBounds = obstacleMesh.bounds.size.y;
 
-                    Vector3 b = mapCell._pathPoint.position;
+                    Vector3 obstaclesPos = mapCell._pathPoint.position;
                     
-                    b.y -= mapCell._pathPointHeight;
+                    obstaclesPos.y -= mapCell._pathPointHeight;
                     
-                    if (_environmentObstaclesGenerator.GenerateEnvironment(b, _obstacleChance, a,
+                    if (_environmentObstaclesGenerator.GenerateEnvironment(obstaclesPos, _obstacleChance, meshBounds,
                             out Vector3 obstaclePos))
                     {
                         GameObject newObstacle=Instantiate(_environmentObstaclePrefab, obstaclePos, Quaternion.identity);
