@@ -21,9 +21,9 @@ public class Flower : MonoBehaviour
     private void Start()
     {
         _environment = FindObjectOfType<EnvironmentManager>();
-        if (_data._flowerPrefab != null)
+        if (_data.FlowerPrefab != null)
         {
-            _model = Instantiate(_data._flowerPrefab, transform).transform;
+            _model = Instantiate(_data.FlowerPrefab, transform).transform;
             _model.localScale = Vector3.zero;
         }
     }
@@ -49,7 +49,7 @@ public class Flower : MonoBehaviour
     {
         _elapsedLifeTime += Time.deltaTime;
 
-        if (_elapsedLifeTime >= _data._lifeDuration)
+        if (_elapsedLifeTime >= _data.LifeDuration)
         {
             Destroy(gameObject);
         }
@@ -57,17 +57,17 @@ public class Flower : MonoBehaviour
 
     private bool CanGrow()
     {
-        return _environment._humidity >= _data._minHumidity && _environment._humidity <= _data._maxHumidity &&
-               _environment._sunlight >= _data._minSunlight && _environment._sunlight <= _data._maxSunlight &&
-               _environment._temperature >= _data._minTemperature && _environment._temperature <= _data._maxTemperature;
+        return _environment._humidity >= _data.MinHumidity && _environment._humidity <= _data.MaxHumidity &&
+               _environment._sunlight >= _data.MinSunlight && _environment._sunlight <= _data.MaxSunlight &&
+               _environment._temperature >= _data.MinTemperature && _environment._temperature <= _data.MaxTemperature;
     }
 
     private void Grow()
     {
         _isGrowing = true;
         _timer += Time.deltaTime;
-        float flowerProgress = Mathf.Clamp01(_timer / _data._growthDuration);
-        _growthProgress = _data._growthCurve.Evaluate(flowerProgress);
+        float flowerProgress = Mathf.Clamp01(_timer / _data.GrowthDuration);
+        _growthProgress = _data.GrowthCurve.Evaluate(flowerProgress);
 
         if (_model != null)
             _model.localScale = Vector3.one * _growthProgress;
@@ -77,7 +77,6 @@ public class Flower : MonoBehaviour
             _isGrowed = true;
             _canBePollinated = true;
             _hasPollen = true;
-            Debug.Log("Growed");
         }
     }
     
@@ -88,7 +87,7 @@ public class Flower : MonoBehaviour
         if (!_hasPollen)
             return 0;
 
-        int amount = _data._pollenAmount;
+        int amount = _data.PollenAmount;
         _hasPollen = false;
         _canBePollinated = false;
         _regenTimer = 0f;

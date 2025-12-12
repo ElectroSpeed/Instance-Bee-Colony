@@ -4,8 +4,7 @@ using UnityEngine;
 public class SO_PowerData : ScriptableObject
 {
     [SerializeField] private string _powerName;
-    [SerializeField] [Min(0)] private float _cooldown;
-
+    [Min(0)][SerializeField] private float _cooldown;
     [SerializeField] private SO_TargetingBehaviour _targetingPrefab;
     [SerializeField] private SO_EffectBehaviour[] _effectPrefabs;
 
