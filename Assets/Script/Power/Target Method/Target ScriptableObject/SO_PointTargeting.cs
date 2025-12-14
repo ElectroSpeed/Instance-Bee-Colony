@@ -23,7 +23,7 @@ public class SO_PointTargeting : SO_TargetingBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, _maxDistance, _groundMask))
         {
-            Cell cell = hit.collider.GetComponent<Cell>();
+            Cell cell = hit.collider.GetComponentInParent<Cell>();
             if (cell != null && cell._pathPoint != null)
             {
                 Vector3 point = cell._pathPoint.position;

@@ -718,7 +718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PowerButtonBinder
   _powerEventChannel: {fileID: 11400000, guid: 58d287fe94bbf4746ad8d5cb39ba718c, type: 2}
-  _powerType: 7
+  _powerType: 12
 --- !u!1 &224366980
 GameObject:
   m_ObjectHideFlags: 0
@@ -1080,7 +1080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PowerButtonBinder
   _powerEventChannel: {fileID: 11400000, guid: 58d287fe94bbf4746ad8d5cb39ba718c, type: 2}
-  _powerType: 6
+  _powerType: 7
 --- !u!1 &529761113
 GameObject:
   m_ObjectHideFlags: 0
@@ -2299,6 +2299,7 @@ GameObject:
   - component: {fileID: 1043473105}
   - component: {fileID: 1043473104}
   - component: {fileID: 1043473103}
+  - component: {fileID: 1043473106}
   m_Layer: 5
   m_Name: Category Button
   m_TagString: Untagged
@@ -2408,6 +2409,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1043473101}
   m_CullTransparentMesh: 1
+--- !u!114 &1043473106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043473101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 155efef2189f64544b2d49b68447a66c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PowerButtonBinder
+  _powerEventChannel: {fileID: 11400000, guid: 58d287fe94bbf4746ad8d5cb39ba718c, type: 2}
+  _powerType: 2
 --- !u!1 &1045636110
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [CreateAssetMenu(menuName = "GodGame/Targeting/Entity Targeting")]
 public class SO_EntityTargeting : SO_TargetingBehaviour
@@ -16,7 +17,7 @@ public class SO_EntityTargeting : SO_TargetingBehaviour
 
     public override IEnumerable<ITarget> GetTargets()
     {
-        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, _entityMask))
         {

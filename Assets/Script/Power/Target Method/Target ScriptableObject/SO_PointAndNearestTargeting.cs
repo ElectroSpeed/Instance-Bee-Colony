@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [CreateAssetMenu(menuName = "GodGame/Targeting/Point + Nearest Entity")]
 public class SO_PointAndNearestEntityTargeting : SO_TargetingBehaviour
@@ -24,7 +25,7 @@ public class SO_PointAndNearestEntityTargeting : SO_TargetingBehaviour
         if (_camera == null)
             yield break;
 
-        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         if (!Physics.Raycast(ray, out RaycastHit hit, _maxDistance, _groundMask))
             yield break;

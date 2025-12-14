@@ -5,8 +5,13 @@ public enum PowerType
     Destruction,
     PlaceBee,
     PlaceBeehive,
-    PlaceFlower,
+    PlaceEdelweiss,
+    PlaceHibiscus,
     PlaceHornet,
+    PlaceMarguerite,
+    PlacePerceNeige,
+    PlaceTournesol,
+    PlaceTulipe,
     Rain,
     Sun
 }
