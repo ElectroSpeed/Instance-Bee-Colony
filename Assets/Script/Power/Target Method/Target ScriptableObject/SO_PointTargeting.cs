@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [CreateAssetMenu(menuName = "GodGame/Targeting/Point Targeting")]
 public class SO_PointTargeting : SO_TargetingBehaviour
@@ -16,9 +17,9 @@ public class SO_PointTargeting : SO_TargetingBehaviour
         _camera = Camera.main;
     }
 
-    public override IEnumerable<ITarget> GetTargets(Vector3 origin)
+    public override IEnumerable<ITarget> GetTargets()
     {
-        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         if (Physics.Raycast(ray, out RaycastHit hit, _maxDistance, _groundMask))
         {

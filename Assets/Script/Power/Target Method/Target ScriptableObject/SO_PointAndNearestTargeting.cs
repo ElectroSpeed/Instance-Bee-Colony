@@ -19,7 +19,7 @@ public class SO_PointAndNearestEntityTargeting : SO_TargetingBehaviour
         _camera = Camera.main;
     }
 
-    public override IEnumerable<ITarget> GetTargets(Vector3 origin)
+    public override IEnumerable<ITarget> GetTargets()
     {
         if (_camera == null)
             yield break;

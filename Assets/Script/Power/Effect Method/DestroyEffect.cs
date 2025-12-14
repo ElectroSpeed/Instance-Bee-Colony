@@ -9,7 +9,7 @@ public class DestroyEffect : SO_EffectBehaviour
         if (targets == null)
             return;
 
-        foreach (var target in targets)
+        foreach (ITarget target in targets)
         {
             if (target == null || !target._isValid())
                 continue;

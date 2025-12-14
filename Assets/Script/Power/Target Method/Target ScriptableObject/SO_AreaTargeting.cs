@@ -15,7 +15,7 @@ public class SO_AreaTargeting : SO_TargetingBehaviour
         _camera = Camera.main;
     }
 
-    public override IEnumerable<ITarget> GetTargets(Vector3 origin)
+    public override IEnumerable<ITarget> GetTargets()
     {
         Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 

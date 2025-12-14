@@ -3,43 +3,41 @@ using UnityEngine;
 
 public class SeasonManager : MonoBehaviour
 {
-    //import enum
-    public Season currentSeason;
-
-    [SerializeField] public float seasonDuration; // Duration of each season in seconds
-    private float seasonTimer;
+    [HideInInspector] public Season _currentSeason;
+    public float _seasonDuration;
+    
+    private float _seasonTimer;
 
     public event Action<Season> OnSeasonChanged;
     public event Action<Season> OnSeasonForcedChange;
 
     private void Start()
     {
-        seasonTimer = seasonDuration;
-        currentSeason = Season.Spring; // Start with Spring
-        OnSeasonChanged?.Invoke(currentSeason);
+        _seasonTimer = _seasonDuration;
+        _currentSeason = Season.Spring;
+        OnSeasonChanged?.Invoke(_currentSeason);
     }
 
     private void Update()
     {
-        seasonTimer -= Time.deltaTime;
+        _seasonTimer -= Time.deltaTime;
 
-        if (seasonTimer <= 0f)
+        if (_seasonTimer <= 0f)
         {
-            AdvanceSeason();
-            seasonTimer = seasonDuration;
+            ChangeSeason();
+            _seasonTimer = _seasonDuration;
         }
     }
 
-    private void AdvanceSeason()
+    private void ChangeSeason()
     {
-        currentSeason = (Season)(((int)currentSeason + 1) % 4);
-        OnSeasonChanged?.Invoke(currentSeason);
+        _currentSeason = (Season)(((int)_currentSeason + 1) % 4);
+        OnSeasonChanged?.Invoke(_currentSeason);
     }
 
-    public void ForceNextSeason()
+    public void GoToNextSeason()
     {
-        currentSeason = (Season)(((int)currentSeason + 1) % 4);
-        OnSeasonForcedChange?.Invoke(currentSeason);
-        seasonTimer = seasonDuration;
+        ChangeSeason();
+        _seasonTimer = _seasonDuration;
     }
 }

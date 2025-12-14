@@ -21,11 +21,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        PlayMusic(SoundType.Child);
-    }
-
     public void PlayMusic(SoundType type)
     {
         var sound = _soundLibrary.GetSound(type, true);

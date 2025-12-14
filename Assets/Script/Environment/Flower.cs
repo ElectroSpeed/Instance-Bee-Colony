@@ -9,9 +9,7 @@ public class Flower : MonoBehaviour
     private float _growthProgress;
     private float _timer;
     private float _elapsedLifeTime;
-    private float _regenTimer;
-
-    private bool _isGrowing = false;
+    
     private bool _canBePollinated = false;
     private bool _isGrowed = false;
     private bool _hasPollen = false;
@@ -38,7 +36,6 @@ public class Flower : MonoBehaviour
 
         if (!CanGrow())
         {
-            _isGrowing = false;
             return;
         }
 
@@ -64,7 +61,6 @@ public class Flower : MonoBehaviour
 
     private void Grow()
     {
-        _isGrowing = true;
         _timer += Time.deltaTime;
         float flowerProgress = Mathf.Clamp01(_timer / _data.GrowthDuration);
         _growthProgress = _data.GrowthCurve.Evaluate(flowerProgress);
@@ -90,7 +86,6 @@ public class Flower : MonoBehaviour
         int amount = _data.PollenAmount;
         _hasPollen = false;
         _canBePollinated = false;
-        _regenTimer = 0f;
 
         return amount;
     }

@@ -486,8 +486,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1130282989}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -538,6 +538,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 188622179}
+  - component: {fileID: 188622180}
   m_Layer: 5
   m_Name: Power Library UI
   m_TagString: Untagged
@@ -567,6 +568,21 @@ RectTransform:
   m_AnchoredPosition: {x: -825, y: -425}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &188622180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188622178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7869e3a29fd4b8468c3a32f2dbe58ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PowerManager
+  _powerEventChannel: {fileID: 11400000, guid: 58d287fe94bbf4746ad8d5cb39ba718c, type: 2}
+  _powerLibrary: {fileID: 11400000, guid: b795be3912642094fb7f4039ba066c2b, type: 2}
+  _activePowerType: 0
 --- !u!1 &214424357
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,6 +595,7 @@ GameObject:
   - component: {fileID: 214424361}
   - component: {fileID: 214424360}
   - component: {fileID: 214424359}
+  - component: {fileID: 214424362}
   m_Layer: 5
   m_Name: Category Button
   m_TagString: Untagged
@@ -688,6 +705,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 214424357}
   m_CullTransparentMesh: 1
+--- !u!114 &214424362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214424357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 155efef2189f64544b2d49b68447a66c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PowerButtonBinder
+  _powerEventChannel: {fileID: 11400000, guid: 58d287fe94bbf4746ad8d5cb39ba718c, type: 2}
+  _powerType: 7
 --- !u!1 &224366980
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,7 +810,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &254402239
 RectTransform:
   m_ObjectHideFlags: 0
@@ -926,6 +957,7 @@ GameObject:
   - component: {fileID: 490252457}
   - component: {fileID: 490252456}
   - component: {fileID: 490252455}
+  - component: {fileID: 490252458}
   m_Layer: 5
   m_Name: Category Button
   m_TagString: Untagged
@@ -1035,6 +1067,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 490252453}
   m_CullTransparentMesh: 1
+--- !u!114 &490252458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490252453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 155efef2189f64544b2d49b68447a66c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PowerButtonBinder
+  _powerEventChannel: {fileID: 11400000, guid: 58d287fe94bbf4746ad8d5cb39ba718c, type: 2}
+  _powerType: 6
 --- !u!1 &529761113
 GameObject:
   m_ObjectHideFlags: 0
@@ -1232,8 +1278,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1339044279}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1307,8 +1353,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 915102655}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1383,7 +1429,7 @@ RectTransform:
   m_Father: {fileID: 295715719}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1800,7 +1846,7 @@ RectTransform:
   m_Father: {fileID: 137938681}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1909,8 +1955,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1742184944}
+  m_Children: []
   m_Father: {fileID: 1039233636}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1938,7 +1983,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 413b3542aedf5bb46bc9526b23c56e6b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f9e3ed4109b89934fa90b01636d2e420, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2199,6 +2244,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1039233636}
+  - component: {fileID: 1039233637}
   m_Layer: 5
   m_Name: 'Category: Saison'
   m_TagString: Untagged
@@ -2219,6 +2265,7 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 867198068}
+  - {fileID: 1742184944}
   m_Father: {fileID: 942119724}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2226,6 +2273,20 @@ RectTransform:
   m_AnchoredPosition: {x: -200, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1039233637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039233635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3229cc9acbbdd5439736bc9ecc4227c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SeasonUI
+  _seasonWheelUI: {fileID: 867198067}
+  _seasonManager: {fileID: 1671524633}
 --- !u!1 &1043473101
 GameObject:
   m_ObjectHideFlags: 0
@@ -2863,7 +2924,7 @@ RectTransform:
   m_Father: {fileID: 1006486101}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3571,6 +3632,7 @@ GameObject:
   - component: {fileID: 1671524630}
   - component: {fileID: 1671524631}
   - component: {fileID: 1671524632}
+  - component: {fileID: 1671524633}
   m_Layer: 0
   m_Name: '[EnvironmentManager]'
   m_TagString: Untagged
@@ -3624,6 +3686,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaxManager
   _waxStock: 0
+--- !u!114 &1671524633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671524629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3802e71ada81bb3438b838e4dfa2bbc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SeasonManager
+  _currentSeason: 0
+  _seasonDuration: 10
 --- !u!1 &1703589044
 GameObject:
   m_ObjectHideFlags: 0
@@ -3690,7 +3766,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 867198068}
+  m_Father: {fileID: 1039233636}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3753,7 +3829,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1795980354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4116,6 +4192,46 @@ PrefabInstance:
     - target: {fileID: 3967346849905699466, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697015945510294730, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697015945510294730, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_ActionId
+      value: 935a0828-8d1d-4a5e-844a-7508128806c1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697015945510294730, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_ActionName
+      value: 'Power/UsePower[/Mouse/leftButton]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697015945510294730, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697015945510294730, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697015945510294730, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 188622180}
+    - target: {fileID: 8697015945510294730, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697015945510294730, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UsePower
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697015945510294730, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PowerManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697015945510294730, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 9079591191476606835, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
       propertyPath: _moveSpeed

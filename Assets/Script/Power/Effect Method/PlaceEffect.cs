@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GodGame/Effects/PlaceObjectEffect")]
@@ -9,12 +10,17 @@ public class PlaceEffect : SO_EffectBehaviour
     public override void ApplyEffect(IEnumerable<ITarget> targets)
     {
         if (_prefabToPlace == null || targets == null)
+        {
             return;
+        }
 
-        foreach (var target in targets)
+        foreach (ITarget target in targets)
         {
             if (target == null || !target._isValid())
+            {
                 continue;
+            }
+
 
             Vector3 pos = target._position;
 
@@ -26,7 +32,7 @@ public class PlaceEffect : SO_EffectBehaviour
 
                 if (entity != null && entity.name.Contains("RaycastTarget"))
                 {
-                    Object.Destroy(entity);
+                    Destroy(entity);
                 }
             }
         }

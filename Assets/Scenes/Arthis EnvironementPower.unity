@@ -978,7 +978,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3229cc9acbbdd5439736bc9ecc4227c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SeasonUI
-  _currentSeason: 2
   _seasonWheelUI: {fileID: 1057731752}
   _seasonManager: {fileID: 1605856132}
 --- !u!222 &935412438
@@ -2131,8 +2130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3802e71ada81bb3438b838e4dfa2bbc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SeasonManager
-  currentSeason: 0
-  seasonDuration: 5
+  _currentSeason: 0
+  _seasonDuration: 10
 --- !u!4 &1605856133
 Transform:
   m_ObjectHideFlags: 0
@@ -2591,7 +2590,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1605856132}
         m_TargetAssemblyTypeName: SeasonManager, Assembly-CSharp
-        m_MethodName: ForceNextSeason
+        m_MethodName: GoToNextSeason
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

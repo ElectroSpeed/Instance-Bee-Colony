@@ -3,5 +3,5 @@ using UnityEngine;
 
 public abstract class SO_TargetingBehaviour : ScriptableObject
 {
-    public abstract IEnumerable<ITarget> GetTargets(Vector3 origin);
+    public abstract IEnumerable<ITarget> GetTargets();
 }

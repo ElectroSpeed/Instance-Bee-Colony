@@ -6,18 +6,9 @@ using UnityEngine.XR;
 
 public class SeasonUI : MonoBehaviour
 {
-    [SerializeField] private Season _currentSeason;
-
     [SerializeField] private GameObject _seasonWheelUI;
 
     [SerializeField] SeasonManager _seasonManager;
-    
-
-    private void Start()
-    {
-        _currentSeason = _seasonManager.currentSeason;
-
-    }
 
     private void OnEnable()
     {
@@ -27,9 +18,9 @@ public class SeasonUI : MonoBehaviour
 
     private void HandleSeasonChanged(Season season)
     {       
-        _currentSeason = season;
-        float delay = _seasonManager.seasonDuration;
-        switch (_currentSeason)
+        float delay = _seasonManager._seasonDuration;
+        
+        switch (season)
         {
             case Season.Spring:  
                 RotateWheel(46, delay, false);
@@ -44,14 +35,12 @@ public class SeasonUI : MonoBehaviour
                 RotateWheel(316, delay, false);
                 break;
         }
-        
     }
 
     private void HandleSeasonForcedChange(Season season)
     {
-        _currentSeason = season;
         float delay = 0.5f;
-        switch (_currentSeason)
+        switch (season)
         {
             case Season.Spring:
                 RotateWheel(0, delay, true);
@@ -64,18 +53,17 @@ public class SeasonUI : MonoBehaviour
                 break;
             case Season.Winter:
                 RotateWheel(270, delay, true);
-                //quand c'est fini
-                HandleSeasonChanged(_currentSeason);
+                HandleSeasonChanged(season);
                 break;
         }
 
     }
 
-    public void RotateWheel(float targetAngle, float duration, bool isEase)
-{
-    StopAllCoroutines(); // empêche deux animations de se superposer
-    StartCoroutine(RotateWheelSmooth(targetAngle, duration, isEase));
-}
+    private void RotateWheel(float targetAngle, float duration, bool isEase)
+    {
+        StopAllCoroutines();
+        StartCoroutine(RotateWheelSmooth(targetAngle, duration, isEase));
+    }
 
 private IEnumerator RotateWheelSmooth(float targetAngle, float duration, bool isEase)
 {
