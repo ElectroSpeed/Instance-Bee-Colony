@@ -10,9 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9759cbccae0e8c478cac5c449443b54, type: 3}
-  m_Name: FlowerData
+  m_Name: EdelweissData
   m_EditorClassIdentifier: Assembly-CSharp::SO_FlowerData
-  _flowerName: Daisy Flower
+  _flowerName: Edelweiss
+  _description: on s en fout
+  _flowerPrefab: {fileID: 778431225565301238, guid: 66fa6b38f83425248b2e3530a7896f38, type: 3}
+  _lifeDuration: 50
+  _pollenAmount: 2
+  _growthDuration: 5
   _growthCurve:
     serializedVersion: 2
     m_Curve:
@@ -28,8 +33,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -37,13 +42,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _growthDuration: 2
-  _lifeDuration: 50
-  _pollenAmount: 3
-  _flowerPrefab: {fileID: 778431225565301238, guid: 66fa6b38f83425248b2e3530a7896f38, type: 3}
   _minHumidity: 0
   _maxHumidity: 100
   _minSunlight: 0
   _maxSunlight: 100
-  _minTemperature: -40
+  _minTemperature: 24.2
   _maxTemperature: 40
