@@ -1531,6 +1531,7 @@ GameObject:
   m_Component:
   - component: {fileID: 624361255}
   - component: {fileID: 624361256}
+  - component: {fileID: 624361257}
   m_Layer: 5
   m_Name: SFXVolumeSlider
   m_TagString: Untagged
@@ -1612,6 +1613,21 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &624361257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624361254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b3620c8a7745464a96d9ba99561a7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioSliderBinder
+  _audioEventChannel: {fileID: 11400000, guid: d0411eeef1527294c83cde740c12a60c, type: 2}
+  _channelType: 2
+  _slider: {fileID: 624361256}
 --- !u!1 &648287932
 GameObject:
   m_ObjectHideFlags: 0
@@ -2241,6 +2257,7 @@ GameObject:
   m_Component:
   - component: {fileID: 746024019}
   - component: {fileID: 746024020}
+  - component: {fileID: 746024021}
   m_Layer: 5
   m_Name: MainVolumeSlider
   m_TagString: Untagged
@@ -2322,6 +2339,21 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &746024021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746024018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b3620c8a7745464a96d9ba99561a7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioSliderBinder
+  _audioEventChannel: {fileID: 11400000, guid: d0411eeef1527294c83cde740c12a60c, type: 2}
+  _channelType: 0
+  _slider: {fileID: 746024020}
 --- !u!1 &818964547
 GameObject:
   m_ObjectHideFlags: 0
@@ -3735,6 +3767,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1095272465}
   - component: {fileID: 1095272466}
+  - component: {fileID: 1095272467}
   m_Layer: 5
   m_Name: MusicVolumeSlider
   m_TagString: Untagged
@@ -3816,6 +3849,21 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1095272467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095272464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b3620c8a7745464a96d9ba99561a7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioSliderBinder
+  _audioEventChannel: {fileID: 11400000, guid: d0411eeef1527294c83cde740c12a60c, type: 2}
+  _channelType: 1
+  _slider: {fileID: 1095272466}
 --- !u!1 &1110685304
 GameObject:
   m_ObjectHideFlags: 0
