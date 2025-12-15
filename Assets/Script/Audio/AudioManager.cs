@@ -46,8 +46,11 @@ public class AudioManager : MonoBehaviour
         _sfxSource.PlayOneShot(sound._clip);
     }
 
-    public void StopAllSFX()
+    public void PlaySFXInObject(SoundType type, AudioSource source)
     {
-        _sfxSource.Stop();
+        var sound = _soundLibrary.GetSound(type, false);
+        if (sound == null) return;
+        
+        source.PlayOneShot(sound._clip);
     }
 }

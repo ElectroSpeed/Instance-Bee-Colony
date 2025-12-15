@@ -6,15 +6,9 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Edelweiss
+  m_Name: TulipAnimatorControler 2
   serializedVersion: 5
-  m_AnimatorParameters:
-  - m_Name: isGrowing
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+  m_AnimatorParameters: []
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -82,7 +76,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -3039429664819086115, guid: 67be5450ab2a8ed46b14a5240c3048f9, type: 3}
+  m_Motion: {fileID: 3157266315055652757, guid: bb8f7c9b9586203488274964d351dd6f, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class BeeAgent : Agent
@@ -31,9 +32,17 @@ public class BeeAgent : Agent
             _statsData._currentTirednessValue
         ));
 
+        _bb.AddValue("Health", new Health( 
+            _statsData._minHealthValue,
+            _statsData._maxHealthValue,
+            _statsData._currentHealthValue
+        ));
+
         _bb.AddValue("TargetFlower", null);
         _bb.AddValue("CollectedPollen", 0);
         _bb.AddValue("Hive", hive);
+        _bb.AddValue("TargetHornet", null);
+        _bb.AddValue("IsUnderAttack", false);
     }
 
 
@@ -56,5 +65,26 @@ public class BeeAgent : Agent
             _bb.ModifyValue("Hunger", h);
             _bb.ModifyValue("Tiredness", t);
         }
+    }
+
+    public void Die()
+    {
+        Debug.Log("Bee died");
+
+        HornetAgent[] hornets = Object.FindObjectsByType<HornetAgent>(FindObjectsSortMode.None);
+
+        foreach (HornetAgent hornet in hornets)
+        {
+            Blackboard bb = hornet.GetBlackboard();
+            if (bb == null) continue;
+
+            Transform targetBee = bb.GetValue("TargetBee") as Transform;
+            if (targetBee == this.transform)
+            {
+                bb.ModifyValue("TargetBee", null);
+            }
+        }
+
+        Destroy(gameObject);
     }
 }
