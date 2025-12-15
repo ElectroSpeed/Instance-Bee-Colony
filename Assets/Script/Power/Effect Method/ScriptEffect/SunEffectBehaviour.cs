@@ -4,12 +4,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GodGame/Effects/SunEffect")]
 public class SunEffectBehaviour : SO_EffectBehaviour
 {
-    [SerializeField] private EnvironmentManager _environment;
+    private EnvironmentManager _environment;
     [SerializeField] private float _intensity;
 
     public override void ApplyEffect(IEnumerable<ITarget> targets)
     {
-        _environment = Object.FindFirstObjectByType<EnvironmentManager>();
+        _environment = GameObject.FindWithTag("EnvironmentManager").GetComponent<EnvironmentManager>();
 
         if (_environment == null)
         {

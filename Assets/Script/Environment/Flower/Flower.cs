@@ -56,7 +56,7 @@ public class Flower : MonoBehaviour
             animator.speed = 1f;
             _growthProgress = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
             if (_growthProgress >= 1f)
-            Destroy(gameObject);
+                Destroy(gameObject);
         }
     }
 

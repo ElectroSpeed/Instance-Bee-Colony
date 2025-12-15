@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
-
 public class PowerBase
 {
     public readonly Power _usedPower;
