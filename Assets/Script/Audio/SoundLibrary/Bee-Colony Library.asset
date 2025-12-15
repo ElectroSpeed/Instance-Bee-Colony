@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoundLibrary
   _musicSounds:
   - _name: Child
-    _clip: {fileID: 8300000, guid: 2b45b07f9de77454f8b500e7f3466abb, type: 3}
+    _clip: {fileID: 8300000, guid: d43ead7c3cd6ac24a900c214ea5dce1d, type: 3}
     _loop: 1
   - _name: Ambiance Main Game
     _clip: {fileID: 8300000, guid: d43ead7c3cd6ac24a900c214ea5dce1d, type: 3}
