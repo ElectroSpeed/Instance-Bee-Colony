@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseMenu : MonoBehaviour
+public class MenuButtons : MonoBehaviour
 {
 
     [SerializeField] private string _sceneName= "Main Menu Raphaël";
@@ -21,5 +21,10 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(_sceneName);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
