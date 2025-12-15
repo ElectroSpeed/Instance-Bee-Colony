@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(menuName = "GodGame/Targeting/Area Targeting")]
@@ -13,6 +13,9 @@ public class SO_AreaTargeting : SO_TargetingBehaviour
 
     public override IEnumerable<ITarget> GetTargets()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            yield break;
+        
         _camera = Camera.main;
         Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 

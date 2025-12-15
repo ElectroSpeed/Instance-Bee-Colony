@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(menuName = "GodGame/Targeting/Point + Nearest Entity")]
@@ -17,6 +18,9 @@ public class SO_PointAndNearestEntityTargeting : SO_TargetingBehaviour
 
     public override IEnumerable<ITarget> GetTargets()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            yield break;
+        
         _camera = Camera.main;
         if (_camera == null)
             yield break;

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(menuName = "GodGame/Targeting/Point Targeting")]
@@ -15,6 +15,9 @@ public class SO_PointTargeting : SO_TargetingBehaviour
 
     public override IEnumerable<ITarget> GetTargets()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            yield break;
+        
         _camera = Camera.main;
         Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
