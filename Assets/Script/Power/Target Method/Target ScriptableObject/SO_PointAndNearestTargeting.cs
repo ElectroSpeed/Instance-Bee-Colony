@@ -11,13 +11,20 @@ public class SO_PointAndNearestEntityTargeting : SO_TargetingBehaviour
     [Header("Entity Scan")]
     [SerializeField] private float _scanRadius = 5f;
     [SerializeField] private LayerMask _entityMask;
+    
+    private Camera _camera;
+
+    private void Awake()
+    {
+        _camera = Camera.main;
+    }
 
     public override IEnumerable<ITarget> GetTargets(Vector3 origin)
     {
-        if (Camera.main == null)
+        if (_camera == null)
             yield break;
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
         if (!Physics.Raycast(ray, out RaycastHit hit, _maxDistance, _groundMask))
             yield break;

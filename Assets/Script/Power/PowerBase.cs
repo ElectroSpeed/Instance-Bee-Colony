@@ -30,7 +30,7 @@ public abstract class PowerBase : MonoBehaviour, IPower
         }
     }
     
-    public void ForceDeactivate()
+    private void ForceDeactivate()
     {
         _usePower = false;
         if (_activePower == this)
