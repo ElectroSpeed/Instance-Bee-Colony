@@ -64,6 +64,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1508495399287731329}
+  - component: {fileID: 4841202367371966351}
   m_Layer: 7
   m_Name: PrefabHornet
   m_TagString: Untagged
@@ -88,6 +89,27 @@ Transform:
   - {fileID: 8743535843812805218}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4841202367371966351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3496864973105607847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ddc9188d859ac409c247a795d2e384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HornetAgent
+  _tasksData:
+  - {fileID: 11400000, guid: 374de2c43cce42f4eb4838e9c9cca1b8, type: 2}
+  - {fileID: 11400000, guid: c625705305cb5e94da9bcfcf8c2b741c, type: 2}
+  - {fileID: 11400000, guid: be73704161410cb4d9bc8ee25b1c1e4d, type: 2}
+  _maxHealth: 50
+  attackRange: 1.2
+  attackCooldown: 0.8
+  attackDamage: 10
+  detectionRadius: 40
 --- !u!1001 &9141743173392330121
 PrefabInstance:
   m_ObjectHideFlags: 0

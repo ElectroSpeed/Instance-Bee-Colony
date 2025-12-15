@@ -69,7 +69,7 @@ public class Task_AttackBee : AgentTaskBase
     {
         if (_targetBee == null) return;
 
-        BeeAgent beeAgent = _targetBee.GetComponent<BeeAgent>();
+        BeeAgent beeAgent = _targetBee.GetComponentInParent<BeeAgent>();
         if (beeAgent == null) return;
 
         Blackboard beeBB = beeAgent.GetBlackboard();
@@ -84,7 +84,7 @@ public class Task_AttackBee : AgentTaskBase
             beeBB.ModifyValue("Health", health);
             beeBB.ModifyValue("IsUnderAttack", true);
             beeBB.ModifyValue("TargetHornet", _agentTransform);
-
+            Debug.Log("HP of the bee: " + health.Current);
             if (health.Current <= 0f)
             {
                 beeAgent.Die();

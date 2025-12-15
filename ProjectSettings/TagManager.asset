@@ -6,6 +6,7 @@ TagManager:
   tags:
   - EnvironmentManager
   - Bee
+  - Beehive
   layers:
   - Default
   - TransparentFX

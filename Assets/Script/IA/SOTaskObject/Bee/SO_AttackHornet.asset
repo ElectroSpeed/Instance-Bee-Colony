@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TaskData_AttackHornet
   _taskName: AttackHornet
   _attackRange: 5
-  _attackCooldown: 1
-  _attackDamage: 7
+  _attackCooldown: 1.5
+  _attackDamage: 5
