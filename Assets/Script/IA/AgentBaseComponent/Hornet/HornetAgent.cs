@@ -10,8 +10,6 @@ public class HornetAgent : Agent
 
     [Header("Detection Parameters")]
     [SerializeField] private float detectionRadius = 10f;
-    [SerializeField] private LayerMask beeLayer;
-
     public override void Initialize()
     {
         _bb = new Blackboard();
@@ -19,7 +17,6 @@ public class HornetAgent : Agent
         _bb.AddValue("HealthHornet", _maxHealth);
         _bb.AddValue("TargetBee", null);
         _bb.AddValue("DetectionRadius", detectionRadius);
-        _bb.AddValue("BeeLayer", beeLayer);
         _bb.AddValue("AttackRange", attackRange);
         _bb.AddValue("AttackCooldown", attackCooldown);
         _bb.AddValue("AttackDamage", attackDamage);
