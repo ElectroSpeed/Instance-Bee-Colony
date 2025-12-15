@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [CreateAssetMenu(menuName = "GodGame/Targeting/Point Targeting")]
 public class SO_PointTargeting : SO_TargetingBehaviour
@@ -11,18 +13,14 @@ public class SO_PointTargeting : SO_TargetingBehaviour
     
     private Camera _camera;
 
-    private void Awake()
+    public override IEnumerable<ITarget> GetTargets()
     {
         _camera = Camera.main;
-    }
-
-    public override IEnumerable<ITarget> GetTargets(Vector3 origin)
-    {
-        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         if (Physics.Raycast(ray, out RaycastHit hit, _maxDistance, _groundMask))
         {
-            Cell cell = hit.collider.GetComponent<Cell>();
+            Cell cell = hit.collider.GetComponentInParent<Cell>();
             if (cell != null && cell._pathPoint != null)
             {
                 Vector3 point = cell._pathPoint.position;

@@ -98,6 +98,8 @@ public class PathFinding
             {
                 if (neighbor._inClosedSet) continue;
 
+                if (!neighbor._isWalkable) continue;
+
                 float heightDiff = Mathf.Max(0, neighbor._height - current._height);
                 int heightCost = Mathf.RoundToInt(heightDiff * 10);
                 int pathCost = current._gCost + 1 + heightCost;

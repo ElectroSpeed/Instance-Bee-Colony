@@ -1,5 +1,5 @@
 public enum SoundType
-        {
-            None,
-            Child
-        }
+{
+    None,
+    TestSound
+}

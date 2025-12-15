@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bee-Colony Library
   m_EditorClassIdentifier: Assembly-CSharp::SoundLibrary
   _musicSounds:
-  - _name: Child
-    _clip: {fileID: 8300000, guid: 2b45b07f9de77454f8b500e7f3466abb, type: 3}
-    _loop: 1
+  - _name: TestSound
+    _clip: {fileID: 0}
+    _loop: 0
   _sfxSounds: []

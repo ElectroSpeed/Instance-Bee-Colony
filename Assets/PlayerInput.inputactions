@@ -871,6 +871,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Power",
+            "id": "6320e523-4249-45a7-9cb3-90a1e0c43d2d",
+            "actions": [
+                {
+                    "name": "UsePower",
+                    "type": "Button",
+                    "id": "935a0828-8d1d-4a5e-844a-7508128806c1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6792f829-3b70-45a0-b600-ccb55cd22a45",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UsePower",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

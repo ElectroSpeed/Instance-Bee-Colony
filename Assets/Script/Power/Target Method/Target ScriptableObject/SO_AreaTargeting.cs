@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [CreateAssetMenu(menuName = "GodGame/Targeting/Area Targeting")]
 public class SO_AreaTargeting : SO_TargetingBehaviour
@@ -10,14 +11,10 @@ public class SO_AreaTargeting : SO_TargetingBehaviour
 
     private Camera _camera;
 
-    private void Awake()
+    public override IEnumerable<ITarget> GetTargets()
     {
         _camera = Camera.main;
-    }
-
-    public override IEnumerable<ITarget> GetTargets(Vector3 origin)
-    {
-        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, _groundMask))
         {

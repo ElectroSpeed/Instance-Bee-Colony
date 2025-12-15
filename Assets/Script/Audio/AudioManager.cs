@@ -21,11 +21,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        PlayMusic(SoundType.Child);
-    }
-
     public void PlayMusic(SoundType type)
     {
         var sound = _soundLibrary.GetSound(type, true);
@@ -51,8 +46,11 @@ public class AudioManager : MonoBehaviour
         _sfxSource.PlayOneShot(sound._clip);
     }
 
-    public void StopAllSFX()
+    public void PlaySFXInObject(SoundType type, AudioSource source)
     {
-        _sfxSource.Stop();
+        var sound = _soundLibrary.GetSound(type, false);
+        if (sound == null) return;
+        
+        source.PlayOneShot(sound._clip);
     }
 }

@@ -1,78 +1,39 @@
 using System.Collections.Generic;
-using UnityEngine;
-
-public abstract class PowerBase : MonoBehaviour, IPower
+public class PowerBase
 {
-    [HideInInspector] public bool _usePower = false;
-
-    [SerializeField] protected SO_PowerData _data;
-    protected float _lastActivationTime;
+    public readonly Power _usedPower;
+    public PowerBase(Power usedPower) => _usedPower = usedPower;
     
-    private static PowerBase _activePower;
-
-    public static PowerBase ActivePower => _activePower;
-
-    public virtual void SwitchActivationPower()
+    public void StartUse()
     {
-        if (!_usePower)
-        {
-            if (_activePower != null && _activePower != this)
-            {
-                _activePower.ForceDeactivate();
-            }
-            
-            _usePower = true;
-            _activePower = this;
-        }
-        else
-        {
-            ForceDeactivate();
-        }
+        ApplyEffects();
+        PlaySound();
     }
     
-    private void ForceDeactivate()
+    public void UpdateContinuous()
     {
-        _usePower = false;
-        if (_activePower == this)
-        {
-            _activePower = null;
-        }
+        ApplyEffects();
     }
-
-    public virtual bool CanActivatePower()
+    
+    private void ApplyEffects()
     {
-        return Time.time >= _lastActivationTime + _data.Cooldown;
-    }
-
-    public virtual void ActivatePower()
-    {
-        if (!_usePower)
+        if (_usedPower._targetingPrefab != null)
         {
-            return;
-        }
-
-        if (!CanActivatePower()) return;
-
-        _lastActivationTime = Time.time;
-
-        if (_data.EffectPrefabs == null || _data.EffectPrefabs.Length == 0)
-        {
-            return;
-        }
-
-        IEnumerable<ITarget> targets = null;
-
-        if (_data.TargetingPrefab != null)
-        {
-            targets = _data.TargetingPrefab.GetTargets(transform.position);
-        }
-
-        foreach (var effect in _data.EffectPrefabs)
-        {
-            if (effect != null)
+            IEnumerable<ITarget> targets = _usedPower._targetingPrefab.GetTargets();
+            foreach (SO_EffectBehaviour effect in _usedPower._effectPrefabs)
             {
-                effect.ApplyEffect(targets);
+                effect?.ApplyEffect(targets);
             }
         }
+        
+        foreach (SO_EffectBehaviour effect in _usedPower._effectPrefabs)
+        {
+            effect?.ApplyEffect(null);
+        }
+    }
+
+    private void PlaySound()
+    {
+        AudioManager.Instance.PlaySFX(_usedPower._sound);
     }
 }
