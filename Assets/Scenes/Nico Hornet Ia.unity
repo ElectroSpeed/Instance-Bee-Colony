@@ -441,7 +441,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HornetAgent
   _tasksData:
   - {fileID: 11400000, guid: 374de2c43cce42f4eb4838e9c9cca1b8, type: 2}
-  _maxHealth: 50
+  - {fileID: 11400000, guid: c625705305cb5e94da9bcfcf8c2b741c, type: 2}
+  - {fileID: 11400000, guid: be73704161410cb4d9bc8ee25b1c1e4d, type: 2}
+  _maxHealth: 100
+  attackRange: 1.2
+  attackCooldown: 0.8
+  attackDamage: 10
   detectionRadius: 40
   beeLayer:
     serializedVersion: 2
@@ -687,6 +692,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a4380fbbc036b5f49b9a8dbf7dd05bc1, type: 2}
   - {fileID: 11400000, guid: 11dea03f3aaec5241810240059392c51, type: 2}
   - {fileID: 11400000, guid: 529f3204eedc8c445a35b2841da47be3, type: 2}
+  - {fileID: 11400000, guid: 6638c7f161e3fcf4199fe899d3a5c591, type: 2}
   _statsData: {fileID: 11400000, guid: d3e152e4f7049a34ea960f22dfae9194, type: 2}
   hive: {fileID: 1932890963}
   hungerDecayAmount: 1

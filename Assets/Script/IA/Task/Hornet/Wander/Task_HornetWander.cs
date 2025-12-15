@@ -29,7 +29,6 @@ public class Task_HornetWander : AgentTaskBase
         _scanInterval = scanInterval;
         _scanRadius = scanRadius;
         _beeLayer = LayerMask.GetMask("Bee");
-
         _agentTransform = (Transform)_bb.GetValue("AgentTransform");
     }
 
@@ -115,7 +114,13 @@ public class Task_HornetWander : AgentTaskBase
 
     public override void OnCancel() { }
 
-    public override float GetUtility() => 10f;
+    public override float GetUtility()
+    {
+        Transform targetBee = _bb.GetValue("TargetBee") as Transform;
+        float cond_NoBee = targetBee == null ? 1f : 0.05f;
+        return cond_NoBee;
+    }
+
 
     public override int GetTaskPriority() => 0;
 
