@@ -1605,8 +1605,8 @@ MonoBehaviour:
   m_FillRect: {fileID: 1024473590}
   m_HandleRect: {fileID: 1550338721}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 80
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -2315,8 +2315,8 @@ MonoBehaviour:
   m_FillRect: {fileID: 238246881}
   m_HandleRect: {fileID: 1562681939}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 80
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -3809,8 +3809,8 @@ MonoBehaviour:
   m_FillRect: {fileID: 659720184}
   m_HandleRect: {fileID: 1871676349}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 80
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -5472,6 +5472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e77d847c26106144382440b7c03e49fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuButton
+  nextScene: MVP Scene
 --- !u!1 &2006180761
 GameObject:
   m_ObjectHideFlags: 0
