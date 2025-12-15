@@ -5,9 +5,11 @@ using UnityEngine.UI;
 public class MainMenuButton : UIBase
 {
 
+    [SerializeField] private string nextScene="MVP Scene";
+    
     public void Play()
     {
-        SceneManager.LoadScene("Merge Scene");
+        SceneManager.LoadScene(nextScene);
     }
 
 
