@@ -1,13 +1,11 @@
+using System.Collections;
 using UnityEngine;
 
 public class Flower : MonoBehaviour
 {
     [SerializeField] private SO_FlowerData _data;
-    
-    private EnvironmentManager _environment;
 
     private float _growthProgress;
-    private float _timer;
     private float _elapsedLifeTime;
     
     private bool _canBePollinated = false;
@@ -16,14 +14,20 @@ public class Flower : MonoBehaviour
 
     private Transform _model;
 
+    [SerializeField] private Animator animator;
+    private EnvironmentManager _environment;
+
+
     private void Start()
     {
-        _environment = FindObjectOfType<EnvironmentManager>();
+        _environment = GameObject.FindWithTag("EnvironmentManager").GetComponent<EnvironmentManager>();
         if (_data.FlowerPrefab != null)
         {
             _model = Instantiate(_data.FlowerPrefab, transform).transform;
             _model.localScale = Vector3.zero;
         }
+
+        animator.speed = 0f;
     }
 
     private void Update()
@@ -36,6 +40,7 @@ public class Flower : MonoBehaviour
 
         if (!CanGrow())
         {
+            animator.speed = 0f;
             return;
         }
 
@@ -45,9 +50,12 @@ public class Flower : MonoBehaviour
     private void PassingLife()
     {
         _elapsedLifeTime += Time.deltaTime;
-
+        
         if (_elapsedLifeTime >= _data.LifeDuration)
         {
+            animator.speed = 1f;
+            _growthProgress = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            if (_growthProgress >= 1f)
             Destroy(gameObject);
         }
     }
@@ -61,15 +69,17 @@ public class Flower : MonoBehaviour
 
     private void Grow()
     {
-        _timer += Time.deltaTime;
-        float flowerProgress = Mathf.Clamp01(_timer / _data.GrowthDuration);
-        _growthProgress = _data.GrowthCurve.Evaluate(flowerProgress);
+        _growthProgress = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
         if (_model != null)
-            _model.localScale = Vector3.one * _growthProgress;
-
-        if (_growthProgress >= 1)
         {
+            animator.speed = 1f;
+
+        }       
+
+        if (_growthProgress >= 0.5f)
+        {
+            animator.speed = 0f;
             _isGrowed = true;
             _canBePollinated = true;
             _hasPollen = true;
@@ -99,3 +109,5 @@ public class Flower : MonoBehaviour
         }
     }
 }
+
+
