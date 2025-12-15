@@ -20,7 +20,7 @@ public class DestroyEffect : SO_EffectBehaviour
 
                 if (entity != null)
                 {
-                    Object.Destroy(entity);
+                    Object.Destroy(entity.transform.parent.gameObject);
                 }
             }
         }

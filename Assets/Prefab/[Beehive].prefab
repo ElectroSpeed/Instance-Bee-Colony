@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6687273254954967233}
   - component: {fileID: 4589665302233018967}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4872160978271933130}
   - component: {fileID: 8222636965491283759}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: '[Beehive]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 49480683081754780}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,6 +190,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: df5969dd32cdf8346afcfbe76a91665b, type: 3}
       propertyPath: m_Name
       value: Tree
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: df5969dd32cdf8346afcfbe76a91665b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -272,6 +276,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5b01e216d487b794ca317642a5ed123d, type: 3}
       propertyPath: m_Name
       value: Ruche
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5b01e216d487b794ca317642a5ed123d, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

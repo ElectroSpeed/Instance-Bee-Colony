@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c4cae9e137a7c4ca5075ef4d17fe4b, type: 3}
   m_Name: PlaceBeehive
   m_EditorClassIdentifier: Assembly-CSharp::PlaceEffect
-  _prefabToPlace: {fileID: 0}
+  _prefabToPlace: {fileID: 2102113273400245465, guid: 703acf8253bbaa84bb3c0692108c594d, type: 3}

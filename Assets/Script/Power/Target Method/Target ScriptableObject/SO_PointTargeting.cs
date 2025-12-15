@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,13 +13,9 @@ public class SO_PointTargeting : SO_TargetingBehaviour
     
     private Camera _camera;
 
-    private void Awake()
-    {
-        _camera = Camera.main;
-    }
-
     public override IEnumerable<ITarget> GetTargets()
     {
+        _camera = Camera.main;
         Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         if (Physics.Raycast(ray, out RaycastHit hit, _maxDistance, _groundMask))

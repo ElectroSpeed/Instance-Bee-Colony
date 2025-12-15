@@ -19,10 +19,18 @@ public class PowerBase
     
     private void ApplyEffects()
     {
-        IEnumerable<ITarget> targets = _usedPower._targetingPrefab.GetTargets();
+        if (_usedPower._targetingPrefab != null)
+        {
+            IEnumerable<ITarget> targets = _usedPower._targetingPrefab.GetTargets();
+            foreach (SO_EffectBehaviour effect in _usedPower._effectPrefabs)
+            {
+                effect?.ApplyEffect(targets);
+            }
+        }
+        
         foreach (SO_EffectBehaviour effect in _usedPower._effectPrefabs)
         {
-            effect?.ApplyEffect(targets);
+            effect?.ApplyEffect(null);
         }
     }
 

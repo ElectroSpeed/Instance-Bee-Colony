@@ -19,4 +19,4 @@ MonoBehaviour:
   _scanRadius: 5
   _entityMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128

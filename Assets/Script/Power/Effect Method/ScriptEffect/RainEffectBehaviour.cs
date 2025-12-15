@@ -4,18 +4,18 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GodGame/Effects/RainEffect")]
 public class RainEffectBehaviour : SO_EffectBehaviour
 {
+    [SerializeField] private EnvironmentManager _environment;
     [SerializeField] private float _intensity;
 
     public override void ApplyEffect(IEnumerable<ITarget> targets)
     {
-        EnvironmentManager environment = Object.FindFirstObjectByType<EnvironmentManager>();
+        _environment = Object.FindFirstObjectByType<EnvironmentManager>();
 
-        if (environment == null)
+        if (_environment == null)
         {
             return;
         }
-        
-        RainEffect rain = new RainEffect(environment, _intensity);
-        rain.ApplyEffect(null);
+        _environment._isPowerActive = true;
+        _environment.SetHumidity(_environment._humidity + _intensity);
     }
 }

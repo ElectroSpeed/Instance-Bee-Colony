@@ -15,13 +15,9 @@ public class SO_PointAndNearestEntityTargeting : SO_TargetingBehaviour
     
     private Camera _camera;
 
-    private void Awake()
-    {
-        _camera = Camera.main;
-    }
-
     public override IEnumerable<ITarget> GetTargets()
     {
+        _camera = Camera.main;
         if (_camera == null)
             yield break;
 

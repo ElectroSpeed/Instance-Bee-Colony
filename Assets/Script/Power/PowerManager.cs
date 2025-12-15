@@ -8,17 +8,27 @@ public class PowerManager : MonoBehaviour
 
     [SerializeField] private PowerType _activePowerType = PowerType.None;
     private PowerBase _activePower;
+    
+    private float _continuousTimer = 0f;
+    private float _timeToUpdate = 1f;
 
     private void OnEnable() => _powerEventChannel.OnPowerSelected += HandlePowerSelected;
     private void OnDisable() => _powerEventChannel.OnPowerSelected -= HandlePowerSelected;
 
     private void Update()
     {
-        if (_activePower != null && _activePower._usedPower._utilisationMethod.IsContinuous)
+        if (_activePower == null) return;
+        if (!_activePower._usedPower._utilisationMethod.IsContinuous) return;
+
+        _continuousTimer += Time.deltaTime;
+
+        if (_continuousTimer >= _timeToUpdate)
         {
             _activePower.UpdateContinuous();
+            _continuousTimer = 0f;
         }
     }
+
 
     public void UsePower(InputAction.CallbackContext context)
     {
