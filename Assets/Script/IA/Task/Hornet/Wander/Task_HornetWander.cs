@@ -15,7 +15,6 @@ public class Task_HornetWander : AgentTaskBase
     private float _scanTimer;
     private float _scanRadius;
 
-    private LayerMask _beeLayer;
 
     private PathFinding _pathFinder = new PathFinding();
     private List<Vector3> _currentPath;
@@ -28,8 +27,6 @@ public class Task_HornetWander : AgentTaskBase
         _speed = speed;
         _scanInterval = scanInterval;
         _scanRadius = scanRadius;
-        _beeLayer = LayerMask.GetMask("Bee");
-
         _agentTransform = (Transform)_bb.GetValue("AgentTransform");
     }
 
@@ -91,11 +88,13 @@ public class Task_HornetWander : AgentTaskBase
 
     private void ScanForBees()
     {
-        Collider[] hits = Physics.OverlapSphere(_agentTransform.position, _scanRadius, _beeLayer);
-        
+        Collider[] hits = Physics.OverlapSphere(_agentTransform.position, _scanRadius);
 
         foreach (var hit in hits)
         {
+            if (!hit.CompareTag("Bee") || hit.transform == null)
+                continue;
+
             _bb.ModifyValue("TargetBee", hit.transform);
             Debug.Log("Hornet found a bee to target.");
             return;
@@ -115,7 +114,13 @@ public class Task_HornetWander : AgentTaskBase
 
     public override void OnCancel() { }
 
-    public override float GetUtility() => 10f;
+    public override float GetUtility()
+    {
+        Transform targetBee = _bb.GetValue("TargetBee") as Transform;
+        float cond_NoBee = targetBee == null ? 1f : 0.05f;
+        return cond_NoBee;
+    }
+
 
     public override int GetTaskPriority() => 0;
 

@@ -5,7 +5,7 @@ public class Hunger
 {
     public float _minHungerValue;
     public float _maxHungerValue;
-    private float _currentHungerValue;
+    public float _currentHungerValue;
     public event System.Action<float> OnValueChanged;
 
     public float Current
@@ -31,18 +31,18 @@ public class Hunger
     {
         public float _minTirednessValue;
         public float _maxTirednessValue;
-        private float _currentTirednessValue;
+        public float _currentTirednessValue;
         public event System.Action<float> OnValueChanged;
 
     public float Current
+    {
+        get => _currentTirednessValue;
+        set
         {
-            get => _currentTirednessValue;
-            set
-            {
                 _currentTirednessValue = Mathf.Clamp(value, _minTirednessValue, _maxTirednessValue);
                 OnValueChanged?.Invoke(_currentTirednessValue);
-            }
         }
+    }
 
         public Tiredness(float minTiredness, float maxTiredness, float currentTiredness = 50f)
         {
@@ -52,9 +52,38 @@ public class Hunger
         }
     }
 
+[System.Serializable]
+    public class Health
+    {
+        public float _minHealthValue;
+        public float _maxHealthValue;
+        public float _currentHealthValue;
+        public event System.Action<float> OnValueChanged;
+
+
+    public float Current
+    {
+        get => _currentHealthValue;
+        set
+        {
+                _currentHealthValue = Mathf.Clamp(value, _minHealthValue, _maxHealthValue);
+                OnValueChanged?.Invoke(_currentHealthValue);
+        }
+    }
+    public Health(float minHealth, float maxHeatlh, float currentHealth)
+    {
+        _minHealthValue = minHealth;
+        _maxHealthValue = maxHeatlh;
+        _currentHealthValue = currentHealth;
+    }
+
+        public bool IsDead => _currentHealthValue <= _minHealthValue;
+    }
+
     [System.Serializable]
-public class AgentBase
-{
-    public Hunger _hunger;
-    public Tiredness _tiredness;
-}
+    public class AgentBase
+    {
+        public Hunger _hunger;
+        public Tiredness _tiredness;
+        public Health _health;
+    }
