@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -3.4}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -75, y: -350}
+  m_AnchoredPosition: {x: -43, y: -352}
   m_SizeDelta: {x: 750, y: 750}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &8491040062581051654
@@ -101,16 +101,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 807920320140509656}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.953717, w: 0.30070582}
   m_LocalPosition: {x: 0, y: 0, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3422344919651236981}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 145}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -772, y: 150}
+  m_AnchoredPosition: {x: -800, y: 150}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3978960177772206413
@@ -134,14 +134,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.07924521, g: 0.07700242, b: 0.07700242, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 1abc8eea5b9c89b4f9c695b2c1f100c7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -405,7 +405,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4e495edbe981332409d1197a66d79685, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8a969d4e92683e541b3631d6cf675345, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -639,13 +639,16 @@ MonoBehaviour:
   - {fileID: 6184310091200377851}
   flowerDatas:
   - {fileID: 11400000, guid: c1e6f321483fc754294a1e818f11a1eb, type: 2}
+  - {fileID: 11400000, guid: e80d08ce4a83af649b8e588705a46439, type: 2}
   - {fileID: 11400000, guid: 86a114ef7e618d04f9d6d8fcfb70f8e3, type: 2}
+  - {fileID: 11400000, guid: 00555167009cb9f4790a174627e96829, type: 2}
+  - {fileID: 11400000, guid: 999495387c0e1e04f80c5f0505bd962d, type: 2}
+  - {fileID: 11400000, guid: decf3c39a48ae684f981ed8d6e504631, type: 2}
   pageBook: {fileID: 9019648721083346270, guid: 5332a8579131cb94381b977d28816306, type: 3}
   BookCover: {fileID: 2765088503456880727}
-  FlowerImage: {fileID: 0}
-  TemperatureImage: {fileID: 0}
-  HumidityImage: {fileID: 0}
-  SunlightImage: {fileID: 0}
+  TemperatureImage: {fileID: 21300000, guid: 78a6b8eebd88e2445810423584bd4d65, type: 3}
+  HumidityImage: {fileID: 21300000, guid: f0c40fde9c8f8e2438b9ae28c2fc375c, type: 3}
+  SunlightImage: {fileID: 21300000, guid: 865f91ab950330b489ded10b84ed4f99, type: 3}
 --- !u!1 &3913064385123018074
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,16 +875,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5995249727379859005}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.95371693, w: 0.30070582}
   m_LocalPosition: {x: 0, y: 0, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3422344919651236981}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -145}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 114, y: 150}
+  m_AnchoredPosition: {x: 163.7, y: 150}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6127386576104838962
@@ -905,14 +908,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.09433961, g: 0.088109635, b: 0.088109635, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 99e94c12436a18d4497c23019840c420, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1012,7 +1015,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -1.5, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4421125381757943022
@@ -1028,7 +1031,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PagesScript
   Container: {fileID: 0}
-  Image: {fileID: 0}
+  FlowerButtonContainer: {fileID: 0}
   TemperatureIcon: {fileID: 0}
   HumidityIcon: {fileID: 0}
   SunlightIcon: {fileID: 0}
