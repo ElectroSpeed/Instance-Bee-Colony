@@ -11,7 +11,6 @@ public class Book : MonoBehaviour
     [SerializeField] private GameObject BookCover;
 
     [Header("Ressources Loader")]
-    [SerializeField] private Sprite FlowerImage;
     [SerializeField] private Sprite TemperatureImage;
     [SerializeField] private Sprite HumidityImage;
     [SerializeField] private Sprite SunlightImage;
@@ -40,7 +39,6 @@ public class Book : MonoBehaviour
 
             }
             // Images
-            slot.Image.sprite = FlowerImage;
             slot.TemperatureIcon.sprite = TemperatureImage;
             slot.HumidityIcon.sprite = HumidityImage;
             slot.SunlightIcon.sprite = SunlightImage;
@@ -54,6 +52,13 @@ public class Book : MonoBehaviour
             slot.SunlightText.text = flower.MinSunlight + "% / " + flower.MaxSunlight + "%";
             slot.TemperatureText.text = flower.MinTemperature + "°C / " + flower.MaxTemperature + "°C";
             slotGO.transform.SetAsFirstSibling();
+
+            //Flower Button
+            GameObject FlowerButtonInstance = Instantiate(
+                flower.FlowerButtonPrefab,
+                slot.FlowerButtonContainer.transform
+            );
+     
 
         }
 

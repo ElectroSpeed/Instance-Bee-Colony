@@ -7,7 +7,7 @@ public class PagesScript : MonoBehaviour
 
     public GameObject Container;
     [Header("Images")]
-    public Image Image;
+    public GameObject FlowerButtonContainer;
     public Image TemperatureIcon;
     public Image HumidityIcon;
     public Image SunlightIcon;
