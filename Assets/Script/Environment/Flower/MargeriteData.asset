@@ -42,6 +42,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _flowerButtonPrefab: {fileID: 249641788594595046, guid: c6b574962c7669042bcd2b436a5ed653, type: 3}
   _minHumidity: 0
   _maxHumidity: 100
   _minSunlight: 0

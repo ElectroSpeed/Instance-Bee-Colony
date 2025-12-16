@@ -13,6 +13,7 @@ public class SO_FlowerData : ScriptableObject
     [SerializeField] private int _pollenAmount;
     [SerializeField] private float _growthDuration;
     [SerializeField] private AnimationCurve _growthCurve;
+    [SerializeField] private GameObject _flowerButtonPrefab;
 
     [Header("Grow Conditions")]
     [Range(0, 100)] [SerializeField] private float _minHumidity;
@@ -26,6 +27,7 @@ public class SO_FlowerData : ScriptableObject
     public string FlowerName => _flowerName;
     public string Description => _description;
     public GameObject FlowerPrefab => _flowerPrefab;
+    public GameObject FlowerButtonPrefab => _flowerButtonPrefab;
 
     public float LifeDuration => _lifeDuration;
     public int PollenAmount => _pollenAmount;
