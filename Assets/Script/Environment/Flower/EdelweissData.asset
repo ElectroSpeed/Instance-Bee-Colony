@@ -46,5 +46,5 @@ MonoBehaviour:
   _maxHumidity: 100
   _minSunlight: 0
   _maxSunlight: 100
-  _minTemperature: 24.2
+  _minTemperature: -10
   _maxTemperature: 40

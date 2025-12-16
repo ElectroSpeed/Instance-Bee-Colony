@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c4cae9e137a7c4ca5075ef4d17fe4b, type: 3}
   m_Name: PlaceHibiscus
   m_EditorClassIdentifier: Assembly-CSharp::PlaceEffect
-  _prefabToPlace: {fileID: 0}
+  _prefabToPlace: {fileID: 4022149953281998217, guid: 2c7d206fa6ec7e64397275e7a6c86eec, type: 3}

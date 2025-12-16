@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c4cae9e137a7c4ca5075ef4d17fe4b, type: 3}
   m_Name: PlacePerceNeige
   m_EditorClassIdentifier: Assembly-CSharp::PlaceEffect
-  _prefabToPlace: {fileID: 0}
+  _prefabToPlace: {fileID: 9099073536887760603, guid: ab975fd562b4bc14485ad86bffc66436, type: 3}

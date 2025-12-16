@@ -42,9 +42,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _minHumidity: 68.9
-  _maxHumidity: 26.2
-  _minSunlight: 70.1
-  _maxSunlight: 26.2
-  _minTemperature: 28.4
-  _maxTemperature: 23.5
+  _minHumidity: 0
+  _maxHumidity: 100
+  _minSunlight: 0
+  _maxSunlight: 100
+  _minTemperature: -10
+  _maxTemperature: 40
