@@ -71,15 +71,19 @@ public class Book : MonoBehaviour
 
 
         index++;
+        pages[index].transform.SetAsLastSibling();
         StartTurn(pages[index], 180f, false);
 
     }
 
      public void RotateBack()
     {
+        Debug.Log("back");
         if (isTurning) return;
+        Debug.Log("turning");
         if (index < 0) return;
-
+        Debug.Log("can turn back");
+        pages[index].transform.SetAsLastSibling();
         StartTurn(pages[index], 0f, true);
     }
 
@@ -112,7 +116,10 @@ public class Book : MonoBehaviour
             currentPage.rotation = targetRot;
 
             if (turnBackward)
+            {
                 index--;
+            }
+ 
 
             isTurning = false;
         }
