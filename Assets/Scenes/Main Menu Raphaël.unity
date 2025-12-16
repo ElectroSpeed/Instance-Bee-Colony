@@ -3738,9 +3738,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenuButton, Assembly-CSharp
-        m_MethodName: Play
+      - m_Target: {fileID: 1932553858}
+        m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
+        m_MethodName: LaunchGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5250,7 +5250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a28c98750436847bca5f16257ae6cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuButtons
-  _sceneName: "Main Menu Rapha\xEBl"
+  _sceneMainMenuName: "Main Menu Rapha\xEBl"
+  _scenePlayName: MVP Scene
 --- !u!1 &1871676348
 GameObject:
   m_ObjectHideFlags: 0
@@ -5576,7 +5577,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a28c98750436847bca5f16257ae6cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
-  _sceneName: MVP Scene
+  _sceneMainMenuName: "Main Menu Rapha\xEBl"
+  _scenePlayName: MVP Scene
 --- !u!1 &2006180761
 GameObject:
   m_ObjectHideFlags: 0
