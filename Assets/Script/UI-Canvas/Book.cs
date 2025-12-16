@@ -74,15 +74,14 @@ public class Book : MonoBehaviour
         pages[index].transform.SetAsLastSibling();
         StartTurn(pages[index], 180f, false);
 
+
     }
 
      public void RotateBack()
     {
-        Debug.Log("back");
         if (isTurning) return;
-        Debug.Log("turning");
         if (index < 0) return;
-        Debug.Log("can turn back");
+
         pages[index].transform.SetAsLastSibling();
         StartTurn(pages[index], 0f, true);
     }
@@ -111,14 +110,21 @@ public class Book : MonoBehaviour
 
         currentPage.rotation = Quaternion.Slerp(startRot, targetRot, animT);
 
+        if (animT >= 0.5f && pages[index].GetComponent<PagesScript>().Container != null)
+        {
+            pages[index].GetComponent<PagesScript>().Container.SetActive(false);
+            if (turnBackward)
+                pages[index].GetComponent<PagesScript>().Container.SetActive(true);
+        }
+
         if (animT >= 1f)
         {
             currentPage.rotation = targetRot;
-
+  
             if (turnBackward)
-            {
                 index--;
-            }
+
+
  
 
             isTurning = false;

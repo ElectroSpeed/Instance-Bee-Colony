@@ -4,6 +4,8 @@ using TMPro;
 
 public class PagesScript : MonoBehaviour
 {
+
+    public GameObject Container;
     [Header("Images")]
     public Image Image;
     public Image TemperatureIcon;
