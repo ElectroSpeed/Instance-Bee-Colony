@@ -22,11 +22,13 @@ public class MenuButtons : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(_sceneMainMenuName);
+        AudioManager.Instance.PlayMusic(SoundType.MusicMenu);
     }
 
     public void LaunchGame()
     {
         SceneManager.LoadScene(_scenePlayName);
+        AudioManager.Instance.PlayMusic(SoundType.MainMusic);
     }
 
     public void QuitGame()
