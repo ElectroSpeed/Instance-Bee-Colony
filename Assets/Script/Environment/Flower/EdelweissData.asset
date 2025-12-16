@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: EdelweissData
   m_EditorClassIdentifier: Assembly-CSharp::SO_FlowerData
   _flowerName: Edelweiss
-  _description: on s en fout
+  _description: "Leontopodium nivale, commun\xE9ment appel\xE9 edelweiss, est une
+    fleur de montagne appartenant \xE0 la famille des Ast\xE9rac\xE9es (p\xE2querettes
+    ou tournesols). La plante pr\xE9f\xE8re les sols calcaires rocheux, entre 1 800
+    et 3 400 m\xE8tres d'altitude. C'est une plante non toxique."
   _flowerPrefab: {fileID: 778431225565301238, guid: 66fa6b38f83425248b2e3530a7896f38, type: 3}
   _lifeDuration: 50
   _pollenAmount: 2

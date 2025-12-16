@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: MargeriteData
   m_EditorClassIdentifier: Assembly-CSharp::SO_FlowerData
   _flowerName: Margerite
-  _description: sxcftvygbuhinj
+  _description: "La Marguerite ou Marguerite commune (Leucanthemum vulgare) est une
+    esp\xE8ce de plantes \xE0 fleurs de la famille des Asteraceae."
   _flowerPrefab: {fileID: 778431225565301238, guid: 66fa6b38f83425248b2e3530a7896f38, type: 3}
   _lifeDuration: 60
   _pollenAmount: 2
