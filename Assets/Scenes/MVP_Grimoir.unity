@@ -861,20 +861,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 800, y: -400}
+  m_AnchoredPosition: {x: 675, y: -378}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &291320282 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8222636965491283759, guid: 703acf8253bbaa84bb3c0692108c594d, type: 3}
-  m_PrefabInstance: {fileID: 250361513}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 716168ef13e095e4b936559a107c21e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Beehive
 --- !u!1 &295715718
 GameObject:
   m_ObjectHideFlags: 0
@@ -4023,67 +4012,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1001 &1939504055
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1295301211270048140, guid: 77dd172286c2a7e41b094deb0229b87c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 40.10512
-      objectReference: {fileID: 0}
-    - target: {fileID: 1295301211270048140, guid: 77dd172286c2a7e41b094deb0229b87c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.068594
-      objectReference: {fileID: 0}
-    - target: {fileID: 1295301211270048140, guid: 77dd172286c2a7e41b094deb0229b87c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 39.000008
-      objectReference: {fileID: 0}
-    - target: {fileID: 1295301211270048140, guid: 77dd172286c2a7e41b094deb0229b87c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1295301211270048140, guid: 77dd172286c2a7e41b094deb0229b87c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1295301211270048140, guid: 77dd172286c2a7e41b094deb0229b87c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1295301211270048140, guid: 77dd172286c2a7e41b094deb0229b87c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1295301211270048140, guid: 77dd172286c2a7e41b094deb0229b87c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1295301211270048140, guid: 77dd172286c2a7e41b094deb0229b87c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1295301211270048140, guid: 77dd172286c2a7e41b094deb0229b87c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3454634031155035739, guid: 77dd172286c2a7e41b094deb0229b87c, type: 3}
-      propertyPath: m_Name
-      value: Abeille
-      objectReference: {fileID: 0}
-    - target: {fileID: 5949307829999877993, guid: 77dd172286c2a7e41b094deb0229b87c, type: 3}
-      propertyPath: hive
-      value: 
-      objectReference: {fileID: 291320282}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 77dd172286c2a7e41b094deb0229b87c, type: 3}
 --- !u!1001 &2063696311
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4274,14 +4202,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.07924521, g: 0.07700242, b: 0.07700242, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 1abc8eea5b9c89b4f9c695b2c1f100c7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4354,16 +4282,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2282355554433842228}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: 0, z: -0.9010772, w: -0.4336588}
   m_LocalPosition: {x: 0, y: 0, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 254402239}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -231.4}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -772, y: 150}
+  m_AnchoredPosition: {x: -777.09, y: 150}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1513728047209672387
@@ -4373,16 +4301,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7461260468216768628}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.9063079, w: 0.42261827}
   m_LocalPosition: {x: 0, y: 0, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 254402239}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -130}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 114, y: 150}
+  m_AnchoredPosition: {x: 148.3, y: 150}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2282355554433842228
@@ -4462,14 +4390,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.09433961, g: 0.088109635, b: 0.088109635, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 99e94c12436a18d4497c23019840c420, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4575,6 +4503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba617372dcb7494199a441bbffea2ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PagesScript
+  Container: {fileID: 0}
   Image: {fileID: 0}
   TemperatureIcon: {fileID: 0}
   HumidityIcon: {fileID: 0}
@@ -4652,5 +4581,4 @@ SceneRoots:
   - {fileID: 1795980357}
   - {fileID: 1177048273}
   - {fileID: 250361513}
-  - {fileID: 1939504055}
   - {fileID: 2099944529}
