@@ -6378,6 +6378,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[Player] Camera'
       objectReference: {fileID: 0}
+    - target: {fileID: 307173630443987532, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10
+      objectReference: {fileID: 0}
     - target: {fileID: 1394019451789104226, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
       propertyPath: m_Name
       value: '[Player] Camera Pivot'
@@ -6388,7 +6392,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3967346849905699466, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 50
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3967346849905699466, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6463,8 +6467,12 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 9079591191476606835, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
+      propertyPath: _maxZoom
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 9079591191476606835, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
       propertyPath: _minZoom
-      value: -90
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 9079591191476606835, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
       propertyPath: _moveSpeed

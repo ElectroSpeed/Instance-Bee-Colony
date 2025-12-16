@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: "Assets/Scenes/Main Menu Rapha\xEBl.unity"
     guid: 6ad050c26d6d04943ab72b4c3c728aaf
   - enabled: 1
