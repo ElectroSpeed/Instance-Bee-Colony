@@ -21,11 +21,13 @@ public class Beehive : MonoBehaviour
     [SerializeField] private Transform spawnPoint; // if nothing so spawn at beehive position
     [SerializeField] private int honeyPerBee = 3;
 
-    private WaxManager _waxManager;
+    [Header("Bee Population")]
+    [SerializeField] private int _aliveBees;
 
     public event Action<int> OnPollenChanged;
     public event Action<int> OnHoneyChanged;
 
+    private WaxManager _waxManager;
     private void Awake()
     {
         OnPollenChanged?.Invoke(_pollenStock);
@@ -101,4 +103,13 @@ public class Beehive : MonoBehaviour
 
     public int GetPollenStock() => _pollenStock;
     public int GetHoneyStock() => _honeyStock;
+
+    public void RegisterBee()
+    {
+        _aliveBees++;
+    }
+    public void UnregisterBee()
+    {
+        _aliveBees = Mathf.Max(0, _aliveBees - 1);
+    }
 }
