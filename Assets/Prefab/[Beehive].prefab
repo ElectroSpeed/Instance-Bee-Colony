@@ -106,6 +106,9 @@ MonoBehaviour:
   _pollenToHoneyRate: 5
   _honeyToWaxRate: 3
   explorationRadius: 25
+  beePrefab: {fileID: 919132149155446097, guid: 330afc209594a524c9656866a1e2d5df, type: 3}
+  spawnPoint: {fileID: 0}
+  honeyPerBee: 3
 --- !u!1 &9004074446577754347
 GameObject:
   m_ObjectHideFlags: 0

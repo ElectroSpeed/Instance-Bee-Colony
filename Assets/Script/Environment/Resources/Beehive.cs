@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Beehive : MonoBehaviour {
+public class Beehive : MonoBehaviour
+{
     [Header("Stock")]
     [SerializeField] private int _pollenStock;
     [SerializeField] private int _honeyStock;
@@ -15,15 +16,27 @@ public class Beehive : MonoBehaviour {
     [Header("Exploration Area")]
     public float explorationRadius = 25f;
 
-    private WaxManager _waxManager;
-    
+    [Header("Bee Spawn")]
+    [SerializeField] private GameObject beePrefab;
+    [SerializeField] private Transform spawnPoint; // if nothing so spawn at beehive position
+    [SerializeField] private int honeyPerBee = 3;
+
+    [Header("Bee Population")]
+    [SerializeField] private int _aliveBees;
+
     public event Action<int> OnPollenChanged;
     public event Action<int> OnHoneyChanged;
 
+    private WaxManager _waxManager;
     private void Awake()
     {
         OnPollenChanged?.Invoke(_pollenStock);
         OnHoneyChanged?.Invoke(_honeyStock);
+    }
+
+    private void Start()
+    {
+        SpawnBee();
     }
 
     public void AddPollen(int amount)
@@ -33,6 +46,17 @@ public class Beehive : MonoBehaviour {
         TryProduceHoney();
     }
 
+    private void SpawnBee()
+    {
+        if (beePrefab == null)
+        {
+            Debug.LogError("Bee prefab is missing on Beehive");
+            return;
+        }
+
+        Vector3 pos = spawnPoint != null ? spawnPoint.position : transform.position;
+        Instantiate(beePrefab, pos, Quaternion.identity);
+    }
     private void TryProduceHoney()
     {
         bool honeyProduced = false;
@@ -49,11 +73,23 @@ public class Beehive : MonoBehaviour {
         {
             return;
         }
-        
+
         OnPollenChanged?.Invoke(_pollenStock);
         OnHoneyChanged?.Invoke(_honeyStock);
-        
+
+        TrySpawnBee();
         TryProduceWax();
+    }
+
+    private void TrySpawnBee()
+    {
+        if (_honeyStock < honeyPerBee)
+            return;
+
+        _honeyStock -= honeyPerBee;
+        OnHoneyChanged?.Invoke(_honeyStock);
+
+        SpawnBee();
     }
 
     private void TryProduceWax()
@@ -64,7 +100,16 @@ public class Beehive : MonoBehaviour {
             _waxManager.AddWax(1);
         }
     }
-    
+
     public int GetPollenStock() => _pollenStock;
     public int GetHoneyStock() => _honeyStock;
+
+    public void RegisterBee()
+    {
+        _aliveBees++;
+    }
+    public void UnregisterBee()
+    {
+        _aliveBees = Mathf.Max(0, _aliveBees - 1);
+    }
 }
