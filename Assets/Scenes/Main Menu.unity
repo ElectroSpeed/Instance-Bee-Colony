@@ -5719,7 +5719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a28c98750436847bca5f16257ae6cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuButtons
-  _sceneMainMenuName: "Main Menu Rapha\xEBl"
+  _sceneMainMenuName: Main Menu
   _scenePlayName: MVP Scene
 --- !u!1 &1871676348
 GameObject:

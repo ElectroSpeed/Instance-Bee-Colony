@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class MenuButtons : MonoBehaviour
 {
 
-    [SerializeField] private string _sceneMainMenuName= "Main Menu Raphaël";
+    [SerializeField] private string _sceneMainMenuName= "Main Menu";
     [SerializeField] private string _scenePlayName= "MVP Scene";
     
     public void PauseGame()

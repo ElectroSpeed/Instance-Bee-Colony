@@ -69,7 +69,7 @@ private IEnumerator RotateWheelSmooth(float targetAngle, float duration, bool is
 {
     float time = 0f;
 
-    Quaternion start = _seasonWheelUI.transform.rotation;
+    Quaternion start = _seasonWheelUI.transform.localRotation;
     Quaternion end = Quaternion.AngleAxis(targetAngle, Vector3.forward);
 
     while (time < duration)
@@ -81,12 +81,12 @@ private IEnumerator RotateWheelSmooth(float targetAngle, float duration, bool is
         // cubic ease-out
       
 
-        _seasonWheelUI.transform.rotation = Quaternion.Lerp(start, end, t);
+        _seasonWheelUI.transform.localRotation = Quaternion.Lerp(start, end, t);
 
         yield return null;
     }
 
-    _seasonWheelUI.transform.rotation = end;
+    _seasonWheelUI.transform.localRotation = end;
 }
 
 
