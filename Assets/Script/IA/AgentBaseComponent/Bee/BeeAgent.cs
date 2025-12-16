@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 
 public class BeeAgent : Agent
@@ -15,7 +14,7 @@ public class BeeAgent : Agent
     [SerializeField] private float _hiveDetectionRadius = 100f;
 
     [Header("Lifetime")]
-    [SerializeField] private float lifeTime = 180f;
+    [SerializeField] private float _lifeTime = 180f;
     private float _lifeTimer;
 
     private float _statReduceTimer = 0f;
@@ -96,7 +95,7 @@ public class BeeAgent : Agent
         }
 
         _lifeTimer += Time.deltaTime;
-        if (_lifeTimer >= lifeTime)
+        if (_lifeTimer >= _lifeTime)
         {
             Die();
             return;
@@ -146,6 +145,7 @@ public class BeeAgent : Agent
             {
                 minDist = dist;
                 closestHive = hive;
+                Debug.Log(closestHive.name);
             }
         }
 
