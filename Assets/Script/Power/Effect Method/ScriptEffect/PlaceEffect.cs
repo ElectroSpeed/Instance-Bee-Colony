@@ -9,8 +9,7 @@ public class PlaceEffect : SO_EffectBehaviour
     
     bool IsPositionOccupied(Vector3 pos)
     {
-        return GameObject.FindGameObjectsWithTag("Flower")
-            .Any(o => Vector3.Distance(o.transform.position, pos) < 1f);
+        return GameObject.FindGameObjectsWithTag("Flower").Any(o => Vector3.Distance(o.transform.position, pos) < 1f);
     }
 
     public override void ApplyEffect(IEnumerable<ITarget> targets)
@@ -29,7 +28,7 @@ public class PlaceEffect : SO_EffectBehaviour
 
             Vector3 pos = target._position;
             
-            if (!IsPositionOccupied(pos))
+            if (IsPositionOccupied(pos))
                 continue;
 
             Instantiate(_prefabToPlace, pos, Quaternion.identity);
