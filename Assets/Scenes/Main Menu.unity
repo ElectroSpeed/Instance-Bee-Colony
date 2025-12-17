@@ -898,7 +898,7 @@ GameObject:
   - component: {fileID: 304100687}
   - component: {fileID: 304100686}
   m_Layer: 5
-  m_Name: Text (TMP) (5)
+  m_Name: Progs Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1433,7 +1433,7 @@ GameObject:
   - component: {fileID: 506242001}
   - component: {fileID: 506242000}
   m_Layer: 5
-  m_Name: Text (TMP) (8)
+  m_Name: COM Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2234,7 +2234,7 @@ GameObject:
   - component: {fileID: 836676243}
   - component: {fileID: 836676242}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Lead Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2790,7 +2790,7 @@ GameObject:
   - component: {fileID: 977934828}
   - component: {fileID: 977934827}
   m_Layer: 5
-  m_Name: Text (TMP) (4)
+  m_Name: Arts Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3420,7 +3420,7 @@ GameObject:
   - component: {fileID: 1069449465}
   - component: {fileID: 1069449464}
   m_Layer: 5
-  m_Name: Text (TMP) (6)
+  m_Name: Progs names
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3467,7 +3467,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Raphael Durand
 
-    Artis Sigal
+    Arthis Sigal
 
     Hanae Doridon
 
@@ -4167,7 +4167,7 @@ GameObject:
   - component: {fileID: 1231008967}
   - component: {fileID: 1231008966}
   m_Layer: 5
-  m_Name: Text (TMP) (9)
+  m_Name: DA name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5195,7 +5195,7 @@ GameObject:
   - component: {fileID: 1654736459}
   - component: {fileID: 1654736458}
   m_Layer: 5
-  m_Name: Text (TMP) (2)
+  m_Name: COM Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5401,7 +5401,7 @@ GameObject:
   - component: {fileID: 1845434971}
   - component: {fileID: 1845434970}
   m_Layer: 5
-  m_Name: Text (TMP) (7)
+  m_Name: Arts Names
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5544,7 +5544,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1855015206
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5808,7 +5808,7 @@ GameObject:
   - component: {fileID: 1878712391}
   - component: {fileID: 1878712390}
   m_Layer: 5
-  m_Name: Text (TMP) (3)
+  m_Name: Lead Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5944,7 +5944,7 @@ GameObject:
   - component: {fileID: 1907918697}
   - component: {fileID: 1907918696}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: DA Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
