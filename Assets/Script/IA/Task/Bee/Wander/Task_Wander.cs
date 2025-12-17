@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class Task_Wander : AgentTaskBase
 {
@@ -17,7 +18,7 @@ public class Task_Wander : AgentTaskBase
     private int _pathIndex = 0;
     private float _moveSpeed = 2f;
 
-    public Task_Wander( string taskName, Blackboard bb, float radius, float scanCooldown, float scanTimer, float flowerDetectionRadius): base(taskName, bb)
+    public Task_Wander(string taskName, Blackboard bb, Agent agent, float radius, float scanCooldown, float scanTimer, float flowerDetectionRadius) : base(taskName, bb, agent)
     {
         _radius = radius;
         _scanCooldown = scanCooldown;
@@ -27,7 +28,7 @@ public class Task_Wander : AgentTaskBase
         _agentTransform = (Transform)bb.GetValue("AgentTransform");
     }
 
-    public override void OnStart()
+    public override async Task OnStart()
     {
         _isFinished = false;
 
@@ -36,7 +37,7 @@ public class Task_Wander : AgentTaskBase
         Vector2Int targetCell = MapGenerator.Instance.WorldToGrid(rawTarget);
         _targetPosition = MapGenerator.Instance.GridToWorld(targetCell);
 
-        _currentPath = _pathFinder.FindPathPositions(_agentTransform.position, _targetPosition);
+        _currentPath = await _agent.StartGetPathPoint(_agentTransform.position, _targetPosition);
         _pathIndex = 0;
 
         if (_currentPath == null || _currentPath.Count == 0)
@@ -128,12 +129,12 @@ public class Task_Wander : AgentTaskBase
         }
     }
 
-    public override void OnFinish()
+    public override async Task OnFinish()
     {
         if (_isFinished)
         {
             _isFinished = false;
-            OnStart();
+            await OnStart();
         }
     }
 

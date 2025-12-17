@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Task_CollectFlower : AgentTaskBase
@@ -6,14 +7,14 @@ public class Task_CollectFlower : AgentTaskBase
     private bool _isFinished = false;
     private int _pollenCollected = 0;
     private float _collectDuration = 2f;
-    private float _timer = 0f; 
+    private float _timer = 0f;
 
-    public Task_CollectFlower(string taskName, Blackboard bb, int pollenCollected): base(taskName, bb)
+    public Task_CollectFlower(string taskName, Blackboard bb, Agent agent, int pollenCollected) : base(taskName, bb, agent)
     {
         _pollenCollected = pollenCollected;
     }
 
-    public override void OnStart()
+    public override async Task OnStart()
     {
         _flower = (Flower)_bb.GetValue("TargetFlower");
         _timer = 0f;
@@ -23,6 +24,7 @@ public class Task_CollectFlower : AgentTaskBase
             _isFinished = true;
             return;
         }
+        await base.OnStart();
     }
 
     public override void OnUpdate()

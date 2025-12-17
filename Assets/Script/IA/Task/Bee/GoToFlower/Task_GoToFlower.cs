@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class Task_GoToFlower : AgentTaskBase
 {
@@ -9,17 +10,16 @@ public class Task_GoToFlower : AgentTaskBase
     private float _speed = 4f;
     private bool _isFinished = false;
 
-    private PathFinding _pathFinder = new PathFinding();
     private List<Vector3> _currentPath;
     private int _pathIndex = 0;
 
-    public Task_GoToFlower(string name, Blackboard bb, float speed) : base(name, bb)
+    public Task_GoToFlower(string name, Blackboard bb, Agent agent, float speed) : base(name, bb, agent)
     {
         _speed = speed;
         _agentTransform = (Transform)bb.GetValue("AgentTransform");
     }
 
-    public override void OnStart()
+    public override async Task OnStart()
     {
         _targetFlower = (Flower)_bb.GetValue("TargetFlower");
         _isFinished = false;
@@ -32,7 +32,8 @@ public class Task_GoToFlower : AgentTaskBase
 
         Vector3 targetPos = _targetFlower.transform.position;
 
-        _currentPath = _pathFinder.FindPathPositions(_agentTransform.position, targetPos);
+        _currentPath = await _agent.StartGetPathPoint(_agentTransform.position, targetPos);
+
         _pathIndex = 0;
 
         if (_currentPath == null || _currentPath.Count == 0)

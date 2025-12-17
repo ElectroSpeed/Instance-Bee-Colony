@@ -1,7 +1,9 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathFinding
+public class PathFinding : MonoBehaviour
 {
     private List<Cell> _cellNeighbors = new List<Cell>();
     private List<Cell> _usedCells = new List<Cell>();
@@ -20,6 +22,8 @@ public class PathFinding
         new Vector2Int(0, -1), new Vector2Int(0, 1),
         new Vector2Int(1, -1), new Vector2Int(1, 1),
     };
+
+    private Coroutine _pathfindingRoutine;
 
     private List<Cell> GetNeighbors(Cell cell)
     {
@@ -47,12 +51,13 @@ public class PathFinding
         return dx + dy - Mathf.Min(dx, dy);
     }
 
-    public List<Cell> FindPath(Vector3 startWorld, Vector3 endWorld)
+    public IEnumerator FindPath(Vector3 startWorld, Vector3 endWorld, Action<List<Cell>> callback)
     {
         if (MapGenerator.Instance == null)
         {
             Debug.LogError("MapGenerator.instance is null");
-            return null;
+            callback?.Invoke(null);
+            yield break;
         }
 
         Vector2Int startGrid = MapGenerator.Instance.WorldToGrid(startWorld);
@@ -61,13 +66,15 @@ public class PathFinding
         if (!MapGenerator.Instance._graph.TryGetValue(startGrid, out Cell start))
         {
             Debug.LogError($"Start position {startGrid} is outside of map.");
-            return null;
+            callback?.Invoke(null);
+            yield break;
         }
 
         if (!MapGenerator.Instance._graph.TryGetValue(endGrid, out Cell end))
         {
             Debug.LogWarning($"End position {endGrid} is outside of map.");
-            return null;
+            callback?.Invoke(null);
+            yield break;
         }
 
         ResetUsedCells();
@@ -89,7 +96,8 @@ public class PathFinding
             {
                 _path = BuildPath(end);
                 ResetUsedCells();
-                return _path;
+                callback?.Invoke(_path);
+                yield break;
             }
 
             current._inClosedSet = true;
@@ -121,7 +129,9 @@ public class PathFinding
 
         Debug.LogWarning("No path found.");
         ResetUsedCells();
-        return null;
+
+        callback?.Invoke(null);
+        yield break;
     }
 
     private List<Cell> BuildPath(Cell end)
@@ -153,11 +163,17 @@ public class PathFinding
         _usedCells.Clear();
     }
 
-    public List<Vector3> FindPathPositions(Vector3 startWorld, Vector3 endWorld)
+    public IEnumerator FindPathPositions(Vector3 startWorld, Vector3 endWorld, Action<List<Vector3>> callback)
     {
         int smoothResolution = 50;
-        List<Cell> cellPath = FindPath(startWorld, endWorld);
-        if (cellPath == null) return null;
+        List<Cell> cellPath = new();
+
+        yield return FindPath(startWorld, endWorld, result =>
+        {
+            cellPath = result;
+        });
+
+        if (cellPath.Count <= 0) yield break;
 
         List<Vector3> positions = new List<Vector3>();
         foreach (Cell c in cellPath)
@@ -173,7 +189,9 @@ public class PathFinding
             positions = BSplineSmooth(positions, smoothResolution);
         }
 
-        return positions;
+
+        callback?.Invoke(positions);
+        yield break;
     }
 
     #region B-Spline

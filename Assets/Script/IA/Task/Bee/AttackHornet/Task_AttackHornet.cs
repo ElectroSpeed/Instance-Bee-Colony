@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Task_AttackHornet : AgentTaskBase
@@ -12,7 +13,7 @@ public class Task_AttackHornet : AgentTaskBase
     private float _cooldownTimer;
     private bool _isFinished;
 
-    public Task_AttackHornet(string taskName, Blackboard bb, float attackRange, float attackCooldown, float attackDamage) : base(taskName, bb)
+    public Task_AttackHornet(string taskName, Blackboard bb, Agent agent, float attackRange, float attackCooldown, float attackDamage) : base(taskName, bb, agent)
     {
         _agentTransform = (Transform)_bb.GetValue("AgentTransform");
         _attackRange = attackRange;
@@ -20,11 +21,13 @@ public class Task_AttackHornet : AgentTaskBase
         _attackDamage = attackDamage;
     }
 
-    public override void OnStart()
+    public override async Task OnStart()
     {
         _isFinished = false;
         _cooldownTimer = 0f;
         UpdateTarget();
+
+        await base.OnStart();
     }
 
     public override void OnUpdate()
@@ -101,7 +104,7 @@ public class Task_AttackHornet : AgentTaskBase
 
     public override bool IsTaskFinished() => _isFinished;
 
-    public override void OnFinish() { }
+    public override void OnFinish() {}
 
     public override void OnCancel()
     {

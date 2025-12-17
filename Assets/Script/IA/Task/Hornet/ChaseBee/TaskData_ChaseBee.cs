@@ -5,8 +5,8 @@ public class TaskData_ChaseBee : TaskDataBase<Task_ChaseBee>
 {
     [SerializeField] private float _speed = 4f;
 
-    protected override Task_ChaseBee CreateTypedTask(string taskName, Blackboard bb)
+    protected override Task_ChaseBee CreateTypedTask(string taskName, Blackboard bb, Agent agent)
     {
-        return new Task_ChaseBee(taskName, bb, _speed);
+        return new Task_ChaseBee(taskName, bb, agent, _speed);
     }
 }

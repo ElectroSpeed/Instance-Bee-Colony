@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public abstract class AgentTaskBase
@@ -5,15 +6,17 @@ public abstract class AgentTaskBase
     [Header ("Global Task Var")]
     [SerializeField] protected string _taskName;
     protected Blackboard _bb;
+    protected Agent _agent;
 
     /// <summary>
     /// AgentTask Constructor Override this when the Task need other parameters in children class.
     /// </summary>
     
-    public AgentTaskBase(string taskName, Blackboard bb)
+    public AgentTaskBase(string taskName, Blackboard bb, Agent agent)
     {
         this._taskName = taskName;
         this._bb = bb;
+        this._agent = agent;
     }
 
     #region CallBack Functions
@@ -22,7 +25,7 @@ public abstract class AgentTaskBase
     /// Called when the task begins execution.
     /// Initialize variables or start required processes here.
     /// </summary>
-    public abstract void OnStart();
+    public virtual async Task OnStart() { await Task.CompletedTask; }
 
     /// <summary>
     /// Called every update tick while the task is running.
@@ -34,7 +37,7 @@ public abstract class AgentTaskBase
     /// Called when the task successfully completes its operation.
     /// Use this to clean up or trigger follow-up actions.
     /// </summary>
-    public abstract void OnFinish();
+    public virtual async Task OnFinish() { await Task.CompletedTask; }
 
     /// <summary>
     /// Called when the task is interrupted or cancelled before completion.

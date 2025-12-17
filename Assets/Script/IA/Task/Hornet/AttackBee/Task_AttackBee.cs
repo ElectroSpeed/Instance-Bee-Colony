@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Task_AttackBee : AgentTaskBase
@@ -12,7 +13,7 @@ public class Task_AttackBee : AgentTaskBase
     private float _cooldownAttackTimer;
     private bool _isFinished;
 
-    public Task_AttackBee(string taskName, Blackboard bb, float attackRange, float attackCooldown, float attackDamage) : base(taskName, bb)
+    public Task_AttackBee(string taskName, Blackboard bb, Agent agent, float attackRange, float attackCooldown, float attackDamage) : base(taskName, bb, agent)
     {
         _agentTransform = (Transform)_bb.GetValue("AgentTransform");
         _attackRange = attackRange;
@@ -20,11 +21,12 @@ public class Task_AttackBee : AgentTaskBase
         _attackDamage = attackDamage;
     }
 
-    public override void OnStart()
+    public override async Task OnStart()
     {
         _isFinished = false;
         _cooldownAttackTimer = 0f;
         UpdateTarget();
+        await base.OnStart();
     }
 
     public override void OnUpdate()

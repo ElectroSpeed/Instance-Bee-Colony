@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class Task_ReturnToHive : AgentTaskBase
 {
@@ -15,14 +16,14 @@ public class Task_ReturnToHive : AgentTaskBase
     private List<Vector3> _currentPath;
     private int _pathIndex = 0;
 
-    public Task_ReturnToHive(string name, Blackboard bb, float speed)
-        : base(name, bb)
+    public Task_ReturnToHive(string name, Blackboard bb, Agent agent, float speed)
+        : base(name, bb, agent)
     {
         _speed = speed;
         _agentTransform = (Transform)bb.GetValue("AgentTransform");
     }
 
-    public override void OnStart()
+    public override async Task OnStart()
     {
         Beehive hive = (Beehive)_bb.GetValue("Hive");
         if (hive == null)
@@ -35,7 +36,7 @@ public class Task_ReturnToHive : AgentTaskBase
         _timer = 0f;
         _arrived = false;
 
-        _currentPath = _pathFinder.FindPathPositions(_agentTransform.position, hive.transform.position);
+        _currentPath = await _agent.StartGetPathPoint(_agentTransform.position, hive.transform.position);
         _pathIndex = 0;
 
         if (_currentPath == null || _currentPath.Count == 0)

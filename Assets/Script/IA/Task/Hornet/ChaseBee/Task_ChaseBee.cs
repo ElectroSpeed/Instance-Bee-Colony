@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class Task_ChaseBee : AgentTaskBase
 {
@@ -20,13 +21,13 @@ public class Task_ChaseBee : AgentTaskBase
     private float _minMoveBeforeRepath = 0.5f;
 
 
-    public Task_ChaseBee(string taskName, Blackboard bb, float speed) : base(taskName, bb)
+    public Task_ChaseBee(string taskName, Blackboard bb, Agent agent, float speed) : base(taskName, bb, agent)
     {
         _speed = speed;
         _agentTransform = (Transform)_bb.GetValue("AgentTransform");
     }
 
-    public override void OnStart()
+    public override async Task OnStart()
     {
         _isFinished = false;
         UpdateTargetBee();
@@ -139,11 +140,12 @@ public class Task_ChaseBee : AgentTaskBase
         }
     }
 
-    public override void OnFinish()
+    public override async Task OnFinish()
     {
         _isFinished = false;
         _currentPath = null;
         _pathIndex = 0;
+        await base.OnFinish();
     }
 
     public override void OnCancel()

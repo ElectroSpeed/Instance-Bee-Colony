@@ -1,6 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Threading.Tasks;
+using UnityEngine;
 
 public class Task_HornetWander : AgentTaskBase
 {
@@ -20,8 +20,8 @@ public class Task_HornetWander : AgentTaskBase
     private List<Vector3> _currentPath;
     private int _pathIndex = 0;
 
-    public Task_HornetWander(string taskName, Blackboard bb, float radius, float speed, float scanInterval, float scanRadius)
-        : base(taskName, bb)
+    public Task_HornetWander(string taskName, Blackboard bb, Agent agent, float radius, float speed, float scanInterval, float scanRadius)
+        : base(taskName, bb, agent)
     {
         _radius = radius;
         _speed = speed;
@@ -30,26 +30,23 @@ public class Task_HornetWander : AgentTaskBase
         _agentTransform = (Transform)_bb.GetValue("AgentTransform");
     }
 
-    public override void OnStart()
+    public override async Task OnStart()
     {
         _isFinished = false;
-        PickNewTarget();
-    }
 
-    private void PickNewTarget()
-    {
         Vector2 rnd = Random.insideUnitCircle * _radius;
         _targetPosition = _agentTransform.position + new Vector3(rnd.x, 0, rnd.y);
 
-        _currentPath = _pathFinder.FindPathPositions(_agentTransform.position, _targetPosition);
+        _currentPath = await _agent.StartGetPathPoint(_agentTransform.position, _targetPosition);
         _pathIndex = 0;
 
         if (_currentPath == null || _currentPath.Count == 0)
         {
             _isFinished = true;
-            OnFinish();
+            await OnFinish();
         }
-    }
+    } 
+
 
     public override void OnUpdate()
     {
@@ -103,12 +100,12 @@ public class Task_HornetWander : AgentTaskBase
         _bb.ModifyValue("TargetBee", null);
     }
 
-    public override void OnFinish()
+    public override async Task OnFinish()
     {
         if (_isFinished)
         {
             _isFinished = false;
-            PickNewTarget();
+            await OnStart();
         }
     }
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class Task_Rest : AgentTaskBase
 {
@@ -17,14 +18,14 @@ public class Task_Rest : AgentTaskBase
 
     private AgentTaskBase _savedTask;
 
-    public Task_Rest(string taskName, Blackboard bb, float restDuration) : base(taskName, bb)
+    public Task_Rest(string taskName, Blackboard bb, Agent agent, float restDuration) : base(taskName, bb, agent)
     {
         _agentTransform = (Transform)_bb.GetValue("AgentTransform");
         _hive = (Beehive)_bb.GetValue("Hive");
         _restDuration = restDuration;
     }
 
-    public override void OnStart()
+    public override async Task OnStart()
     {
         if (_hive == null)
         {
@@ -43,7 +44,7 @@ public class Task_Rest : AgentTaskBase
             _savedTask = null;
 
         Vector3 target = _hive.transform.position;
-        _currentPath = _pathFinder.FindPathPositions(_agentTransform.position, target);
+        _currentPath = await _agent.StartGetPathPoint(_agentTransform.position, target);
         _pathIndex = 0;
 
         if (_currentPath == null || _currentPath.Count == 0)
