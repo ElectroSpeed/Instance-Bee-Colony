@@ -7,7 +7,7 @@ public class Task_ChaseBee : AgentTaskBase
     private Transform _agentTransform;
     private Transform _targetBee;
     private float _speed;
-    private PathFinding _pathFinder = new PathFinding();
+   
     private List<Vector3> _currentPath;
     private int _pathIndex = 0;
     private bool _isFinished = false;
@@ -37,7 +37,7 @@ public class Task_ChaseBee : AgentTaskBase
         if (_targetBee != null)
         {
             _lastTargetPos = _targetBee.position;
-            ComputePath();
+            await ComputePath();
         }
     }
 
@@ -61,18 +61,23 @@ public class Task_ChaseBee : AgentTaskBase
 
         if (canRepath)
         {
-            _repathTimer = 0f;
-            _lastTargetPos = _targetBee.position;
-            _lastAgentPos = _agentTransform.position;
-            ComputePath();
-
-            if (_currentPath.Count > 1 && Vector3.Distance(_agentTransform.position, _currentPath[0]) < 0.2f)
-            {
-                _pathIndex = 1;
-            }
+            CanRepath();
         }
 
         FollowPath();
+    }
+
+    private async Task CanRepath()
+    {
+        _repathTimer = 0f;
+        _lastTargetPos = _targetBee.position;
+        _lastAgentPos = _agentTransform.position;
+        await ComputePath();
+
+        if (_currentPath.Count > 1 && Vector3.Distance(_agentTransform.position, _currentPath[0]) < 0.2f)
+        {
+            _pathIndex = 1;
+        }
     }
 
     private void UpdateTargetBee()
@@ -98,14 +103,11 @@ public class Task_ChaseBee : AgentTaskBase
         return closestIndex;
     }
 
-    private void ComputePath()
+    private async Task ComputePath()
     {
         if (_targetBee == null) return;
 
-        _currentPath = _pathFinder.FindPathPositions(
-            _agentTransform.position,
-            _targetBee.position
-        );
+        _currentPath = await _agent.StartGetPathPoint(_agentTransform.position, _targetBee.position);
 
         if (_currentPath == null || _currentPath.Count == 0)
             return;

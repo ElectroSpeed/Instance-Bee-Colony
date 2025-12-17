@@ -11,8 +11,7 @@ public class Task_ReturnToHive : AgentTaskBase
     private float _waitDuration = 1.5f;
     private float _timer = 0f;
     private bool _arrived = false;
-
-    private PathFinding _pathFinder = new PathFinding();
+    
     private List<Vector3> _currentPath;
     private int _pathIndex = 0;
 
@@ -104,7 +103,11 @@ public class Task_ReturnToHive : AgentTaskBase
 
     public override bool IsTaskFinished() => _isFinished;
 
-    public override void OnFinish() { }
+    public override async Task OnFinish()
+    {
+        await base.OnFinish();
+        
+    }
     public override void OnCancel() { }
 
     public override int GetTaskPriority() => 3;

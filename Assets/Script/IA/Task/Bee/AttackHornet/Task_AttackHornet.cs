@@ -104,7 +104,11 @@ public class Task_AttackHornet : AgentTaskBase
 
     public override bool IsTaskFinished() => _isFinished;
 
-    public override void OnFinish() {}
+    public override async Task OnFinish()
+    {
+        await base.OnFinish();
+        
+    }
 
     public override void OnCancel()
     {

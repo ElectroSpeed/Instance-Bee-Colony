@@ -12,8 +12,7 @@ public class Task_Wander : AgentTaskBase
     private float _scanCooldown;
     private float _scanTimer;
     private float _flowerDetectionRadius;
-
-    private PathFinding _pathFinder = new PathFinding();
+    
     private List<Vector3> _currentPath;
     private int _pathIndex = 0;
     private float _moveSpeed = 2f;

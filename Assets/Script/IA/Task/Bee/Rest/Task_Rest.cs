@@ -7,7 +7,6 @@ public class Task_Rest : AgentTaskBase
     private Transform _agentTransform;
     private Beehive _hive;
     private float _moveSpeed = 2.5f;
-    private PathFinding _pathFinder = new PathFinding();
     private List<Vector3> _currentPath;
     private int _pathIndex = 0;
     private bool _isFinished = false;
@@ -108,7 +107,11 @@ public class Task_Rest : AgentTaskBase
             _pathIndex++;
     }
 
-    public override void OnFinish() { }
+    public override async Task OnFinish()
+    {
+        await base.OnFinish();
+        
+    }
     public override void OnCancel() { _isFinished = true; }
 
     public override float GetUtility()

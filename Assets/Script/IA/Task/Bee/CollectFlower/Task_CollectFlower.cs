@@ -40,7 +40,11 @@ public class Task_CollectFlower : AgentTaskBase
         }
     }
 
-    public override void OnFinish() { }
+    public override async Task OnFinish()
+    {
+        await base.OnFinish();
+        
+    }
 
     public override void OnCancel() { }
 

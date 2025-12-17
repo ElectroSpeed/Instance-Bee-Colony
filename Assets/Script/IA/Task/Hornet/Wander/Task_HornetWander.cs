@@ -15,8 +15,7 @@ public class Task_HornetWander : AgentTaskBase
     private float _scanTimer;
     private float _scanRadius;
 
-
-    private PathFinding _pathFinder = new PathFinding();
+    
     private List<Vector3> _currentPath;
     private int _pathIndex = 0;
 

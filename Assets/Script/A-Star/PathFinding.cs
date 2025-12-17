@@ -168,10 +168,16 @@ public class PathFinding : MonoBehaviour
         int smoothResolution = 50;
         List<Cell> cellPath = new();
 
+        bool done = false;
+        
         yield return FindPath(startWorld, endWorld, result =>
         {
             cellPath = result;
+            Debug.Log(result);
+            done = true;
         });
+
+        yield return new WaitUntil((() => done));
 
         if (cellPath.Count <= 0) yield break;
 

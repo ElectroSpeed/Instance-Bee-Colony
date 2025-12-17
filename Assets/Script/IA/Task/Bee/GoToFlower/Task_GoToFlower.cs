@@ -110,6 +110,10 @@ public class Task_GoToFlower : AgentTaskBase
 
     public override int GetTaskPriority() => 1;
 
-    public override void OnFinish() { }
+    public override async Task OnFinish()
+    {
+        await base.OnFinish();
+        
+    }
     public override void OnCancel() { }
 }
