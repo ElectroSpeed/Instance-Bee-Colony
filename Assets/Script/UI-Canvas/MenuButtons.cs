@@ -27,8 +27,9 @@ public class MenuButtons : MonoBehaviour
 
     public void LaunchGame()
     {
-        SceneManager.LoadScene(_scenePlayName);
+        AudioManager.Instance.StopMusic();
         AudioManager.Instance.PlayMusic(SoundType.MainMusic);
+        SceneManager.LoadScene(_scenePlayName);
     }
 
     public void QuitGame()
