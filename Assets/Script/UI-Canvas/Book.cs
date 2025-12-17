@@ -96,8 +96,8 @@ public class Book : MonoBehaviour
 
         isTurning = true;
         currentPage = page;
-        startRot = page.rotation;
-        targetRot = Quaternion.Euler(0, angle, 0);
+        startRot = page.localRotation;
+        targetRot = Quaternion.Euler(0, -angle, 0);
         animT = 0f;
 
 
@@ -114,12 +114,12 @@ public class Book : MonoBehaviour
 
         currentPage.localRotation = Quaternion.Slerp(startRot, targetRot, animT);
 
-        if (animT >= 0.5f && pages[index].GetComponent<PagesScript>().Container != null)
-        {
+        if (animT >= 0.6f && pages[index].GetComponent<PagesScript>().Container != null)
             pages[index].GetComponent<PagesScript>().Container.SetActive(false);
-            if (turnBackward)
-                pages[index].GetComponent<PagesScript>().Container.SetActive(true);
-        }
+        
+        if (turnBackward && animT >= 0.4f)
+            pages[index].GetComponent<PagesScript>().Container.SetActive(true);
+            
 
         if (animT >= 1f)
         {
