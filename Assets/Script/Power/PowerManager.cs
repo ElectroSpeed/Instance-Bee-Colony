@@ -46,6 +46,12 @@ public class PowerManager : MonoBehaviour
 
     private void HandlePowerSelected(PowerType newPower)
     {
+        if(_activePower != null && _activePower._usedPower._utilisationMethod.IsContinuous)
+        {
+                _activePower.StopUse();
+        }
+        
+
         if (_activePowerType == newPower)
         {
             _activePower = null;
@@ -67,8 +73,9 @@ public class PowerManager : MonoBehaviour
 
         _activePowerType = newPower;
         _activePower = new PowerBase(powerData);
-        
+
+
         if (_activePower._usedPower._utilisationMethod.IsContinuous)
-            _activePower.StartUse();
+            _activePower.StartUse();    
     }
 }

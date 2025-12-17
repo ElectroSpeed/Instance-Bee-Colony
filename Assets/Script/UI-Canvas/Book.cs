@@ -112,7 +112,7 @@ public class Book : MonoBehaviour
 
         animT += Time.deltaTime * pageSpeed;
 
-        currentPage.rotation = Quaternion.Slerp(startRot, targetRot, animT);
+        currentPage.localRotation = Quaternion.Slerp(startRot, targetRot, animT);
 
         if (animT >= 0.5f && pages[index].GetComponent<PagesScript>().Container != null)
         {
@@ -123,7 +123,7 @@ public class Book : MonoBehaviour
 
         if (animT >= 1f)
         {
-            currentPage.rotation = targetRot;
+            currentPage.localRotation = targetRot;
   
             if (turnBackward)
                 index--;

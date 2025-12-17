@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using UnityEngine;
+
 public class PowerBase
 {
     public readonly Power _usedPower;
@@ -8,6 +10,11 @@ public class PowerBase
     {
         ApplyEffects();
         PlaySound();
+    }
+
+    public void StopUse()
+    {
+        StopSound();
     }
     
     public void UpdateContinuous()
@@ -35,5 +42,10 @@ public class PowerBase
     private void PlaySound()
     {
         AudioManager.Instance.PlaySFX(_usedPower._sound);
+    }
+
+    private void StopSound()
+    {
+        AudioManager.Instance.StopSFX();
     }
 }

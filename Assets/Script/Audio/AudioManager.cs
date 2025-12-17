@@ -46,6 +46,12 @@ public class AudioManager : MonoBehaviour
         _sfxSource.PlayOneShot(sound._clip);
     }
 
+    public void StopSFX()
+    {
+        Debug.Log("stop sfx");
+        _sfxSource.Stop();
+    }
+
     public void PlaySFXInObject(SoundType type, AudioSource source)
     {
         var sound = _soundLibrary.GetSound(type, false);
