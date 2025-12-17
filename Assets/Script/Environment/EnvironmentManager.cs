@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class EnvironmentManager : MonoBehaviour
 {
+    public static EnvironmentManager Instance;
+    
     [Header("Environment Values")]
     [Range(0, 100)] public float _sunlight;
     [Range(0, 100)] public float _humidity;
@@ -20,6 +22,17 @@ public class EnvironmentManager : MonoBehaviour
 
     public event Action<float> OnSunlightChanged;
     public event Action<float> OnHumidityChanged;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
 
     private void Update()
     {

@@ -9,7 +9,7 @@ public class RainEffectBehaviour : SO_EffectBehaviour
 
     public override void ApplyEffect(IEnumerable<ITarget> targets)
     {
-        _environment = GameObject.FindWithTag("EnvironmentManager").GetComponent<EnvironmentManager>();
+        _environment = EnvironmentManager.Instance;
 
         if (_environment == null)
         {

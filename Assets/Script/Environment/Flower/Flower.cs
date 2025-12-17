@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -17,10 +18,19 @@ public class Flower : MonoBehaviour
     [SerializeField] private Animator animator;
     private EnvironmentManager _environment;
 
+    private void OnEnable()
+    {
+        Locator<Flower>.Bind(this);
+    }
 
+    private void OnDisable()
+    {
+        Locator<Flower>.UnBind(this);
+    }
+    
     private void Start()
     {
-        _environment = GameObject.FindWithTag("EnvironmentManager").GetComponent<EnvironmentManager>();
+        _environment = EnvironmentManager.Instance;
         if (_data.FlowerPrefab != null)
         {
             _model = Instantiate(_data.FlowerPrefab, transform).transform;

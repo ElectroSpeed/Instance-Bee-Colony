@@ -10,7 +10,15 @@ public class Agent : MonoBehaviour
     private AgentTaskBase _currentTask;
     public Blackboard _bb;
 
+    private void OnEnable()
+    {
+        Locator<Agent>.Bind(this);
+    }
 
+    private void OnDisable()
+    {
+        Locator<Agent>.UnBind(this);
+    }
 
     public void Start()
     {

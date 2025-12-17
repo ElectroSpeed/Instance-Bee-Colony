@@ -7,9 +7,18 @@ public class PlaceEffect : SO_EffectBehaviour
 {
     [SerializeField] private GameObject _prefabToPlace;
     
+    List<Flower> _flowers = Locator<Flower>.Get<Flower>();
+    
     bool IsPositionOccupied(Vector3 pos)
     {
-        return GameObject.FindGameObjectsWithTag("Flower").Any(o => Vector3.Distance(o.transform.position, pos) < 1f);
+        foreach (Flower flower in _flowers)
+        {
+            if (Vector3.Distance(flower.transform.position, pos) < 1f)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public override void ApplyEffect(IEnumerable<ITarget> targets)

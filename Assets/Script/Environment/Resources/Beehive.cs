@@ -29,6 +29,17 @@ public class Beehive : MonoBehaviour
     public event Action<int> OnBeeNumberChanged;
 
     private WaxManager _waxManager;
+    
+    private void OnEnable()
+    {
+        Locator<Beehive>.Bind(this);
+    }
+
+    private void OnDisable()
+    {
+        Locator<Beehive>.UnBind(this);
+    }
+    
     private void Awake()
     {
         OnPollenChanged?.Invoke(_pollenStock);

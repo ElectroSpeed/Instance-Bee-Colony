@@ -18,7 +18,7 @@ public class PowerManager : MonoBehaviour
 
     private void Start()
     {
-        _environment = GameObject.FindWithTag("EnvironmentManager").GetComponent<EnvironmentManager>();
+        _environment = EnvironmentManager.Instance;
     }
 
     private void Update()

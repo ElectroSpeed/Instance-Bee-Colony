@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BeeAgent : Agent
@@ -112,7 +113,16 @@ public class BeeAgent : Agent
             hive.UnregisterBee();
         }
 
-        HornetAgent[] hornets = Object.FindObjectsByType<HornetAgent>(FindObjectsSortMode.None);
+        List<Agent> agents = Locator<Agent>.Get<Agent>();
+        List<HornetAgent> hornets = new List<HornetAgent>();
+
+        foreach (var agent in agents)
+        {
+            if (agent is HornetAgent hornet )
+            {
+                hornets.Add(hornet);
+            }
+        }
 
         foreach (HornetAgent hornet in hornets)
         {
@@ -130,14 +140,13 @@ public class BeeAgent : Agent
     }
     private Beehive FindClosestHiveByTag()
     {
-        GameObject[] hives = GameObject.FindGameObjectsWithTag("Beehive");
+        List<Beehive> hives = Locator<Beehive>.Get<Beehive>();
 
         Beehive closestHive = null;
         float minDist = float.MaxValue;
 
-        foreach (var go in hives)
+        foreach (Beehive hive in hives)
         {
-            Beehive hive = go.GetComponent<Beehive>();
             if (hive == null) continue;
 
             float dist = Vector3.Distance(transform.position, hive.transform.position);
