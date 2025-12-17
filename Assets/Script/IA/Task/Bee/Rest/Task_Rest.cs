@@ -16,6 +16,7 @@ public class Task_Rest : AgentTaskBase
     private float _restTimer;
 
     private AgentTaskBase _savedTask;
+    private bool _pathIsCalculated = false;
 
     public Task_Rest(string taskName, Blackboard bb, Agent agent, float restDuration) : base(taskName, bb, agent)
     {
@@ -24,7 +25,7 @@ public class Task_Rest : AgentTaskBase
         _restDuration = restDuration;
     }
 
-    public override async Task OnStart()
+    public override void OnStart()
     {
         if (_hive == null)
         {
@@ -32,6 +33,7 @@ public class Task_Rest : AgentTaskBase
             return;
         }
 
+        _pathIsCalculated = false;
         _isFinished = false;
         _arrived = false;
         _restTimer = 0f;
@@ -43,16 +45,31 @@ public class Task_Rest : AgentTaskBase
             _savedTask = null;
 
         Vector3 target = _hive.transform.position;
-        _currentPath = await _agent.StartGetPathPoint(_agentTransform.position, target);
         _pathIndex = 0;
 
         if (_currentPath == null || _currentPath.Count == 0)
             _arrived = true;
+
+        _agent.StartGetPathPoint(_agentTransform.position, target, OnPathReady);
+    }
+
+    private void OnPathReady(List<Vector3> result)
+    {
+        if (result == null || result.Count == 0)
+        {
+            _isFinished = true;
+            OnFinish();
+            return;
+        }
+
+        _currentPath = result;
+        _pathIndex = 0;
+        _pathIsCalculated = true;
     }
 
     public override void OnUpdate()
     {
-        if (_isFinished) return;
+        if (_isFinished || !_pathIsCalculated) return;
 
         if (!_arrived)
         {
@@ -107,10 +124,8 @@ public class Task_Rest : AgentTaskBase
             _pathIndex++;
     }
 
-    public override async Task OnFinish()
+    public override void OnFinish()
     {
-        await base.OnFinish();
-        
     }
     public override void OnCancel() { _isFinished = true; }
 

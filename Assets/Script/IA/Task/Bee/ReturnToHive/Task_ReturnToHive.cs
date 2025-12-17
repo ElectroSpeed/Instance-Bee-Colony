@@ -1,6 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using UnityEngine;
 
 public class Task_ReturnToHive : AgentTaskBase
 {
@@ -11,10 +10,10 @@ public class Task_ReturnToHive : AgentTaskBase
     private float _waitDuration = 1.5f;
     private float _timer = 0f;
     private bool _arrived = false;
-    
+
     private List<Vector3> _currentPath;
     private int _pathIndex = 0;
-
+    private bool _pathIsCalculated = false;
     public Task_ReturnToHive(string name, Blackboard bb, Agent agent, float speed)
         : base(name, bb, agent)
     {
@@ -22,7 +21,7 @@ public class Task_ReturnToHive : AgentTaskBase
         _agentTransform = (Transform)bb.GetValue("AgentTransform");
     }
 
-    public override async Task OnStart()
+    public override void OnStart()
     {
         Beehive hive = (Beehive)_bb.GetValue("Hive");
         if (hive == null)
@@ -30,22 +29,39 @@ public class Task_ReturnToHive : AgentTaskBase
             _isFinished = true;
             return;
         }
-
+        _pathIsCalculated = false;
         _isFinished = false;
         _timer = 0f;
         _arrived = false;
 
-        _currentPath = await _agent.StartGetPathPoint(_agentTransform.position, hive.transform.position);
         _pathIndex = 0;
 
         if (_currentPath == null || _currentPath.Count == 0)
         {
             _isFinished = true;
         }
+
+        _agent.StartGetPathPoint(_agentTransform.position, hive.transform.position, OnPathReady);
+    }
+
+    private void OnPathReady(List<Vector3> result)
+    {
+        if (result == null || result.Count == 0)
+        {
+            _isFinished = true;
+            OnFinish();
+            return;
+        }
+
+        _currentPath = result;
+        _pathIndex = 0;
+        _pathIsCalculated = true;
     }
 
     public override void OnUpdate()
     {
+        if (!_pathIsCalculated) return;
+
         Beehive hive = (Beehive)_bb.GetValue("Hive");
         if (hive == null)
         {
@@ -103,10 +119,8 @@ public class Task_ReturnToHive : AgentTaskBase
 
     public override bool IsTaskFinished() => _isFinished;
 
-    public override async Task OnFinish()
+    public override void OnFinish()
     {
-        await base.OnFinish();
-        
     }
     public override void OnCancel() { }
 

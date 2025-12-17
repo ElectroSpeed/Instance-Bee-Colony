@@ -21,13 +21,11 @@ public class Task_AttackHornet : AgentTaskBase
         _attackDamage = attackDamage;
     }
 
-    public override async Task OnStart()
+    public override void OnStart()
     {
         _isFinished = false;
         _cooldownTimer = 0f;
         UpdateTarget();
-
-        await base.OnStart();
     }
 
     public override void OnUpdate()
@@ -104,10 +102,8 @@ public class Task_AttackHornet : AgentTaskBase
 
     public override bool IsTaskFinished() => _isFinished;
 
-    public override async Task OnFinish()
+    public override void OnFinish()
     {
-        await base.OnFinish();
-        
     }
 
     public override void OnCancel()

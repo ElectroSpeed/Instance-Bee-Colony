@@ -18,6 +18,7 @@ public class Task_HornetWander : AgentTaskBase
     
     private List<Vector3> _currentPath;
     private int _pathIndex = 0;
+    private bool _pathIsCalculated = false;
 
     public Task_HornetWander(string taskName, Blackboard bb, Agent agent, float radius, float speed, float scanInterval, float scanRadius)
         : base(taskName, bb, agent)
@@ -29,23 +30,38 @@ public class Task_HornetWander : AgentTaskBase
         _agentTransform = (Transform)_bb.GetValue("AgentTransform");
     }
 
-    public override async Task OnStart()
+    public override void OnStart()
     {
         _isFinished = false;
+        _pathIsCalculated = false;
 
         Vector2 rnd = Random.insideUnitCircle * _radius;
         _targetPosition = _agentTransform.position + new Vector3(rnd.x, 0, rnd.y);
 
-        _currentPath = await _agent.StartGetPathPoint(_agentTransform.position, _targetPosition);
         _pathIndex = 0;
 
         if (_currentPath == null || _currentPath.Count == 0)
         {
             _isFinished = true;
-            await OnFinish();
+            OnFinish();
         }
-    } 
 
+        _agent.StartGetPathPoint(_agentTransform.position, _targetPosition, OnPathReady);
+    }
+
+    private void OnPathReady(List<Vector3> result)
+    {
+        if (result == null || result.Count == 0)
+        {
+            _isFinished = true;
+            OnFinish();
+            return;
+        }
+
+        _currentPath = result;
+        _pathIndex = 0;
+        _pathIsCalculated = true;
+    }
 
     public override void OnUpdate()
     {
@@ -99,12 +115,12 @@ public class Task_HornetWander : AgentTaskBase
         _bb.ModifyValue("TargetBee", null);
     }
 
-    public override async Task OnFinish()
+    public override void OnFinish()
     {
         if (_isFinished)
         {
             _isFinished = false;
-            await OnStart();
+            OnStart();
         }
     }
 

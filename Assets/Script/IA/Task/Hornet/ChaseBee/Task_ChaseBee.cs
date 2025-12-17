@@ -1,44 +1,55 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 public class Task_ChaseBee : AgentTaskBase
 {
     private Transform _agentTransform;
     private Transform _targetBee;
     private float _speed;
-   
-    private List<Vector3> _currentPath;
-    private int _pathIndex = 0;
-    private bool _isFinished = false;
 
-    //Chase variable 
+    private List<Vector3> _currentPath;
+    private int _pathIndex;
+    private bool _isFinished;
+
+    // Path state
+    private bool _isWaitingForPath;
+    private int _pathRequestId;
+
+    // Chase variables
     private Vector3 _lastTargetPos;
     private Vector3 _lastAgentPos;
     private float _repathInterval = 0.3f;
-    private float _repathTimer = 0f;
+    private float _repathTimer;
     private float _repathDistance = 1.0f;
     private float _minMoveBeforeRepath = 0.5f;
 
-
-    public Task_ChaseBee(string taskName, Blackboard bb, Agent agent, float speed) : base(taskName, bb, agent)
+    public Task_ChaseBee(string taskName, Blackboard bb, Agent agent, float speed)
+        : base(taskName, bb, agent)
     {
         _speed = speed;
         _agentTransform = (Transform)_bb.GetValue("AgentTransform");
     }
 
-    public override async Task OnStart()
+    public override void OnStart()
     {
         _isFinished = false;
+        _currentPath = null;
+        _pathIndex = 0;
+        _repathTimer = 0f;
+        _isWaitingForPath = false;
+
         UpdateTargetBee();
 
-        _lastAgentPos = _agentTransform.position;
-
-        if (_targetBee != null)
+        if (_targetBee == null)
         {
-            _lastTargetPos = _targetBee.position;
-            await ComputePath();
+            _isFinished = true;
+            return;
         }
+
+        _lastAgentPos = _agentTransform.position;
+        _lastTargetPos = _targetBee.position;
+
+        RequestPath();
     }
 
     public override void OnUpdate()
@@ -48,36 +59,87 @@ public class Task_ChaseBee : AgentTaskBase
         if (_targetBee == null)
         {
             _isFinished = true;
-            OnFinish();
             return;
         }
 
         _repathTimer += Time.deltaTime;
 
-        float targetMovedDistance = Vector3.Distance(_lastTargetPos, _targetBee.position);
-        float agentMovedDistance = Vector3.Distance(_lastAgentPos, _agentTransform.position);
-
-        bool canRepath = _repathTimer >= _repathInterval && targetMovedDistance >= _repathDistance && agentMovedDistance >= _minMoveBeforeRepath;
-
-        if (canRepath)
+        if (!_isWaitingForPath && CanRepath())
         {
-            CanRepath();
+            RequestPath();
         }
+
+        if (_currentPath == null)
+            return;
 
         FollowPath();
     }
 
-    private async Task CanRepath()
+    private void RequestPath()
     {
-        _repathTimer = 0f;
-        _lastTargetPos = _targetBee.position;
-        _lastAgentPos = _agentTransform.position;
-        await ComputePath();
+        _isWaitingForPath = true;
+        int requestId = ++_pathRequestId;
 
-        if (_currentPath.Count > 1 && Vector3.Distance(_agentTransform.position, _currentPath[0]) < 0.2f)
-        {
-            _pathIndex = 1;
-        }
+        _agent.StartGetPathPoint(
+            _agentTransform.position,
+            _targetBee.position,
+            path =>
+            {
+                if (requestId != _pathRequestId)
+                    return;
+
+                OnPathReady(path);
+            }
+        );
+
+        _repathTimer = 0f;
+        _lastAgentPos = _agentTransform.position;
+        _lastTargetPos = _targetBee.position;
+    }
+
+    private void OnPathReady(List<Vector3> path)
+    {
+        _isWaitingForPath = false;
+
+        if (path == null || path.Count == 0)
+            return;
+
+        _currentPath = path;
+        _pathIndex = FindClosestPathIndex(_currentPath, _agentTransform.position);
+
+        if (_pathIndex < _currentPath.Count - 1)
+            _pathIndex++;
+    }
+
+    private bool CanRepath()
+    {
+        float targetMoved = Vector3.Distance(_lastTargetPos, _targetBee.position);
+        float agentMoved = Vector3.Distance(_lastAgentPos, _agentTransform.position);
+
+        return _repathTimer >= _repathInterval
+            && targetMoved >= _repathDistance
+            && agentMoved >= _minMoveBeforeRepath;
+    }
+
+    private void FollowPath()
+    {
+        if (_pathIndex >= _currentPath.Count)
+            return;
+
+        Vector3 target = _currentPath[_pathIndex];
+
+        _agentTransform.position = Vector3.MoveTowards(
+            _agentTransform.position,
+            target,
+            _speed * Time.deltaTime
+        );
+
+        Vector3 dir = target - _agentTransform.position;
+        if (dir.sqrMagnitude > 0.01f)
+            _agentTransform.forward = dir.normalized;
+
+        if (Vector3.Distance(_agentTransform.position, target) < 0.1f)
+            _pathIndex++;
     }
 
     private void UpdateTargetBee()
@@ -92,7 +154,7 @@ public class Task_ChaseBee : AgentTaskBase
 
         for (int i = 0; i < path.Count; i++)
         {
-            float dist = Vector3.SqrMagnitude(path[i] - agentPos);
+            float dist = (path[i] - agentPos).sqrMagnitude;
             if (dist < closestDist)
             {
                 closestDist = dist;
@@ -103,70 +165,32 @@ public class Task_ChaseBee : AgentTaskBase
         return closestIndex;
     }
 
-    private async Task ComputePath()
+    public override void OnFinish()
     {
-        if (_targetBee == null) return;
-
-        _currentPath = await _agent.StartGetPathPoint(_agentTransform.position, _targetBee.position);
-
-        if (_currentPath == null || _currentPath.Count == 0)
-            return;
-
-        _pathIndex = FindClosestPathIndex(_currentPath, _agentTransform.position);
-
-        if (_pathIndex < _currentPath.Count - 1)
-            _pathIndex++;
-    }
-
-    private void FollowPath()
-    {
-        if (_currentPath == null || _currentPath.Count == 0)
-            return;
-
-        if (_pathIndex >= _currentPath.Count)
-            return;
-
-        Vector3 target = _currentPath[_pathIndex];
-
-        _agentTransform.position = Vector3.MoveTowards(_agentTransform.position, target, _speed * Time.deltaTime);
-
-        Vector3 direction = (target - _agentTransform.position);
-        if (direction.sqrMagnitude > 0.01f)
-        {
-            _agentTransform.forward = direction.normalized;
-        }
-
-        if (Vector3.Distance(_agentTransform.position, target) < 0.1f)
-        {
-            _pathIndex++;
-        }
-    }
-
-    public override async Task OnFinish()
-    {
-        _isFinished = false;
         _currentPath = null;
         _pathIndex = 0;
-        await base.OnFinish();
+        _isWaitingForPath = false;
+        _pathRequestId++;
+        _isFinished = false;
     }
 
     public override void OnCancel()
     {
+        _pathRequestId++;
+        _currentPath = null;
         _isFinished = true;
     }
 
     public override float GetUtility()
     {
-        Transform targetBee = _bb.GetValue("TargetBee") as Transform;
-        if (targetBee == null) return 0f;
+        Transform target = _bb.GetValue("TargetBee") as Transform;
+        if (target == null) return 0f;
 
-        float maxConsiderDistance = 30f;    
-        float distance = Vector3.Distance(_agentTransform.position, targetBee.position);
-        float u = Mathf.Clamp01(1f - (distance / maxConsiderDistance));
-        return u;
+        float maxDistance = 30f;
+        float d = Vector3.Distance(_agentTransform.position, target.position);
+        return Mathf.Clamp01(1f - d / maxDistance);
     }
 
     public override int GetTaskPriority() => 1;
-
     public override bool IsTaskFinished() => _isFinished;
 }

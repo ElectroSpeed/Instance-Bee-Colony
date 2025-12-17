@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 public class Task_AttackBee : AgentTaskBase
@@ -21,12 +22,11 @@ public class Task_AttackBee : AgentTaskBase
         _attackDamage = attackDamage;
     }
 
-    public override async Task OnStart()
+    public override void OnStart()
     {
         _isFinished = false;
         _cooldownAttackTimer = 0f;
         UpdateTarget();
-        await base.OnStart();
     }
 
     public override void OnUpdate()
@@ -94,10 +94,8 @@ public class Task_AttackBee : AgentTaskBase
         }
     }
 
-    public override async Task OnFinish()
+    public override void OnFinish()
     {
-        await base.OnFinish();
-        
     }
 
     public override void OnCancel()
