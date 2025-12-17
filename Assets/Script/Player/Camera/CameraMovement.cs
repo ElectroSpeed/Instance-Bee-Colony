@@ -9,6 +9,9 @@ public class CameraMovement : MonoBehaviour
     [Header("Camera Information")]
     [SerializeField] private Transform _playerCamera;
     [SerializeField] private Transform _pivotCamera;
+    [SerializeField] private Transform _centerMapPosition;
+    [SerializeField] private int _mapLimitX = 50;
+    [SerializeField] private int _mapLimitY = 50;
 
     [Header("Zoom Settings")]
     [SerializeField] private float _zoomSpeed;
@@ -65,7 +68,7 @@ public class CameraMovement : MonoBehaviour
     {
         if (_moveInput == Vector2.zero)
             return;
-        
+
         Vector3 forward = _pivotCamera.forward;
         forward.y = 0;
         forward.Normalize();
@@ -73,10 +76,25 @@ public class CameraMovement : MonoBehaviour
         Vector3 right = _pivotCamera.right;
         right.y = 0;
         right.Normalize();
-        
-        Vector3 direction = forward * _moveInput.y + right * _moveInput.x;
 
-        transform.position += direction * _moveSpeed * Time.deltaTime;
+        Vector3 direction = forward * _moveInput.y + right * _moveInput.x;
+        Vector3 newPosition = transform.position + direction * _moveSpeed * Time.deltaTime;
+        
+        Vector3 center = _centerMapPosition.position;
+        
+        newPosition.x = Mathf.Clamp(
+            newPosition.x,
+            center.x - _mapLimitX,
+            center.x + _mapLimitX
+        );
+
+        newPosition.z = Mathf.Clamp(
+            newPosition.z,
+            center.z - _mapLimitY,
+            center.z + _mapLimitY
+        );
+
+        transform.position = newPosition;
     }
 
     #endregion

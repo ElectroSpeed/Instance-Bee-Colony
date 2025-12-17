@@ -3870,7 +3870,7 @@ Transform:
   m_GameObject: {fileID: 1671524629}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 86, y: 0, z: 74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4948,7 +4948,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3967346849905699466, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 86
       objectReference: {fileID: 0}
     - target: {fileID: 3967346849905699466, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4956,7 +4956,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3967346849905699466, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 74
       objectReference: {fileID: 0}
     - target: {fileID: 3967346849905699466, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5135,6 +5135,18 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 9079591191476606835, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
+      propertyPath: _mapLimit
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 9079591191476606835, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
+      propertyPath: _mapLimitX
+      value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 9079591191476606835, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
+      propertyPath: _mapLimitY
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 9079591191476606835, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
       propertyPath: _moveSpeed
       value: 50
       objectReference: {fileID: 0}
@@ -5142,6 +5154,10 @@ PrefabInstance:
       propertyPath: _xCameraAngle
       value: 45
       objectReference: {fileID: 0}
+    - target: {fileID: 9079591191476606835, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
+      propertyPath: _centerMapPosition
+      value: 
+      objectReference: {fileID: 1671524630}
     - target: {fileID: 9079591191476606835, guid: b4c52488110cfb24ba7e5146baf4240d, type: 3}
       propertyPath: _sensitivityRotation
       value: 0.15
