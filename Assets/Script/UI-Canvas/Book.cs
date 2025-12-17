@@ -70,7 +70,6 @@ public class Book : MonoBehaviour
     }
     public void RotateForward()
     {
-        Debug.Log(index + "/" + pages.Count);
         if (isTurning) return;
         if (index + 1 >= pages.Count) return;
 
