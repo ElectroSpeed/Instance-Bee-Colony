@@ -165,6 +165,7 @@ public class MapGenerator : MonoBehaviour
         GameObject obstacle = Instantiate(_environmentObstaclePrefab, obstaclePosition, Quaternion.identity, transform.GetChild(1));
         obstacle.transform.position = new Vector3(obstacle.transform.position.x, obstacle.transform.position.y - mapCell._pathPointHeight, obstacle.transform.position.z);
         obstacle.GetComponentInChildren<MeshFilter>().mesh = meshObstacle;
+        Locator<GameObject>.Bind(obstacle);
     }
     
     private void GenerateBeehive()

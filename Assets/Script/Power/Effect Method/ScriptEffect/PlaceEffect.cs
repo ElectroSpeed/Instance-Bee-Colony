@@ -8,12 +8,38 @@ public class PlaceEffect : SO_EffectBehaviour
     [SerializeField] private GameObject _prefabToPlace;
     
     List<Flower> _flowers = Locator<Flower>.Get<Flower>();
+    List<GameObject> _obstacles = Locator<GameObject>.Get<GameObject>();
+    List<Beehive> _beehives = Locator<Beehive>.Get<Beehive>();
     
-    bool IsPositionOccupied(Vector3 pos)
+    bool IsPositionOccupiedByFlower(Vector3 pos)
     {
         foreach (Flower flower in _flowers)
         {
             if (Vector3.Distance(flower.transform.position, pos) < 1f)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    bool IsPositionOccupiedByObstacle(Vector3 pos)
+    {
+        foreach (GameObject obstacle in _obstacles)
+        {
+            if (Vector3.Distance(obstacle.transform.position, pos) < 1f)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    bool IsPositionOccupiedByBeehive(Vector3 pos)
+    {
+        foreach (Beehive beehive in _beehives)
+        {
+            if (Vector3.Distance(beehive.transform.position, pos) < 1f)
             {
                 return true;
             }
@@ -37,7 +63,7 @@ public class PlaceEffect : SO_EffectBehaviour
 
             Vector3 pos = target._position;
             
-            if (IsPositionOccupied(pos))
+            if (IsPositionOccupiedByFlower(pos) || IsPositionOccupiedByObstacle(pos) || IsPositionOccupiedByBeehive(pos))
                 continue;
 
             Instantiate(_prefabToPlace, pos, Quaternion.identity);
