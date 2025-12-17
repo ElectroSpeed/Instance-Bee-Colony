@@ -6,22 +6,34 @@ public class Cell : MonoBehaviour
     public float _height;
     public float _pathPointHeight;
     public bool _isWalkable=true;
+    public bool _inOpenSet;
 
     [HideInInspector] public Transform _pathPoint;
     [HideInInspector] public int _gCost = int.MaxValue;
     [HideInInspector] public Cell _parent;
     [HideInInspector] public bool _inClosedSet = false;
+    public Renderer _meshRenderer;
+    private void Awake()
+    {
+        if (transform.childCount > 1)
+            _pathPoint = transform.GetChild(1);
+    }
+
+    private void OnEnable()
+    {
+        CellCullingEvents.AddCell?.Invoke(_meshRenderer);
+    }
+
+    private void OnDisable()
+    {
+        CellCullingEvents.RemoveCell?.Invoke(_meshRenderer);
+    }
 
     public void Reset()
     {
         _gCost = int.MaxValue;
         _parent = null;
         _inClosedSet = false;
-    }
-
-    private void Awake()
-    {
-        if (transform.childCount > 1)
-            _pathPoint = transform.GetChild(1);
+        _inOpenSet = false;
     }
 }

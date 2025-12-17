@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class Task_Wander : AgentTaskBase
@@ -40,15 +41,17 @@ public class Task_Wander : AgentTaskBase
         Vector2Int targetCell = MapGenerator.Instance.WorldToGrid(rawTarget);
         _targetPosition = MapGenerator.Instance.GridToWorld(targetCell);
 
+        Debug.Log("Try call MoveAgent");
         _agent.StartGetPathPoint(
             _agentTransform.position,
-            _targetPosition,
-            OnPathReady
+            _targetPosition, result =>
+            OnPathReady(result)
         );
     }
     private void OnPathReady(List<Vector3> result)
     {
-        if (result == null || result.Count == 0)
+        Debug.Log($"set path : {result.Count}");
+        if (result == null || result.Count <= 0)
         {
             _isFinished = true;
             OnFinish();
@@ -60,8 +63,6 @@ public class Task_Wander : AgentTaskBase
         _pathIsCalculated = true;
     }
 
-
-
     private Vector3 GetValidWanderTarget() // function to get a random point inside the hive's exploration area
     {
         Vector3 candidate;
@@ -72,8 +73,7 @@ public class Task_Wander : AgentTaskBase
             Vector2 rnd = Random.insideUnitCircle * _radius;
             candidate = _agentTransform.position + new Vector3(rnd.x, 0, rnd.y);
 
-            safety++;
-            if (safety > 20)
+            if (++safety > 20)
             {
                 return _agentTransform.position;
             }
@@ -150,7 +150,7 @@ public class Task_Wander : AgentTaskBase
         if (_isFinished)
         {
             _isFinished = false;
-            OnStart();
+            _agent.TaskCanceled();
         }
     }
 

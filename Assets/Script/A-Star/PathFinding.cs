@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathFinding : MonoBehaviour
+public class PathFinding
 {
     private const int _maxIterationPerFrame = 50;
 
@@ -24,9 +24,6 @@ public class PathFinding : MonoBehaviour
         new Vector2Int(0, -1), new Vector2Int(0, 1),
         new Vector2Int(1, -1), new Vector2Int(1, 1),
     };
-
-    private Coroutine _pathfindingRoutine;
-
     private List<Cell> GetNeighbors(Cell cell)
     {
         _cellNeighbors.Clear();
@@ -58,7 +55,7 @@ public class PathFinding : MonoBehaviour
         if (MapGenerator.Instance == null)
         {
             Debug.LogError("MapGenerator.instance is null");
-            callback?.Invoke(null);
+            callback?.Invoke(new List<Cell>());
             yield break;
         }
 
@@ -68,14 +65,14 @@ public class PathFinding : MonoBehaviour
         if (!MapGenerator.Instance._graph.TryGetValue(startGrid, out Cell start))
         {
             Debug.LogError($"Start position {startGrid} is outside of map.");
-            callback?.Invoke(null);
+            callback?.Invoke(new List<Cell>());
             yield break;
         }
 
         if (!MapGenerator.Instance._graph.TryGetValue(endGrid, out Cell end))
         {
             Debug.LogWarning($"End position {endGrid} is outside of map.");
-            callback?.Invoke(null);
+            callback?.Invoke(new List<Cell>());
             yield break;
         }
 
@@ -106,6 +103,7 @@ public class PathFinding : MonoBehaviour
             {
                 _path = BuildPath(end);
                 ResetUsedCells();
+
                 callback?.Invoke(_path);
                 yield break;
             }
@@ -129,8 +127,11 @@ public class PathFinding : MonoBehaviour
 
                     int f = neighbor._gCost + Heuristic(neighbor, end);
 
-                    if (!openSet.Contains(neighbor))
+                    if (!neighbor._inOpenSet)
+                    {
+                        neighbor._inOpenSet = true;
                         openSet.Enqueue(neighbor, f);
+                    }
 
                     AddToUsed(neighbor);
                 }
@@ -140,7 +141,7 @@ public class PathFinding : MonoBehaviour
         Debug.LogWarning("No path found.");
         ResetUsedCells();
 
-        callback?.Invoke(null);
+        callback?.Invoke(new List<Cell>());
         yield break;
     }
 
@@ -176,15 +177,25 @@ public class PathFinding : MonoBehaviour
     public IEnumerator FindPathPositions(Vector3 startWorld, Vector3 endWorld, Action<List<Vector3>> callback)
     {
         int smoothResolution = 50;
-        List<Cell> cellPath = new();
-        
-        yield return FindPath(startWorld, endWorld, result =>
+        List<Cell> cellPath = null;
+
+        ////////////////////////////////////////////////////
+        IEnumerator findPath = FindPath(startWorld, endWorld, result =>
         {
             cellPath = result;
-            Debug.Log(result);
         });
 
-        if (cellPath.Count <= 0) yield break;
+        while (findPath.MoveNext())
+        {
+            yield return findPath.Current;
+        }
+        ////////////////////////////////////////////////////
+
+        if (cellPath == null || cellPath.Count == 0)
+        {
+            callback?.Invoke(new List<Vector3>());
+            yield break;
+        }
 
         List<Vector3> positions = new List<Vector3>();
         foreach (Cell c in cellPath)
@@ -194,16 +205,15 @@ public class PathFinding : MonoBehaviour
             else
                 positions.Add(MapGenerator.Instance.GridToWorld(c._position));
         }
-        
-        if (positions.Count > 1)
-        {
-            positions = BSplineSmooth(positions, smoothResolution);
-        }
 
+        //if (positions.Count > 1)
+        //{
+        //    positions = BSplineSmooth(positions, smoothResolution);
+        //}
 
         callback?.Invoke(positions);
-        yield break;
     }
+
 
     #region B-Spline
     private List<Vector3> BSplineSmooth(List<Vector3> points, int resolution)
@@ -223,7 +233,7 @@ public class PathFinding : MonoBehaviour
     private List<Vector3> BSplineRaw(List<Vector3> controlPoints, int resolution)
     {
         List<Vector3> smoothedPoints = new List<Vector3>();
-        
+
         for (int segmentIndex = 0; segmentIndex < controlPoints.Count - 3; segmentIndex++)
         {
             for (int stepIndex = 0; stepIndex <= resolution; stepIndex++)
@@ -231,12 +241,12 @@ public class PathFinding : MonoBehaviour
                 float normalizedTime = stepIndex / (float)resolution;
 
                 Vector3 pointOnSpline = EvaluateCubicBSpline(normalizedTime,
-                    controlPoints[segmentIndex], 
-                    controlPoints[segmentIndex + 1], 
-                    controlPoints[segmentIndex + 2], 
+                    controlPoints[segmentIndex],
+                    controlPoints[segmentIndex + 1],
+                    controlPoints[segmentIndex + 2],
                     controlPoints[segmentIndex + 3]
                 );
-                
+
                 smoothedPoints.Add(pointOnSpline);
             }
         }
@@ -247,7 +257,7 @@ public class PathFinding : MonoBehaviour
     private Vector3 EvaluateCubicBSpline(float normalizedTime, Vector3 previousPoint, Vector3 startPoint, Vector3 endPoint, Vector3 nextPoint)
     {
         float normalizedTimeSquared = normalizedTime * normalizedTime;
-        float normalizedTimeCubed   = normalizedTimeSquared * normalizedTime;
+        float normalizedTimeCubed = normalizedTimeSquared * normalizedTime;
 
         float weightPrevious = (-normalizedTimeCubed + 3f * normalizedTimeSquared - 3f * normalizedTime + 1f) / 6f;
         float weightStart = (3f * normalizedTimeCubed - 6f * normalizedTimeSquared + 4f) / 6f;

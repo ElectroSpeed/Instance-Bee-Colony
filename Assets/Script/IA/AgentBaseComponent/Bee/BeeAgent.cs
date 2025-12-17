@@ -20,9 +20,10 @@ public class BeeAgent : Agent
     private float _statReduceTimer = 0f;
     private float _statReduceInterval = 5f;
     private bool _isDying = false;
-
     public override void Initialize()
     {
+        base.Initialize();
+
         _bb = new Blackboard();
         _bb.AddValue("AgentTransform", this.transform);
 

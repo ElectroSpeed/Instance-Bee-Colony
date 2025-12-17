@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(PathFinding))]
 public class Agent : MonoBehaviour
 {
     [Header("Agent need Parameters")]
@@ -14,7 +13,8 @@ public class Agent : MonoBehaviour
     public Blackboard _bb;
 
     public PathFinding _pathfinder;
-
+    private bool _isPathRequestRunning;
+    private PathFinding _pathFinding;
 
 
     public void Start()
@@ -25,8 +25,7 @@ public class Agent : MonoBehaviour
 
     public virtual void Initialize()
     {
-        _pathfinder = GetComponent<PathFinding>();
-        if (_pathfinder == null) _pathfinder = gameObject.AddComponent<PathFinding>();
+        _pathfinder = PathfindingScheduler.Instance._pathfinding;   
     }
 
     public Blackboard GetBlackboard() => _bb;
@@ -39,6 +38,11 @@ public class Agent : MonoBehaviour
 
             _agentsTask.Add(newTask);
         }
+    }
+
+    public void TaskCanceled()
+    {
+        _currentTask = null;
     }
 
     protected virtual void Update()
@@ -76,15 +80,32 @@ public class Agent : MonoBehaviour
         }
         return bestTask;
     }
+    //public void StartGetPathPoint(Vector3 startWorld, Vector3 endWorld, Action<List<Vector3>> callback)
+    //{
+    //    if (_isPathRequestRunning)
+    //        return;
 
-    public void StartGetPathPoint(Vector3 startWorld, Vector3 endWorld, Action<List<Vector3>> callback)
+    //    _isPathRequestRunning = true;
+
+    //    if (_pathfindingRoutine == null)
+    //    {
+    //        _pathfindingRoutine = StartCoroutine(_pathfinder.FindPathPositions(startWorld, endWorld,
+    //            result =>
+    //                {
+    //                    _isPathRequestRunning = false;
+    //                    print($"agent ask to pathfinding => pathfinding send to agent PathPoint {result.Count}");
+    //                    callback?.Invoke(result);
+
+    //                    //Security
+    //                    _pathfindingRoutine = null;
+    //                }
+    //            )
+    //        );
+    //    }
+    //}
+
+    public void StartGetPathPoint(Vector3 startWorld, Vector3 endWorld, Action<List<Vector3>> onPathReady)
     {
-        StartCoroutine(_pathfinder.FindPathPositions(startWorld, endWorld, result =>
-        {
-            if (result.Count > 0)
-            {
-                callback?.Invoke(result);
-            }
-        }));
+        PathfindingScheduler.Instance.Enqueue(_pathfinder.FindPathPositions(startWorld, endWorld, onPathReady));
     }
 }

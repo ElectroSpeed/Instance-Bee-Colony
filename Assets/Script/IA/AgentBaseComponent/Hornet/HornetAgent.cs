@@ -12,6 +12,8 @@ public class HornetAgent : Agent
     [SerializeField] private float detectionRadius = 10f;
     public override void Initialize()
     {
+        base.Initialize();
+
         _bb = new Blackboard();
         _bb.AddValue("AgentTransform", this.transform);
         _bb.AddValue("HealthHornet", _maxHealth);

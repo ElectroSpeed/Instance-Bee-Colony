@@ -60,7 +60,7 @@ public class Task_ReturnToHive : AgentTaskBase
 
     public override void OnUpdate()
     {
-        if (!_pathIsCalculated) return;
+        if (_pathIsCalculated) return;
 
         Beehive hive = (Beehive)_bb.GetValue("Hive");
         if (hive == null)

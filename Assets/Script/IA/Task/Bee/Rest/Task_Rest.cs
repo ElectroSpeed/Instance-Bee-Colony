@@ -69,7 +69,7 @@ public class Task_Rest : AgentTaskBase
 
     public override void OnUpdate()
     {
-        if (_isFinished || !_pathIsCalculated) return;
+        if (_isFinished || _pathIsCalculated) return;
 
         if (!_arrived)
         {

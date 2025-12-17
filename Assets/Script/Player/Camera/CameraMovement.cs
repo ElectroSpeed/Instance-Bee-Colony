@@ -13,9 +13,9 @@ public class CameraMovement : MonoBehaviour
     [Header("Zoom Settings")]
     [SerializeField] private float _zoomSpeed;
     [SerializeField] private float _minZoom;
-    [SerializeField] private float _maxZoom; 
+    [SerializeField] private float _maxZoom;
     private float _currentZoom;
-    
+
     [Header("Rotation Settings")]
     [SerializeField] private float _sensitivityRotation;
     private float _rotationX;
@@ -28,7 +28,7 @@ public class CameraMovement : MonoBehaviour
         _camera = Camera.main;
         _playerCamera = _camera.transform;
         _pivotCamera = transform;
-        
+
 
         _currentZoom = Vector3.Distance(_playerCamera.position, _pivotCamera.position);
 
@@ -65,7 +65,7 @@ public class CameraMovement : MonoBehaviour
     {
         if (_moveInput == Vector2.zero)
             return;
-        
+
         Vector3 forward = _pivotCamera.forward;
         forward.y = 0;
         forward.Normalize();
@@ -73,11 +73,14 @@ public class CameraMovement : MonoBehaviour
         Vector3 right = _pivotCamera.right;
         right.y = 0;
         right.Normalize();
-        
+
         Vector3 direction = forward * _moveInput.y + right * _moveInput.x;
 
         transform.position += direction * _moveSpeed * Time.deltaTime;
+
+        CellCullingEvents.CameraMoved?.Invoke();
     }
+
 
     #endregion
 
@@ -94,11 +97,12 @@ public class CameraMovement : MonoBehaviour
             _currentZoom = Mathf.Clamp(_currentZoom, _minZoom, _maxZoom);
 
             UpdateCameraPosition();
+            CellCullingEvents.CameraMoved?.Invoke();
         }
     }
 
     private void UpdateCameraPosition()
-    {   
+    {
         _playerCamera.localPosition = new Vector3(0, 0, -_currentZoom);
     }
 
@@ -108,13 +112,17 @@ public class CameraMovement : MonoBehaviour
 
     public void OnRotate(InputAction.CallbackContext context)
     {
-        if (!_isRightMouseHeld) return;
+        if (!_isRightMouseHeld)
+            return;
 
         Vector2 lookInput = context.ReadValue<Vector2>();
 
         _rotationX += lookInput.x * _sensitivityRotation;
         _pivotCamera.localEulerAngles = new Vector3(_rotationY, _rotationX, 0f);
+
+        CellCullingEvents.CameraMoved?.Invoke();
     }
+
 
     #endregion
 }

@@ -58,7 +58,7 @@ public class Task_GoToFlower : AgentTaskBase
 
     public override void OnUpdate()
     {
-        if (!_pathIsCalculated) return;
+        if (_pathIsCalculated) return;
 
 
         if (_isFinished || _targetFlower == null)
