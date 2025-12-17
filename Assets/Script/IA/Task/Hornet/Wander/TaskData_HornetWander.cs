@@ -9,8 +9,8 @@ public class TaskData_HornetWander : TaskDataBase<Task_HornetWander>
     public float _scanRadius;
 
 
-    protected override Task_HornetWander CreateTypedTask(string taskName, Blackboard bb)
+    protected override Task_HornetWander CreateTypedTask(string taskName, Blackboard bb, Agent agent)
     {
-        return new Task_HornetWander(taskName, bb, _radius, _moveSpeed, _scanInterval, _scanRadius);
+        return new Task_HornetWander(taskName, bb, agent, _radius, _moveSpeed, _scanInterval, _scanRadius);
     }
 }

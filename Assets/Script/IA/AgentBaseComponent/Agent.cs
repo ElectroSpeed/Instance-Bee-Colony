@@ -1,24 +1,21 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 public class Agent : MonoBehaviour
 {
     [Header("Agent need Parameters")]
     [SerializeField] private List<TaskDataBase> _tasksData;
 
-    private List<AgentTaskBase> _agentsTask = new(); 
+    private List<AgentTaskBase> _agentsTask = new();
     private AgentTaskBase _currentTask;
     public Blackboard _bb;
 
-    private void OnEnable()
-    {
-        Locator<Agent>.Bind(this);
-    }
+    public PathFinding _pathfinder;
+    private bool _isPathRequestRunning;
+    private PathFinding _pathFinding;
 
-    private void OnDisable()
-    {
-        Locator<Agent>.UnBind(this);
-    }
 
     public void Start()
     {
@@ -26,7 +23,10 @@ public class Agent : MonoBehaviour
         CreateAgentTasks();
     }
 
-    public virtual void Initialize() { }
+    public virtual void Initialize()
+    {
+        _pathfinder = PathfindingScheduler.Instance._pathfinding;   
+    }
 
     public Blackboard GetBlackboard() => _bb;
 
@@ -34,10 +34,15 @@ public class Agent : MonoBehaviour
     {
         foreach (var taskData in _tasksData)
         {
-            AgentTaskBase newTask = taskData.CreateTaskInstance(_bb);
+            AgentTaskBase newTask = taskData.CreateTaskInstance(_bb, this);
 
             _agentsTask.Add(newTask);
         }
+    }
+
+    public void TaskCanceled()
+    {
+        _currentTask = null;
     }
 
     protected virtual void Update()
@@ -74,5 +79,33 @@ public class Agent : MonoBehaviour
             }
         }
         return bestTask;
+    }
+    //public void StartGetPathPoint(Vector3 startWorld, Vector3 endWorld, Action<List<Vector3>> callback)
+    //{
+    //    if (_isPathRequestRunning)
+    //        return;
+
+    //    _isPathRequestRunning = true;
+
+    //    if (_pathfindingRoutine == null)
+    //    {
+    //        _pathfindingRoutine = StartCoroutine(_pathfinder.FindPathPositions(startWorld, endWorld,
+    //            result =>
+    //                {
+    //                    _isPathRequestRunning = false;
+    //                    print($"agent ask to pathfinding => pathfinding send to agent PathPoint {result.Count}");
+    //                    callback?.Invoke(result);
+
+    //                    //Security
+    //                    _pathfindingRoutine = null;
+    //                }
+    //            )
+    //        );
+    //    }
+    //}
+
+    public void StartGetPathPoint(Vector3 startWorld, Vector3 endWorld, Action<List<Vector3>> onPathReady)
+    {
+        PathfindingScheduler.Instance.Enqueue(_pathfinder.FindPathPositions(startWorld, endWorld, onPathReady));
     }
 }

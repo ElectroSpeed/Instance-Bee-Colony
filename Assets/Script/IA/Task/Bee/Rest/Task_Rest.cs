@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class Task_Rest : AgentTaskBase
 {
     private Transform _agentTransform;
     private Beehive _hive;
     private float _moveSpeed = 2.5f;
-    private PathFinding _pathFinder = new PathFinding();
     private List<Vector3> _currentPath;
     private int _pathIndex = 0;
     private bool _isFinished = false;
@@ -16,8 +16,9 @@ public class Task_Rest : AgentTaskBase
     private float _restTimer;
 
     private AgentTaskBase _savedTask;
+    private bool _pathIsCalculated = false;
 
-    public Task_Rest(string taskName, Blackboard bb, float restDuration) : base(taskName, bb)
+    public Task_Rest(string taskName, Blackboard bb, Agent agent, float restDuration) : base(taskName, bb, agent)
     {
         _agentTransform = (Transform)_bb.GetValue("AgentTransform");
         _hive = (Beehive)_bb.GetValue("Hive");
@@ -32,6 +33,7 @@ public class Task_Rest : AgentTaskBase
             return;
         }
 
+        _pathIsCalculated = false;
         _isFinished = false;
         _arrived = false;
         _restTimer = 0f;
@@ -43,16 +45,31 @@ public class Task_Rest : AgentTaskBase
             _savedTask = null;
 
         Vector3 target = _hive.transform.position;
-        _currentPath = _pathFinder.FindPathPositions(_agentTransform.position, target);
         _pathIndex = 0;
 
         if (_currentPath == null || _currentPath.Count == 0)
             _arrived = true;
+
+        _agent.StartGetPathPoint(_agentTransform.position, target, OnPathReady);
+    }
+
+    private void OnPathReady(List<Vector3> result)
+    {
+        if (result == null || result.Count == 0)
+        {
+            _isFinished = true;
+            OnFinish();
+            return;
+        }
+
+        _currentPath = result;
+        _pathIndex = 0;
+        _pathIsCalculated = true;
     }
 
     public override void OnUpdate()
     {
-        if (_isFinished) return;
+        if (_isFinished || _pathIsCalculated) return;
 
         if (!_arrived)
         {
@@ -107,7 +124,9 @@ public class Task_Rest : AgentTaskBase
             _pathIndex++;
     }
 
-    public override void OnFinish() { }
+    public override void OnFinish()
+    {
+    }
     public override void OnCancel() { _isFinished = true; }
 
     public override float GetUtility()

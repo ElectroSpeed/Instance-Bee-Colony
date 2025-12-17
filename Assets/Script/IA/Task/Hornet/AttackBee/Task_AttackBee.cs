@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 public class Task_AttackBee : AgentTaskBase
@@ -12,7 +14,7 @@ public class Task_AttackBee : AgentTaskBase
     private float _cooldownAttackTimer;
     private bool _isFinished;
 
-    public Task_AttackBee(string taskName, Blackboard bb, float attackRange, float attackCooldown, float attackDamage) : base(taskName, bb)
+    public Task_AttackBee(string taskName, Blackboard bb, Agent agent, float attackRange, float attackCooldown, float attackDamage) : base(taskName, bb, agent)
     {
         _agentTransform = (Transform)_bb.GetValue("AgentTransform");
         _attackRange = attackRange;
@@ -92,7 +94,9 @@ public class Task_AttackBee : AgentTaskBase
         }
     }
 
-    public override void OnFinish() { }
+    public override void OnFinish()
+    {
+    }
 
     public override void OnCancel()
     {

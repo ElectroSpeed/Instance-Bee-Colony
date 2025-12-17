@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public abstract class AgentTaskBase
@@ -5,15 +6,17 @@ public abstract class AgentTaskBase
     [Header ("Global Task Var")]
     [SerializeField] protected string _taskName;
     protected Blackboard _bb;
+    protected Agent _agent;
 
     /// <summary>
     /// AgentTask Constructor Override this when the Task need other parameters in children class.
     /// </summary>
     
-    public AgentTaskBase(string taskName, Blackboard bb)
+    public AgentTaskBase(string taskName, Blackboard bb, Agent agent)
     {
         this._taskName = taskName;
         this._bb = bb;
+        this._agent = agent;
     }
 
     #region CallBack Functions

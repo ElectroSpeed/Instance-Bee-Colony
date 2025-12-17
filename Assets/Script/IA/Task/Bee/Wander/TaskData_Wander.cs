@@ -8,9 +8,9 @@ public class TaskData_Wander : TaskDataBase<Task_Wander>
     public float _scanTimer = 0f;
     public float _flowerDetectionRadius = 10f;
 
-    protected override Task_Wander CreateTypedTask(string taskName, Blackboard bb)
+    protected override Task_Wander CreateTypedTask(string taskName, Blackboard bb, Agent agent)
     {
-        return new Task_Wander(taskName, bb, _radius, _scanCooldown, _scanTimer, _flowerDetectionRadius);
+        return new Task_Wander(taskName, bb, agent, _radius, _scanCooldown, _scanTimer, _flowerDetectionRadius);
     }
 
 }

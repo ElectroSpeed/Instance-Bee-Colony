@@ -6,9 +6,9 @@ public class Task_CollectFlower : AgentTaskBase
     private bool _isFinished = false;
     private int _pollenCollected = 0;
     private float _collectDuration = 2f;
-    private float _timer = 0f; 
+    private float _timer = 0f;
 
-    public Task_CollectFlower(string taskName, Blackboard bb, int pollenCollected): base(taskName, bb)
+    public Task_CollectFlower(string taskName, Blackboard bb, Agent agent, int pollenCollected) : base(taskName, bb, agent)
     {
         _pollenCollected = pollenCollected;
     }
@@ -38,7 +38,9 @@ public class Task_CollectFlower : AgentTaskBase
         }
     }
 
-    public override void OnFinish() { }
+    public override void OnFinish()
+    {
+    }
 
     public override void OnCancel() { }
 

@@ -48,11 +48,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BeeAgent
   _tasksData:
   - {fileID: 11400000, guid: 532040ef44cfeb74a9a3833dc9b70b86, type: 2}
-  - {fileID: 11400000, guid: 1974c740498e8ec4e9d7928fc591cc0b, type: 2}
-  - {fileID: 11400000, guid: a4380fbbc036b5f49b9a8dbf7dd05bc1, type: 2}
-  - {fileID: 11400000, guid: 11dea03f3aaec5241810240059392c51, type: 2}
-  - {fileID: 11400000, guid: 529f3204eedc8c445a35b2841da47be3, type: 2}
-  - {fileID: 11400000, guid: 6638c7f161e3fcf4199fe899d3a5c591, type: 2}
   _statsData: {fileID: 11400000, guid: d3e152e4f7049a34ea960f22dfae9194, type: 2}
   _hungerDecayAmount: 5
   _tirednessDecayAmount: 5

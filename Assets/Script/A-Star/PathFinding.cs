@@ -1,8 +1,12 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PathFinding
 {
+    private const int _maxIterationPerFrame = 50;
+
     private List<Cell> _cellNeighbors = new List<Cell>();
     private List<Cell> _usedCells = new List<Cell>();
     private List<Cell> _path = new List<Cell>();
@@ -20,7 +24,6 @@ public class PathFinding
         new Vector2Int(0, -1), new Vector2Int(0, 1),
         new Vector2Int(1, -1), new Vector2Int(1, 1),
     };
-
     private List<Cell> GetNeighbors(Cell cell)
     {
         _cellNeighbors.Clear();
@@ -47,12 +50,13 @@ public class PathFinding
         return dx + dy - Mathf.Min(dx, dy);
     }
 
-    public List<Cell> FindPath(Vector3 startWorld, Vector3 endWorld)
+    public IEnumerator FindPath(Vector3 startWorld, Vector3 endWorld, Action<List<Cell>> callback)
     {
         if (MapGenerator.Instance == null)
         {
             Debug.LogError("MapGenerator.instance is null");
-            return null;
+            callback?.Invoke(new List<Cell>());
+            yield break;
         }
 
         Vector2Int startGrid = MapGenerator.Instance.WorldToGrid(startWorld);
@@ -61,13 +65,15 @@ public class PathFinding
         if (!MapGenerator.Instance._graph.TryGetValue(startGrid, out Cell start))
         {
             Debug.LogError($"Start position {startGrid} is outside of map.");
-            return null;
+            callback?.Invoke(new List<Cell>());
+            yield break;
         }
 
         if (!MapGenerator.Instance._graph.TryGetValue(endGrid, out Cell end))
         {
             Debug.LogWarning($"End position {endGrid} is outside of map.");
-            return null;
+            callback?.Invoke(new List<Cell>());
+            yield break;
         }
 
         ResetUsedCells();
@@ -81,15 +87,25 @@ public class PathFinding
         openSet.Enqueue(start, Heuristic(start, end));
         AddToUsed(start);
 
+        int iterationsThisFrame = 0;
+
         while (openSet.Count > 0)
         {
+            if (++iterationsThisFrame >= _maxIterationPerFrame)
+            {
+                iterationsThisFrame = 0;
+                yield return null;
+            }
+
             Cell current = openSet.Dequeue();
 
             if (current == end)
             {
                 _path = BuildPath(end);
                 ResetUsedCells();
-                return _path;
+
+                callback?.Invoke(_path);
+                yield break;
             }
 
             current._inClosedSet = true;
@@ -111,8 +127,11 @@ public class PathFinding
 
                     int f = neighbor._gCost + Heuristic(neighbor, end);
 
-                    if (!openSet.Contains(neighbor))
+                    if (!neighbor._inOpenSet)
+                    {
+                        neighbor._inOpenSet = true;
                         openSet.Enqueue(neighbor, f);
+                    }
 
                     AddToUsed(neighbor);
                 }
@@ -121,7 +140,9 @@ public class PathFinding
 
         Debug.LogWarning("No path found.");
         ResetUsedCells();
-        return null;
+
+        callback?.Invoke(new List<Cell>());
+        yield break;
     }
 
     private List<Cell> BuildPath(Cell end)
@@ -153,11 +174,28 @@ public class PathFinding
         _usedCells.Clear();
     }
 
-    public List<Vector3> FindPathPositions(Vector3 startWorld, Vector3 endWorld)
+    public IEnumerator FindPathPositions(Vector3 startWorld, Vector3 endWorld, Action<List<Vector3>> callback)
     {
         int smoothResolution = 50;
-        List<Cell> cellPath = FindPath(startWorld, endWorld);
-        if (cellPath == null) return null;
+        List<Cell> cellPath = null;
+
+        ////////////////////////////////////////////////////
+        IEnumerator findPath = FindPath(startWorld, endWorld, result =>
+        {
+            cellPath = result;
+        });
+
+        while (findPath.MoveNext())
+        {
+            yield return findPath.Current;
+        }
+        ////////////////////////////////////////////////////
+
+        if (cellPath == null || cellPath.Count == 0)
+        {
+            callback?.Invoke(new List<Vector3>());
+            yield break;
+        }
 
         List<Vector3> positions = new List<Vector3>();
         foreach (Cell c in cellPath)
@@ -167,14 +205,15 @@ public class PathFinding
             else
                 positions.Add(MapGenerator.Instance.GridToWorld(c._position));
         }
-        
-        if (positions.Count > 1)
-        {
-            positions = BSplineSmooth(positions, smoothResolution);
-        }
 
-        return positions;
+        //if (positions.Count > 1)
+        //{
+        //    positions = BSplineSmooth(positions, smoothResolution);
+        //}
+
+        callback?.Invoke(positions);
     }
+
 
     #region B-Spline
     private List<Vector3> BSplineSmooth(List<Vector3> points, int resolution)
@@ -194,7 +233,7 @@ public class PathFinding
     private List<Vector3> BSplineRaw(List<Vector3> controlPoints, int resolution)
     {
         List<Vector3> smoothedPoints = new List<Vector3>();
-        
+
         for (int segmentIndex = 0; segmentIndex < controlPoints.Count - 3; segmentIndex++)
         {
             for (int stepIndex = 0; stepIndex <= resolution; stepIndex++)
@@ -202,12 +241,12 @@ public class PathFinding
                 float normalizedTime = stepIndex / (float)resolution;
 
                 Vector3 pointOnSpline = EvaluateCubicBSpline(normalizedTime,
-                    controlPoints[segmentIndex], 
-                    controlPoints[segmentIndex + 1], 
-                    controlPoints[segmentIndex + 2], 
+                    controlPoints[segmentIndex],
+                    controlPoints[segmentIndex + 1],
+                    controlPoints[segmentIndex + 2],
                     controlPoints[segmentIndex + 3]
                 );
-                
+
                 smoothedPoints.Add(pointOnSpline);
             }
         }
@@ -218,7 +257,7 @@ public class PathFinding
     private Vector3 EvaluateCubicBSpline(float normalizedTime, Vector3 previousPoint, Vector3 startPoint, Vector3 endPoint, Vector3 nextPoint)
     {
         float normalizedTimeSquared = normalizedTime * normalizedTime;
-        float normalizedTimeCubed   = normalizedTimeSquared * normalizedTime;
+        float normalizedTimeCubed = normalizedTimeSquared * normalizedTime;
 
         float weightPrevious = (-normalizedTimeCubed + 3f * normalizedTimeSquared - 3f * normalizedTime + 1f) / 6f;
         float weightStart = (3f * normalizedTimeCubed - 6f * normalizedTimeSquared + 4f) / 6f;

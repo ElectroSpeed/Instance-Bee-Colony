@@ -7,8 +7,8 @@ public class TaskData_AttackHornet : TaskDataBase<Task_AttackHornet>
     public float _attackCooldown = 1f;
     public float _attackDamage = 10f;
 
-    protected override Task_AttackHornet CreateTypedTask(string taskName, Blackboard bb)
+    protected override Task_AttackHornet CreateTypedTask(string taskName, Blackboard bb, Agent agent)
     {
-        return new Task_AttackHornet(taskName, bb, _attackRange, _attackCooldown, _attackDamage);
+        return new Task_AttackHornet(taskName, bb, agent, _attackRange, _attackCooldown, _attackDamage);
     }
 }

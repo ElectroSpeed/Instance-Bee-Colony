@@ -5,8 +5,8 @@ public class TaskData_Rest : TaskDataBase<Task_Rest>
 {
     public float _restDuration;
 
-    protected override Task_Rest CreateTypedTask(string taskName, Blackboard bb)
+    protected override Task_Rest CreateTypedTask(string taskName, Blackboard bb, Agent agent)
     {
-        return new Task_Rest(taskName, bb, _restDuration);
+        return new Task_Rest(taskName, bb, agent, _restDuration);
     }
 }

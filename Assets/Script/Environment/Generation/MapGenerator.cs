@@ -10,6 +10,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private Cell _tilePrefab;
     [SerializeField] private int _gridLength = 10;
     [SerializeField] private int _gridWidth = 10;
+    [SerializeField] private int _chunkCountPerLine = 10;
 
     [Header("Perlin Noise Settings")]
     public int _seed = 12345;
@@ -119,8 +120,10 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
+
         GenerateBeehive();
     }
+
 
     #region Generate Map
 
@@ -153,7 +156,7 @@ public class MapGenerator : MonoBehaviour
 
     private void GenerateMapCellRenderer(Cell mapCell, float noiseValue)
     {
-        Renderer mapCellRenderer = mapCell.GetComponentInChildren<Renderer>();
+        UnityEngine.Renderer mapCellRenderer = mapCell.GetComponentInChildren<UnityEngine.Renderer>();
         if (mapCellRenderer != null)
             mapCellRenderer.material.color = _colorGradient.Evaluate(noiseValue);
     }

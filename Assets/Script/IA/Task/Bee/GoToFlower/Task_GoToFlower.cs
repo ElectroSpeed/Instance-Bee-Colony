@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Task_GoToFlower : AgentTaskBase
 {
@@ -9,11 +9,11 @@ public class Task_GoToFlower : AgentTaskBase
     private float _speed = 4f;
     private bool _isFinished = false;
 
-    private PathFinding _pathFinder = new PathFinding();
     private List<Vector3> _currentPath;
     private int _pathIndex = 0;
+    private bool _pathIsCalculated = false;
 
-    public Task_GoToFlower(string name, Blackboard bb, float speed) : base(name, bb)
+    public Task_GoToFlower(string name, Blackboard bb, Agent agent, float speed) : base(name, bb, agent)
     {
         _speed = speed;
         _agentTransform = (Transform)bb.GetValue("AgentTransform");
@@ -23,6 +23,7 @@ public class Task_GoToFlower : AgentTaskBase
     {
         _targetFlower = (Flower)_bb.GetValue("TargetFlower");
         _isFinished = false;
+        _pathIsCalculated = false;
 
         if (_targetFlower == null)
         {
@@ -31,18 +32,35 @@ public class Task_GoToFlower : AgentTaskBase
         }
 
         Vector3 targetPos = _targetFlower.transform.position;
-
-        _currentPath = _pathFinder.FindPathPositions(_agentTransform.position, targetPos);
         _pathIndex = 0;
 
         if (_currentPath == null || _currentPath.Count == 0)
         {
             _isFinished = true;
         }
+
+        _agent.StartGetPathPoint(_agentTransform.position, targetPos, OnPathReady);
+    }
+
+    private void OnPathReady(List<Vector3> result)
+    {
+        if (result == null || result.Count == 0)
+        {
+            _isFinished = true;
+            OnFinish();
+            return;
+        }
+
+        _currentPath = result;
+        _pathIndex = 0;
+        _pathIsCalculated = true;
     }
 
     public override void OnUpdate()
     {
+        if (_pathIsCalculated) return;
+
+
         if (_isFinished || _targetFlower == null)
         {
             _isFinished = true;
@@ -109,6 +127,8 @@ public class Task_GoToFlower : AgentTaskBase
 
     public override int GetTaskPriority() => 1;
 
-    public override void OnFinish() { }
+    public override void OnFinish()
+    {
+    }
     public override void OnCancel() { }
 }
