@@ -54,9 +54,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 529f3204eedc8c445a35b2841da47be3, type: 2}
   - {fileID: 11400000, guid: 6638c7f161e3fcf4199fe899d3a5c591, type: 2}
   _statsData: {fileID: 11400000, guid: d3e152e4f7049a34ea960f22dfae9194, type: 2}
-  hive: {fileID: 0}
-  hungerDecayAmount: 2.5
-  tirednessDecayAmount: 2.5
+  _hungerDecayAmount: 5
+  _tirednessDecayAmount: 5
+  _hiveDetectionRadius: 100
+  _lifeTime: 180
 --- !u!1 &4686888451805472518
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,6 +225,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 151911650247344510, guid: 330afc209594a524c9656866a1e2d5df, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 18cd181c9ea0f97419466579f11eefaf, type: 2}
     - target: {fileID: 427433119957989592, guid: 330afc209594a524c9656866a1e2d5df, type: 3}
       propertyPath: m_Layer
       value: 7

@@ -46,8 +46,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   _flowerButtonPrefab: {fileID: 7252747223418991580, guid: f7d31c6424180804b9e4e20f4699ef54, type: 3}
   _minHumidity: 0
-  _maxHumidity: 100
-  _minSunlight: 0
+  _maxHumidity: 25
+  _minSunlight: 75
   _maxSunlight: 100
-  _minTemperature: -10
+  _minTemperature: 10
   _maxTemperature: 40
