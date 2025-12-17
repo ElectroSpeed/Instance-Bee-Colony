@@ -13,7 +13,34 @@ MonoBehaviour:
   m_Name: Bee-Colony Library
   m_EditorClassIdentifier: Assembly-CSharp::SoundLibrary
   _musicSounds:
-  - _name: TestSound
-    _clip: {fileID: 0}
+  - _name: MusicMenu
+    _clip: {fileID: 8300000, guid: f080db08204ef1a488852b54cc979fd1, type: 3}
+    _loop: 1
+  - _name: MainMusic
+    _clip: {fileID: 8300000, guid: 5d6aaa950df023e439b2892dbc3ca48a, type: 3}
+    _loop: 1
+  _sfxSounds:
+  - _name: Hornet
+    _clip: {fileID: 8300000, guid: b60620fdffcb34441951c552e55a51fd, type: 3}
     _loop: 0
-  _sfxSounds: []
+  - _name: Flower
+    _clip: {fileID: 8300000, guid: 199b97428436e0a4784115edb06820bf, type: 3}
+    _loop: 0
+  - _name: Rain
+    _clip: {fileID: 8300000, guid: a0a13b7e665be5b4e82177f7a140cdd1, type: 3}
+    _loop: 0
+  - _name: Remove
+    _clip: {fileID: 8300000, guid: 358932ac762a6e549b91c2408e4e5d78, type: 3}
+    _loop: 0
+  - _name: Bee
+    _clip: {fileID: 8300000, guid: f105d9a32340f3c42bb6f90042b5a5fa, type: 3}
+    _loop: 0
+  - _name: Page
+    _clip: {fileID: 8300000, guid: 19550ce943d91374f8164e8803866a55, type: 3}
+    _loop: 0
+  - _name: Sun
+    _clip: {fileID: 8300000, guid: fbd32ea556817cc4996576c4058d4910, type: 3}
+    _loop: 0
+  - _name: ClickButton
+    _clip: {fileID: 8300000, guid: ddd57f948516bfb46b44c0c4c33b27e9, type: 3}
+    _loop: 0

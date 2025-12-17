@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: PerceNeigeData
   m_EditorClassIdentifier: Assembly-CSharp::SO_FlowerData
   _flowerName: PerceNeige
-  _description: sxcftvygbuhinj
+  _description: "Perce-neige est un nom vernaculaire d\xE9signant en fran\xE7ais
+    diverses plantes de la famille des Amaryllidaceae, \xE0 fleurs en clochettes
+    blanches macul\xE9es de vert, qui poussent et fleurissent g\xE9n\xE9ralement
+    en hiver ; pour ce faire, elles ont la capacit\xE9 de percer une faible couche
+    de neige."
   _flowerPrefab: {fileID: 778431225565301238, guid: 66fa6b38f83425248b2e3530a7896f38, type: 3}
   _lifeDuration: 60
   _pollenAmount: 2
@@ -42,9 +46,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _minHumidity: 68.9
-  _maxHumidity: 26.2
-  _minSunlight: 70.1
-  _maxSunlight: 26.2
-  _minTemperature: 28.4
-  _maxTemperature: 23.5
+  _flowerButtonPrefab: {fileID: 7066802871493782469, guid: 8c4c32b4d00c74e478385d7c96fffd1f, type: 3}
+  _minHumidity: 0
+  _maxHumidity: 100
+  _minSunlight: 0
+  _maxSunlight: 100
+  _minTemperature: -10
+  _maxTemperature: 40

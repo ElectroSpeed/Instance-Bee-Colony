@@ -1,5 +1,14 @@
 public enum SoundType
 {
     None,
-    TestSound
+    Bee,
+    ClickButton,
+    Flower,
+    Hornet,
+    MainMusic,
+    MusicMenu,
+    Page,
+    Rain,
+    Remove,
+    Sun
 }

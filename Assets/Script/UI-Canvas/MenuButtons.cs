@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class MenuButtons : MonoBehaviour
 {
 
-    [SerializeField] private string _sceneMainMenuName= "Main Menu Raphaël";
+    [SerializeField] private string _sceneMainMenuName= "Main Menu";
     [SerializeField] private string _scenePlayName= "MVP Scene";
     
     public void PauseGame()
@@ -22,11 +22,13 @@ public class MenuButtons : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(_sceneMainMenuName);
+        AudioManager.Instance.PlayMusic(SoundType.MusicMenu);
     }
 
     public void LaunchGame()
     {
         SceneManager.LoadScene(_scenePlayName);
+        AudioManager.Instance.PlayMusic(SoundType.MainMusic);
     }
 
     public void QuitGame()

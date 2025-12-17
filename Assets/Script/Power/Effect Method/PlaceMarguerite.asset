@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c4cae9e137a7c4ca5075ef4d17fe4b, type: 3}
   m_Name: PlaceMarguerite
   m_EditorClassIdentifier: Assembly-CSharp::PlaceEffect
-  _prefabToPlace: {fileID: 0}
+  _prefabToPlace: {fileID: 2716052938921768097, guid: e393fb05881b04f46ae42c40ed082239, type: 3}

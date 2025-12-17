@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c4cae9e137a7c4ca5075ef4d17fe4b, type: 3}
   m_Name: PlaceEdelweiss
   m_EditorClassIdentifier: Assembly-CSharp::PlaceEffect
-  _prefabToPlace: {fileID: 0}
+  _prefabToPlace: {fileID: 3776254561047352706, guid: 8b5883bcf7b4bd64e93f6f0a4e4eb50d, type: 3}
