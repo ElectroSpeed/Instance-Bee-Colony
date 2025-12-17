@@ -1,7 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 
@@ -11,7 +9,7 @@ public class Agent : MonoBehaviour
     [Header("Agent need Parameters")]
     [SerializeField] private List<TaskDataBase> _tasksData;
 
-    private List<AgentTaskBase> _agentsTask = new(); 
+    private List<AgentTaskBase> _agentsTask = new();
     private AgentTaskBase _currentTask;
     public Blackboard _bb;
 
@@ -28,7 +26,7 @@ public class Agent : MonoBehaviour
     public virtual void Initialize()
     {
         _pathfinder = GetComponent<PathFinding>();
-        if( _pathfinder == null ) _pathfinder = gameObject.AddComponent<PathFinding>();
+        if (_pathfinder == null) _pathfinder = gameObject.AddComponent<PathFinding>();
     }
 
     public Blackboard GetBlackboard() => _bb;
@@ -79,14 +77,14 @@ public class Agent : MonoBehaviour
         return bestTask;
     }
 
-    public Task<List<Vector3>> StartGetPathPoint(Vector3 startWorld, Vector3 endWorld)
+    public void StartGetPathPoint(Vector3 startWorld, Vector3 endWorld, Action<List<Vector3>> callback)
     {
-        var tcs = new TaskCompletionSource<List<Vector3>>();
-
         StartCoroutine(_pathfinder.FindPathPositions(startWorld, endWorld, result =>
         {
-            tcs.TrySetResult(result);
+            if (result.Count > 0)
+            {
+                callback?.Invoke(result);
+            }
         }));
-        return tcs.Task;
     }
 }

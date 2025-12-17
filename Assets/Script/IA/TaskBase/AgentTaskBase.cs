@@ -25,7 +25,7 @@ public abstract class AgentTaskBase
     /// Called when the task begins execution.
     /// Initialize variables or start required processes here.
     /// </summary>
-    public virtual async Task OnStart() { await Task.CompletedTask; }
+    public abstract void OnStart();
 
     /// <summary>
     /// Called every update tick while the task is running.
@@ -37,7 +37,7 @@ public abstract class AgentTaskBase
     /// Called when the task successfully completes its operation.
     /// Use this to clean up or trigger follow-up actions.
     /// </summary>
-    public virtual async Task OnFinish() { await Task.CompletedTask; }
+    public abstract void OnFinish();
 
     /// <summary>
     /// Called when the task is interrupted or cancelled before completion.

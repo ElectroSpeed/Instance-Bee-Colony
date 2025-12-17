@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PathFinding : MonoBehaviour
 {
+    private const int _maxIterationPerFrame = 50;
+
     private List<Cell> _cellNeighbors = new List<Cell>();
     private List<Cell> _usedCells = new List<Cell>();
     private List<Cell> _path = new List<Cell>();
@@ -88,8 +90,16 @@ public class PathFinding : MonoBehaviour
         openSet.Enqueue(start, Heuristic(start, end));
         AddToUsed(start);
 
+        int iterationsThisFrame = 0;
+
         while (openSet.Count > 0)
         {
+            if (++iterationsThisFrame >= _maxIterationPerFrame)
+            {
+                iterationsThisFrame = 0;
+                yield return null;
+            }
+
             Cell current = openSet.Dequeue();
 
             if (current == end)
@@ -167,17 +177,12 @@ public class PathFinding : MonoBehaviour
     {
         int smoothResolution = 50;
         List<Cell> cellPath = new();
-
-        bool done = false;
         
         yield return FindPath(startWorld, endWorld, result =>
         {
             cellPath = result;
             Debug.Log(result);
-            done = true;
         });
-
-        yield return new WaitUntil((() => done));
 
         if (cellPath.Count <= 0) yield break;
 

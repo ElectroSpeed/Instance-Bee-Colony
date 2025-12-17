@@ -1,6 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using UnityEngine;
 
 public class Task_Wander : AgentTaskBase
 {
@@ -12,10 +11,12 @@ public class Task_Wander : AgentTaskBase
     private float _scanCooldown;
     private float _scanTimer;
     private float _flowerDetectionRadius;
-    
+
     private List<Vector3> _currentPath;
     private int _pathIndex = 0;
     private float _moveSpeed = 2f;
+
+    private bool _pathIsCalculated = false;
 
     public Task_Wander(string taskName, Blackboard bb, Agent agent, float radius, float scanCooldown, float scanTimer, float flowerDetectionRadius) : base(taskName, bb, agent)
     {
@@ -27,24 +28,38 @@ public class Task_Wander : AgentTaskBase
         _agentTransform = (Transform)bb.GetValue("AgentTransform");
     }
 
-    public override async Task OnStart()
+    public override void OnStart()
     {
         _isFinished = false;
+        _pathIsCalculated = false;
+        _currentPath = null;
+        _pathIndex = 0;
 
         Vector3 rawTarget = GetValidWanderTarget();
 
         Vector2Int targetCell = MapGenerator.Instance.WorldToGrid(rawTarget);
         _targetPosition = MapGenerator.Instance.GridToWorld(targetCell);
 
-        _currentPath = await _agent.StartGetPathPoint(_agentTransform.position, _targetPosition);
-        _pathIndex = 0;
-
-        if (_currentPath == null || _currentPath.Count == 0)
+        _agent.StartGetPathPoint(
+            _agentTransform.position,
+            _targetPosition,
+            OnPathReady
+        );
+    }
+    private void OnPathReady(List<Vector3> result)
+    {
+        if (result == null || result.Count == 0)
         {
             _isFinished = true;
             OnFinish();
+            return;
         }
+
+        _currentPath = result;
+        _pathIndex = 0;
+        _pathIsCalculated = true;
     }
+
 
 
     private Vector3 GetValidWanderTarget() // function to get a random point inside the hive's exploration area
@@ -63,7 +78,7 @@ public class Task_Wander : AgentTaskBase
                 return _agentTransform.position;
             }
 
-        } 
+        }
         while (!IsInsideHiveZone(candidate));
 
         return candidate;
@@ -71,6 +86,8 @@ public class Task_Wander : AgentTaskBase
 
     public override void OnUpdate()
     {
+        if (!_pathIsCalculated) return;
+
         FollowPath();
 
         _scanTimer += Time.deltaTime;
@@ -128,12 +145,12 @@ public class Task_Wander : AgentTaskBase
         }
     }
 
-    public override async Task OnFinish()
+    public override void OnFinish()
     {
         if (_isFinished)
         {
             _isFinished = false;
-            await OnStart();
+            OnStart();
         }
     }
 
