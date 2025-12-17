@@ -26,6 +26,7 @@ public class Beehive : MonoBehaviour
 
     public event Action<int> OnPollenChanged;
     public event Action<int> OnHoneyChanged;
+    public event Action<int> OnBeeNumberChanged;
 
     private WaxManager _waxManager;
     private void Awake()
@@ -107,9 +108,11 @@ public class Beehive : MonoBehaviour
     public void RegisterBee()
     {
         _aliveBees++;
+        OnBeeNumberChanged?.Invoke(_aliveBees);
     }
     public void UnregisterBee()
     {
         _aliveBees = Mathf.Max(0, _aliveBees - 1);
+        OnBeeNumberChanged?.Invoke(_aliveBees);
     }
 }
