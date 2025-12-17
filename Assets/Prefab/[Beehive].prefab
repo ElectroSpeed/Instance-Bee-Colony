@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8b5892858a5ec49a8dfc5bfd2e60c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveLocatorScript
+  _yLock: 1
 --- !u!1 &8643047418239159960
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,6 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8b5892858a5ec49a8dfc5bfd2e60c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveLocatorScript
+  _yLock: 0
 --- !u!1 &8816528416123910650
 GameObject:
   m_ObjectHideFlags: 0
