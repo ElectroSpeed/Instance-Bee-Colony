@@ -151,6 +151,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5acde2afbf74f0341ac2edc28ddbd17f, type: 3}
+      propertyPath: m_TagString
+      value: Flower
+      objectReference: {fileID: 0}
     - target: {fileID: 1057642026447896051, guid: 5acde2afbf74f0341ac2edc28ddbd17f, type: 3}
       propertyPath: m_Layer
       value: 7

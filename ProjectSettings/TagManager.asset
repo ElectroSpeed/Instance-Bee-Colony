@@ -7,6 +7,7 @@ TagManager:
   - EnvironmentManager
   - Bee
   - Beehive
+  - Flower
   layers:
   - Default
   - TransparentFX
