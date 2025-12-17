@@ -41,14 +41,11 @@ public class BeehiveUI : MonoBehaviour
             if (_hit.collider.transform.parent.gameObject == _beehive.gameObject)
             {
                 _tooltipText.SetActive(true);
-                Debug.Log("aedsfgbb");
             }
             else
             {
                 _tooltipText.SetActive(false);
-                Debug.Log("ersgdthvnfdgxwsc");
             }
         }
-        
     }
 }
