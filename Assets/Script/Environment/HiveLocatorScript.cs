@@ -4,6 +4,7 @@ using UnityEngine;
 public class HiveLocatorScript : MonoBehaviour
 {
     private Camera playerCamera;
+    public bool _yLock = true;
 
     private void Start()
     {
@@ -13,7 +14,10 @@ public class HiveLocatorScript : MonoBehaviour
     private void Update()
     {
         Vector3 direction = transform.position - playerCamera.transform.position;
-        direction.y = 0f; // optionnel : garde l'objet droit
+        if (_yLock)
+        {
+            direction.y = 0f; // optionnel : garde l'objet droit
+        }
 
         transform.rotation = Quaternion.LookRotation(direction);
     }
