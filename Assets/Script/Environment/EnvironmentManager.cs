@@ -13,6 +13,9 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] private float _updateInterval = 0.5f;
     [HideInInspector] public bool _isPowerActive = false;
 
+    [Header("SeasonReference")]
+    [SerializeField] private SeasonManager _seasonManager;
+
     private float _updateTimer;
 
     public event Action<float> OnSunlightChanged;
@@ -27,6 +30,11 @@ public class EnvironmentManager : MonoBehaviour
     public void SetPowerActive(bool isActive)
     {
         _isPowerActive = isActive;
+    }
+
+      private void OnEnable()
+    {
+        _seasonManager.OnSeasonChanged += HandleSeasonChanged;
     }
 
     private void UpdateTimer()
@@ -68,5 +76,24 @@ public class EnvironmentManager : MonoBehaviour
         sunlight = _sunlight;
         humidity = _humidity;
         temperature = _temperature;
+    }
+
+    private void HandleSeasonChanged(Season season)
+    {
+        switch (season)
+        {
+            case Season.Spring:
+                _temperature = 27.5f;
+                break;
+            case Season.Summer:
+                _temperature = 40f;
+                break;
+            case Season.Autumn:
+                _temperature = 15f;
+                break;
+            case Season.Winter:
+                _temperature = -10f;
+                break;
+        }
     }
 }
