@@ -73,8 +73,8 @@ public class CellCullingManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!_dirty)
-            return;
+        // if (!_dirty)
+        //     return;
 
         EnsurePlanes();
 

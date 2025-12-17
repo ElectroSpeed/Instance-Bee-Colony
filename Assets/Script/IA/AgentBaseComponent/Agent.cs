@@ -16,6 +16,10 @@ public class Agent : MonoBehaviour
     private bool _isPathRequestRunning;
     private PathFinding _pathFinding;
 
+    private void OnEnable()
+    {
+        Locator<Agent>.Bind(this);
+    }
 
     public void Start()
     {

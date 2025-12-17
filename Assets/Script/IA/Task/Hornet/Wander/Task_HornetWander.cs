@@ -19,8 +19,8 @@ public class Task_HornetWander : AgentTaskBase
     private List<Vector3> _currentPath;
     private int _pathIndex = 0;
 
-    public Task_HornetWander(string taskName, Blackboard bb, float radius, float speed, float scanInterval, float scanRadius)
-        : base(taskName, bb)
+    public Task_HornetWander(string taskName, Blackboard bb, Agent agent,float radius, float speed, float scanInterval, float scanRadius)
+        : base(taskName, bb, agent)
     {
         _radius = radius;
         _speed = speed;
@@ -40,7 +40,7 @@ public class Task_HornetWander : AgentTaskBase
         Vector2 rnd = Random.insideUnitCircle * _radius;
         _targetPosition = _agentTransform.position + new Vector3(rnd.x, 0, rnd.y);
 
-        _currentPath = _pathFinder.FindPathPositions(_agentTransform.position, _targetPosition);
+        //_currentPath = _pathFinder.FindPathPositions(_agentTransform.position, _targetPosition);
         _pathIndex = 0;
 
         if (_currentPath == null || _currentPath.Count == 0)
