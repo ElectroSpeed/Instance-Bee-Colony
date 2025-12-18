@@ -19,21 +19,21 @@ MonoBehaviour:
     _effectPrefabs:
     - {fileID: 11400000, guid: ed00db05bf6c1e740b2cbd4839e4f19e, type: 2}
     _utilisationMethod: {fileID: 11400000, guid: 9139efcdb1b5c5042926aa3860eb4ad9, type: 2}
-    _sound: 1
+    _sound: 0
   - _name: PlaceHornet
     _cooldown: 0
     _targetingPrefab: {fileID: 11400000, guid: 8c13d22e4f6f8ae44a2f04c049e80315, type: 2}
     _effectPrefabs:
     - {fileID: 11400000, guid: ae88bcaa33aecbe4a974e66ddf750063, type: 2}
     _utilisationMethod: {fileID: 11400000, guid: 9139efcdb1b5c5042926aa3860eb4ad9, type: 2}
-    _sound: 4
+    _sound: 0
   - _name: PlaceBeehive
     _cooldown: 0
     _targetingPrefab: {fileID: 11400000, guid: 0d3c2e8e20824c24086b0c74d35f5be6, type: 2}
     _effectPrefabs:
     - {fileID: 11400000, guid: 912a0a2b059440443890d7eb9c4ca34d, type: 2}
     _utilisationMethod: {fileID: 11400000, guid: 9139efcdb1b5c5042926aa3860eb4ad9, type: 2}
-    _sound: 1
+    _sound: 0
   - _name: Destruction
     _cooldown: 0
     _targetingPrefab: {fileID: 11400000, guid: ca2f8a76f056ffc459381ec7440baf8e, type: 2}

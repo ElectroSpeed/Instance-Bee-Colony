@@ -23,18 +23,6 @@ public class PlaceEffect : SO_EffectBehaviour
         return false;
     }
     
-    bool IsPositionOccupiedByObstacle(Vector3 pos)
-    {
-        foreach (GameObject obstacle in _obstacles)
-        {
-            if (Vector3.Distance(obstacle.transform.position, pos) < 1f)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-    
     bool IsPositionOccupiedByBeehive(Vector3 pos)
     {
         foreach (Beehive beehive in _beehives)
@@ -63,7 +51,7 @@ public class PlaceEffect : SO_EffectBehaviour
 
             Vector3 pos = target._position;
             
-            if (IsPositionOccupiedByFlower(pos) || IsPositionOccupiedByObstacle(pos) || IsPositionOccupiedByBeehive(pos))
+            if (IsPositionOccupiedByFlower(pos) || IsPositionOccupiedByBeehive(pos))
                 continue;
 
             Instantiate(_prefabToPlace, pos, Quaternion.identity);
