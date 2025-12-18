@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SO_FlowerData
   _flowerName: Tulip
   _description: "Les tulipes constituent un genre de plantes herbac\xE9es, de la
-    famille des Liliac\xE9es. Le genre compte une centaine d'esp\xE8ces r\xE9parties
-    en quatre sous-genres, originaires du Pal\xE9arctique"
+    famille des Liliac\xE9es."
   _flowerPrefab: {fileID: 778431225565301238, guid: 66fa6b38f83425248b2e3530a7896f38, type: 3}
   _lifeDuration: 60
   _pollenAmount: 2

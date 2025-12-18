@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: TournesolData
   m_EditorClassIdentifier: Assembly-CSharp::SO_FlowerData
   _flowerName: Tournesol
-  _description: "Le tournesol, \xE9galement connu sous les noms h\xE9lianthe et soleil,
-    est une grande plante annuelle, appartenant \xE0 la famille des Ast\xE9rac\xE9es,
-    dont les fleurs sont group\xE9es en capitules de grandes dimensions"
+  _description: "Le tournesol, \xE9galement connu sous les noms h\xE9lianthe et soleil."
   _flowerPrefab: {fileID: 778431225565301238, guid: 66fa6b38f83425248b2e3530a7896f38, type: 3}
   _lifeDuration: 60
   _pollenAmount: 2

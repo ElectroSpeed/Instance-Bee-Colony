@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SO_FlowerData
   _flowerName: Hibiscus
   _description: "Hibiscus est un genre de plantes \xE0 fleurs annuelles ou vivaces
-    qui comporte plusieurs centaines d'esp\xE8ces. Les hibiscus font partie de la
-    famille des Malvac\xE9es."
+    qui comporte plusieurs centaines d'esp\xE8ces."
   _flowerPrefab: {fileID: 778431225565301238, guid: 66fa6b38f83425248b2e3530a7896f38, type: 3}
   _lifeDuration: 50
   _pollenAmount: 3

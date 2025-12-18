@@ -381,8 +381,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5228656179783648199, guid: e83efd63eb79a1b4cbe8126392bc1874, type: 3}
+      propertyPath: m_text
+      value: "L'Almanach contient l\u2019ensemble des fleurs que vous pouvez utiliser.\n\nChaque
+        page correspond \xE0 une fleur diff\xE9rente.\nL\u2019image affich\xE9e sur
+        la page repr\xE9sente la fleur associ\xE9e.\n\nPour s\xE9lectionner une fleur,
+        cliquez directement sur son image.\nUne fois s\xE9lectionn\xE9e, la fleur
+        peut \xEAtre plac\xE9e dans le monde.\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5228656179783648199, guid: e83efd63eb79a1b4cbe8126392bc1874, type: 3}
       propertyPath: m_fontSize
-      value: 10
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 5228656179783648199, guid: e83efd63eb79a1b4cbe8126392bc1874, type: 3}
       propertyPath: m_fontAsset
@@ -390,7 +398,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: cceeaa65ee00c704e8a74ea690408ddf, type: 2}
     - target: {fileID: 5228656179783648199, guid: e83efd63eb79a1b4cbe8126392bc1874, type: 3}
       propertyPath: m_fontSizeBase
-      value: 10
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 5228656179783648199, guid: e83efd63eb79a1b4cbe8126392bc1874, type: 3}
       propertyPath: m_sharedMaterial

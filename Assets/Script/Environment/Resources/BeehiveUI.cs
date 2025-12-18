@@ -34,11 +34,14 @@ public class BeehiveUI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+        if (_cam == null) return;
+
         _ray = _cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+
         if (Physics.Raycast(_ray, out _hit))
         {
-            if (_hit.collider.transform.parent.gameObject == _beehive.gameObject)
+            if (_hit.collider.transform.parent != null &&
+                _hit.collider.transform.parent.gameObject == _beehive.gameObject)
             {
                 _tooltipText.SetActive(true);
             }
@@ -47,5 +50,19 @@ public class BeehiveUI : MonoBehaviour
                 _tooltipText.SetActive(false);
             }
         }
+        else
+        {
+            _tooltipText.SetActive(false);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (_cam == null) return;
+
+        transform.LookAt(
+            transform.position + _cam.transform.forward,
+            _cam.transform.up
+        );
     }
 }
