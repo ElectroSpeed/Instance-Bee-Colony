@@ -23,12 +23,14 @@ public class MenuButtons : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene(_sceneMainMenuName);
         AudioManager.Instance.PlayMusic(SoundType.MusicMenu);
+        AudioManager.Instance.StopSFX();
     }
 
     public void LaunchGame()
     {
         AudioManager.Instance.StopMusic();
         AudioManager.Instance.PlayMusic(SoundType.MainMusic);
+        AudioManager.Instance.StopSFX();
         SceneManager.LoadScene(_scenePlayName);
     }
 

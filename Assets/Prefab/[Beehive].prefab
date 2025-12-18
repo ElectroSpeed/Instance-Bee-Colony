@@ -176,6 +176,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveLocatorScript
   _yLock: 1
+  _minDistance: 5
+  _maxDistance: 50
+  _minScale: 0.5
+  _maxScale: 3
 --- !u!1 &8643047418239159960
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,6 +226,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveLocatorScript
   _yLock: 0
+  _minDistance: 5
+  _maxDistance: 50
+  _minScale: 0.5
+  _maxScale: 2
 --- !u!1 &8816528416123910650
 GameObject:
   m_ObjectHideFlags: 0
